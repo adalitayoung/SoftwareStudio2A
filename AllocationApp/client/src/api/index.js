@@ -10,6 +10,8 @@ const api = axios.create({
 // export const deleteMovieById = id => api.delete(`/movie/${id}`)
 // export const getMovieById = id => api.get(`/movie/${id}`)
 
+export const addUserToDatabase = user => api.post(`/user`, user)
+
 // const apis = {
 //     insertMovie,
 //     getAllMovies,
@@ -18,6 +20,8 @@ const api = axios.create({
 //     getMovieById,
 // }
 
-const apis = {}
+const apis = {
+    addUserToDatabase
+}
 
 export default apis
