@@ -1,5 +1,5 @@
 function startAlgorithm() {
-    console.log("hello");
+    console.info("Algorithm Started")
 }
 
 module.exports = {
