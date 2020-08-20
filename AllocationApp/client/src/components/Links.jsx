@@ -29,8 +29,8 @@ class Links extends Component {
                             </Link>
                         </Item>
                         <Item>
-                            <Link to="SignUp" className="nav-link">
-                                Sign up
+                            <Link to="Register" className="nav-link">
+                                Register
                             </Link>
                         </Item>
                         <Item>
