@@ -6,4 +6,8 @@ import Links from './Links'
 import Logo from './Logo'
 import NavBar from './NavBar'
 
-export { Links, Logo, NavBar }
+export { default as Home } from "./Home";
+export { default as Signin } from "./Signin";
+export { default as Signup } from "./Signup";
+
+export {  Links, Logo, NavBar }
