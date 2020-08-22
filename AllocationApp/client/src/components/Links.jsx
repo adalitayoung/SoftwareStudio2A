@@ -7,19 +7,20 @@ const Collapse = styled.div.attrs({
 })``
 
 const List = styled.div.attrs({
-    className: 'navbar-nav mr-auto',
+    className: 'navbar-nav ml-auto',
 })``
 
 const Item = styled.div.attrs({
     className: 'collpase navbar-collapse',
 })``
 
+
 class Links extends Component {
     render() {
         return (
             <React.Fragment>
                 <Link to="/" className="navbar-brand">
-                    Software studio 2A
+                    GradOnline
                 </Link>
                 <Collapse>
                     <List>
@@ -29,13 +30,18 @@ class Links extends Component {
                             </Link>
                         </Item>
                         <Item>
+                            <Link to="SignIn" className="nav-link">
+                                Sign In
+                            </Link>
+                        </Item>
+                        <Item>
                             <Link to="Register" className="nav-link">
                                 Register
                             </Link>
                         </Item>
                         <Item>
-                            <Link to="SignIn" className="nav-link">
-                                Sign In
+                            <Link to="Contact" className="nav-link">
+                                Contact
                             </Link>
                         </Item>
                     </List>

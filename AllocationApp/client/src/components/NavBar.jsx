@@ -9,7 +9,7 @@ const Container = styled.div.attrs({
 })``
 
 const Nav = styled.nav.attrs({
-    className: 'navbar navbar-expand-lg navbar-dark bg-dark',
+    className: 'navbar navbar-expand-lg navbar-light ',
 })`
     margin-bottom: 20 px;
 `
