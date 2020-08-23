@@ -1,0 +1,75 @@
+.navbar-brand {
+  font-family: helvetica;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+  color:  #3da2ff  !important;
+  text-align: center;
+}
+
+.signup .col-lg-5 {
+  width: 200px;
+}
+
+.signup .form-group {
+  font-size: 15px !important;
+  font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: gray;
+}
+
+.form-control {
+  font-size: 0.8rem !important;
+}
+
+.btn {
+  padding-top: 1rem;
+  font-weight: 600px !important;
+}
+
+.font-weight{
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+  color: #3da2ff;
+  font-weight: 600 !important;
+  font-size: 25px;
+}
+
+.col-sm-5 {
+  padding-left: 50px !important;
+}
+
+.btn {
+  margin-top: 20px;
+  font-weight: 600px !important;
+}
+
+.row {
+  padding-top: 2%;
+  padding-bottom: 5%;
+}
+
+.name {
+  margin-right:5px;
+}
+
+.password {
+  margin-right:5px;
+  padding-bottom: 4px;
+}
+
+.lock {
+  padding-bottom: 5px;
+}
+
+.signuppic {
+  padding-top: 40px;
+}
+
+.account {
+  color: gray;
+  text-align: center;
+  font-size: 15px;
+  padding-top: 10px;
+
+}
+
