@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import '../style/style.css'
 
 import Logo from './Logo'
 import Links from './Links'
