@@ -29,5 +29,4 @@ else
     randomly assign to projects with empty spaces 
     OR
     Admin can manually assign students to groups with empty spaces 
-    
 */
