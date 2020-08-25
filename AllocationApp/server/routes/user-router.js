@@ -4,7 +4,7 @@ const AlgorithmCtrl = require('../controllers/algorithm-ctrl')
 const UserCtrl = require('../controllers/user-ctrl')
 const router = express.Router();
 
-router.post('/user', UserCtrl.createUser)
+router.post('/createUser', UserCtrl.createUser)
 router.post('/userPreference', UserCtrl.addPreference)
 
 router.get('/algorithm', AlgorithmCtrl.startAlgorithm)
