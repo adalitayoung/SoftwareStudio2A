@@ -55,11 +55,32 @@ addPreference = (req, res) => {
 
     const email = body.email;
 
-    return res.status(201).json({
-        success: true,
-        email: body.email,
+    User.find({email: email}).exec(function(err, users){
+
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'user not found!',
+            })
+        }
+
+        if (users.length){
+            var id = users[0]._id;
+            //console.log(id);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'found',
+                id: id
+            })   
+            
+        }       
     })
 
+    //get student user id based of email
+    //get student project preferences from user input
+    //get student tech background
+    //save student id, project preferences, and projectid(initially null) to db
 }
 
 module.exports = {
