@@ -1,4 +1,5 @@
 const User = require('../models/user-model.js')
+const TempUser = require('../models/temp-student-model.js')
 
 createUser = (req, res) => {
     const body = req.body
@@ -27,7 +28,7 @@ createUser = (req, res) => {
         }
         else{
             user.role = "Student"
-    
+
             user
                 .save()
                 .then(() => {
@@ -39,10 +40,29 @@ createUser = (req, res) => {
                 })
         }
     })
-   
-    
+
+
+}
+
+addPreference = (req, res) => {
+    const body = req.body
+    if (!body){
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a user',
+        })
+    }
+
+    const email = body.email;
+
+    return res.status(201).json({
+        success: true,
+        email: body.email,
+    })
+
 }
 
 module.exports = {
     createUser,
+    addPreference
 }

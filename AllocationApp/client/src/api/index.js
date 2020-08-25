@@ -14,6 +14,8 @@ export const addUserToDatabase = user => api.post(`/user`, user)
 
 export const startAlgorithm = () => api.get(`/algorithm`)
 
+export const addUserPreference = userPreference => api.post(`/userPreference`, userPreference)
+
 // const apis = {
 //     insertMovie,
 //     getAllMovies,
@@ -24,7 +26,8 @@ export const startAlgorithm = () => api.get(`/algorithm`)
 
 const apis = {
     addUserToDatabase,
-    startAlgorithm
+    startAlgorithm,
+    addUserPreference
 }
 
 export default apis
