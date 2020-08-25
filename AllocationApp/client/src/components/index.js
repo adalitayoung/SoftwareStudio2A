@@ -8,7 +8,6 @@ import NavBar from './NavBar'
 
 export { default as Home } from "./Home";
 export { default as Signin } from "./Signin";
-export { default as Signup } from "./Register";
 export { default as Contact } from "./Contact";
 
 
