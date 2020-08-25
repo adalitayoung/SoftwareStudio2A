@@ -12,6 +12,8 @@ const api = axios.create({
 
 export const addUserToDatabase = user => api.post(`/user`, user)
 
+export const startAlgorithm = () => api.get(`/algorithm`)
+
 // const apis = {
 //     insertMovie,
 //     getAllMovies,
@@ -21,7 +23,8 @@ export const addUserToDatabase = user => api.post(`/user`, user)
 // }
 
 const apis = {
-    addUserToDatabase
+    addUserToDatabase,
+    startAlgorithm
 }
 
 export default apis
