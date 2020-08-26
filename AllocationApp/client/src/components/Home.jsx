@@ -17,20 +17,19 @@ function Home() {
     borderRadius: "12px"
   };
   return (
-    <div className="home">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-5">
+      <div className="home" >
+          <div class="container" >
+        
+                      <div className="box" >
             <h1 class="font-weight-light"></h1>
-            
-            <p>
               <img src={require("./grad.png")} alt="grad" width="200" height="150"/>
               
 
-              <h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh' }}>GRADONLINE</h1>
-              <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>Automatic Student Group Allocation</h2>
-              <br></br>
-              <div>
+              <h1>GRADONLINE</h1>
+              <h2>Automatic Student Group Allocation</h2>
+                          <br></br>
+              </div>
+              <div className="box">
           
               
               <button type="button" style={mystyle}>SIGN IN</button>
@@ -38,9 +37,7 @@ function Home() {
               <button type="button" style={mystyle}>SIGN OUT</button>
               
               </div>
-            </p>
-          </div>
-        </div>
+         
       </div>
     </div>
   );
