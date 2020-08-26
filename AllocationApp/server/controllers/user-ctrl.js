@@ -1,4 +1,5 @@
 const User = require('../models/user-model.js')
+const TempUser = require('../models/temp-student-model.js')
 
 createUser = (req, res) => {
     const body = req.body
@@ -27,7 +28,7 @@ createUser = (req, res) => {
         }
         else{
             user.role = "Student"
-    
+
             user
                 .save()
                 .then(() => {
@@ -39,10 +40,50 @@ createUser = (req, res) => {
                 })
         }
     })
-   
-    
+
+
+}
+
+addPreference = (req, res) => {
+    const body = req.body
+    if (!body){
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a user',
+        })
+    }
+
+    const email = body.email;
+
+    User.find({email: email}).exec(function(err, users){
+
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'user not found!',
+            })
+        }
+
+        if (users.length){
+            var id = users[0]._id;
+            //console.log(id);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'found',
+                id: id
+            })   
+            
+        }       
+    })
+
+    //get student user id based of email
+    //get student project preferences from user input
+    //get student tech background
+    //save student id, project preferences, and projectid(initially null) to db
 }
 
 module.exports = {
     createUser,
+    addPreference
 }
