@@ -78,6 +78,8 @@ addUserPreference = (req, res) => {
                     })
                 }
                 else {
+                    tempStudent.projectID = null;
+
                     tempStudent
                     .save()
                     .then(()=> {
