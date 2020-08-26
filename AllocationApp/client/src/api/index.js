@@ -16,7 +16,7 @@ export const startAlgorithm = () => api.get(`/algorithm`)
 
 export const addUserPreference = userPreference => api.post(`/user/userPreference`, userPreference)
 
-export const addCourse = course => api.post('/user/createClass', course)
+export const addCourse = course => api.post('/class/createClass', course)
 
 // const apis = {
 //     insertMovie,
