@@ -18,6 +18,8 @@ export const addUserPreference = userPreference => api.post(`/user/userPreferenc
 
 export const addCourse = course => api.post('/class/createClass', course)
 
+export const login = loginDetails => api.post('/user/login', loginDetails)
+
 // const apis = {
 //     insertMovie,
 //     getAllMovies,
@@ -31,6 +33,7 @@ const apis = {
     startAlgorithm,
     addUserPreference,
     addCourse,
+    login,
 }
 
 export default apis

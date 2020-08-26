@@ -104,7 +104,42 @@ addUserPreference = (req, res) => {
     //save student id, project preferences, and projectid(initially null) to db
 
 
+
+login = (req, res) => {
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide login details',
+        })
+    }
+
+    User.find({email: body.email}).exec(function(err, users) {
+        if (err){
+            return res.status(400).json({
+                success: false,
+                error: err
+            })
+        }
+
+        if (users[0].password == body.password){
+            return res.status(201).json({
+                success: true,
+                fullName: users[0].fullName,
+                role: users[0].role
+            })
+        }
+        else if (users[0].password != body.password){
+            return res.status(400).json({
+                success: false,
+                message: "User's password does not match the system"
+            })
+        }
+    })
+}
+
 module.exports = {
     createUser,
-    addUserPreference
+    addUserPreference,
+    login
 }
