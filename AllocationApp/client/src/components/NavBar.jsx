@@ -12,17 +12,19 @@ const Nav = styled.nav.attrs({
     className: 'navbar navbar-expand-lg navbar-light ',
 })`
     margin-bottom: 20 px;
+    padding-right: 50px;
+    padding-left:50px;
 `
 
 class NavBar extends Component {
     render() {
         return (
-            <Container>
+            
                 <Nav>
                     <Logo />
                     <Links />
                 </Nav>
-            </Container>
+           
         )
     }
 }
