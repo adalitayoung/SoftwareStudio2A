@@ -28,7 +28,7 @@ class Links extends Component {
                             <Link to="SignIn" className="nav-link"><button id="signnav" className="btn btn-primary">Sign In</button></Link>
                         </Item>
                         <Item>
-                            <Link to="SignIn" className="nav-link"><button id="signnav" className="btn btn-primary">Sign Up</button></Link>
+                            <Link to="Register" className="nav-link"><button id="signnav" className="btn btn-primary">Sign Up</button></Link>
                         </Item>
                     </List>
                 </Collapse>
