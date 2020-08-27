@@ -77,3 +77,9 @@
 .title {
   padding-left: 50px;
 }
+
+.row {
+  padding-top: 2%;
+  bottom: 0 !important;
+  width: 100%;
+}
