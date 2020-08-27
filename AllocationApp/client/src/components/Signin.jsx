@@ -11,14 +11,14 @@ class Signin extends Component {
   constructor(props){
     super(props)
     this.state = {
-      fullName: '',
+      email: '',
       password: ''
     }
   }
 
   handleChangeName = async event => {
-    const fullName = event.target.value;
-    this.setState({fullName})
+    const email = event.target.value;
+    this.setState({email})
   }
 
   handleChangePassword = async event => {
@@ -28,9 +28,17 @@ class Signin extends Component {
 
   handleSignin = async event => {
     event.preventDefault();
-    const {fullName, password} = this.state
-    if (fullName !== '' && password !== '') {
-      
+    const {email, password} = this.state
+    if (email !== '' && password !== '') {
+      await api.login({email, password}).then(res => {
+        console.log(res)
+        if(res.status === 201){
+          window.alert('Welcome')
+          this.props.history.push('/Home')
+        }
+      }, error => {
+        console.log(error)
+      })
     }
   }
 
