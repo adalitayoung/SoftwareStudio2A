@@ -3,6 +3,7 @@ import '../style/style.css';
 import api from '../api'
 import name from '../name.png'
 import lock from '../lock.png'
+import { withRouter } from "react-router-dom";
 
 import { Link } from 'react-router-dom'
 
@@ -34,7 +35,10 @@ class Signin extends Component {
         console.log(res)
         if(res.status === 201){
           window.alert('Welcome')
-          this.props.history.push('/Home')
+          this.props.history.push({
+            pathname: '/',
+            state: { user: res.data }
+            })
         }
       }, error => {
         console.log(error)
@@ -70,4 +74,4 @@ class Signin extends Component {
   
 }
 
-export default Signin;
+export default withRouter(Signin);
