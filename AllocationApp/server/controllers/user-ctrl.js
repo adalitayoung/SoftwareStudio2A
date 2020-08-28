@@ -74,7 +74,7 @@ addUserPreference = (req, res) => {
                 if (tempStudents.length){
                     return res.status(400).json({
                         success: false,
-                        error: 'Student has already entered preferences'
+                        error: 'Student has already entered preferences, go to update preferences to edit'
                     })
                 }
                 else {
@@ -89,21 +89,74 @@ addUserPreference = (req, res) => {
                             message: 'student added',
                         })
                     })
-
                 }   
+            })
+        }
+        else {
+            return res.status(404).json({
+                err,
+                message: 'user not found!',
             })
         }
     })
 }
 
+updatePreferences = async (req, res) => {
+    const body = req.body
 
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
 
-    //get student user id based of email
-    //get student project preferences from user input
-    //get student tech background
-    //save student id, project preferences, and projectid(initially null) to db
+    //find student in user database using email entered in body
+    User.find({email: body.email}).exec(function(err, users){
 
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'user not found!',
+            })
+        }
 
+        //if there is a user 
+        if (users.length){
+            //get the student id from the users db and assign as tempStudent students id
+            var id = users[0]._id;
+
+            //Check that the student is not already in temp-student db
+            TempStudent.find({studentID: id}).exec(function(err, tempStudents){
+                //if there is a student
+                if (tempStudents.length) {
+                    //Update preferences based on user input
+                    TempStudent.findOneAndUpdate(
+                        {studentID: id},
+                        { $set: { projectPreference1: body.projectPreference1, 
+                            projectPreference2: body.projectPreference2, 
+                            projectPreference3: body.projectPreference3 }}, {new: true}, (err, doc) => {
+                            if (err) {
+                                console.log("Something wrong when updating data!");
+                            }
+                        });
+                    
+                    return res.status(200).json({
+                        success: true,
+                        message: "Preferences have been updated"
+                    })
+                
+                }
+            })
+        }
+        else {
+            return res.status(404).json({
+                err,
+                message: 'user not found!',
+            })
+        }
+    })
+}
 
 login = (req, res) => {
     const body = req.body
@@ -141,5 +194,6 @@ login = (req, res) => {
 module.exports = {
     createUser,
     addUserPreference,
+    updatePreferences,
     login
 }
