@@ -14,7 +14,7 @@ export const addUserToDatabase = user => api.post(`/user/createUser`, user)
 
 export const startAlgorithm = () => api.get(`/algorithm`)
 
-export const addUserPreference = userPreference => api.post(`/user/userPreference`, userPreference)
+export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
 
