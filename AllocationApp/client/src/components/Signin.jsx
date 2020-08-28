@@ -41,7 +41,7 @@ class Signin extends Component {
             /*state: { user: res.data }*/
             })
         } if(res.status === 201){
-          window.alert('Welcome ' + res.user.fullname)
+          window.alert('Welcome ' + email)
           this.props.history.push({
             pathname: '/',
             state: { user: res.data }
