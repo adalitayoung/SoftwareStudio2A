@@ -75,10 +75,6 @@ class Signin extends Component {
                     <p className="account"><Link to="" className="nav-link">Forgot your password?</Link></p>
                   </form>
                 </div>
-                <div className="left">
-                  <h1>Welcome to the higher education!!!</h1>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident laboriosam incidunt, culpa nisi error, laudantium dicta voluptatum, quidem obcaecati debitis rem ipsam quaerat eveniet cumque ea veritatis doloremque officia mollitia?</p>
-                </div>
               </div>            
             </div>              
           </div>
