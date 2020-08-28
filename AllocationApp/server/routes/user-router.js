@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/createUser', UserCtrl.createUser)
 router.post('/userPreference', UserCtrl.addUserPreference)
+router.post('/updatePreference', UserCtrl.updatePreferences)
 router.get('/algorithm', AlgorithmCtrl.startAlgorithm)
 router.post('/login', UserCtrl.login)
 module.exports = router
