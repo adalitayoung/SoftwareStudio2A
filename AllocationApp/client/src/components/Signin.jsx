@@ -41,7 +41,7 @@ class Signin extends Component {
             /*state: { user: res.data }*/
             })
         } if(res.status === 201){
-          window.alert('Welcome ' + res.fullname)
+          window.alert('Welcome ' + res.user.fullname)
           this.props.history.push({
             pathname: '/',
             state: { user: res.data }
@@ -59,20 +59,28 @@ class Signin extends Component {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-5">
-              <h1 className="font-weight-light">Signin</h1>
-              <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail"><img className="mail" src={mail} width="15px"/> Email</label>
-                  <input type="name" className="form-control" id="exampleInputEmail" onChange={this.handleChangeName} placeholder="Enter Your Email"></input>
+              <div className="content">
+                <div className="column">
+                  <h1 className="font-weight-light">Signin</h1>
+                  <form>
+                    <div className="form-group">
+                      <label htmlFor="exampleInputEmail"><img className="mail" src={mail} width="15px"/> Email</label>
+                      <input type="name" className="form-control" id="exampleInputEmail" onChange={this.handleChangeName} placeholder="Enter Your Email"></input>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="exampleInputPassword1"><img className="lock" src={lock} width="15px"/> Password</label>
+                      <input type="password" className="form-control" id="exampleInputPassword1" onChange={this.handleChangePassword} placeholder="Password"></input>
+                    </div>
+                    <button id="sign" className="btn btn-primary btn-block" onClick={this.handleSignin}>Sign in</button>
+                    <p className="account"><Link to="" className="nav-link">Forgot your password?</Link></p>
+                  </form>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1"><img className="lock" src={lock} width="15px"/> Password</label>
-                  <input type="password" className="form-control" id="exampleInputPassword1" onChange={this.handleChangePassword} placeholder="Password"></input>
+                <div className="left">
+                  <h1>Welcome to the higher education!!!</h1>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident laboriosam incidunt, culpa nisi error, laudantium dicta voluptatum, quidem obcaecati debitis rem ipsam quaerat eveniet cumque ea veritatis doloremque officia mollitia?</p>
                 </div>
-                <button id="sign" className="btn btn-primary btn-block" onClick={this.handleSignin}>Sign in</button>
-                <p className="account"><Link to="" className="nav-link">Forgot your password?</Link></p>
-              </form>
-            </div>
+              </div>            
+            </div>              
           </div>
         </div>
       </div>
