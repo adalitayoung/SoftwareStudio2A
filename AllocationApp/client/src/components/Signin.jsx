@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import '../style/style.css';
 import api from '../api'
-import name from '../name.png'
+import mail from '../mail.png'
 import lock from '../lock.png'
 import { withRouter } from "react-router-dom";
 
@@ -13,7 +13,8 @@ class Signin extends Component {
     super(props)
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      //fullname: ''
     }
   }
 
@@ -33,8 +34,14 @@ class Signin extends Component {
     if (email !== '' && password !== '') {
       await api.login({email, password}).then(res => {
         console.log(res)
-        if(res.status === 201){
-          window.alert('Welcome')
+        if(res.status === 400){
+          window.alert('Email or Password is wrong.')
+          this.props.history.push({
+            pathname: '/Signin',
+            /*state: { user: res.data }*/
+            })
+        } if(res.status === 201){
+          window.alert('Welcome ' + res.fullname)
           this.props.history.push({
             pathname: '/',
             state: { user: res.data }
@@ -55,8 +62,8 @@ class Signin extends Component {
               <h1 className="font-weight-light">Signin</h1>
               <form>
                 <div className="form-group">
-                  <label htmlFor="exampleInputName"><img className="name" src={name} width="15px"/>Full Name</label>
-                  <input type="name" className="form-control" id="exampleInputName" onChange={this.handleChangeName} placeholder="Enter Full Name"></input>
+                  <label htmlFor="exampleInputEmail"><img className="mail" src={mail} width="15px"/> Email</label>
+                  <input type="name" className="form-control" id="exampleInputEmail" onChange={this.handleChangeName} placeholder="Enter Your Email"></input>
                 </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputPassword1"><img className="lock" src={lock} width="15px"/> Password</label>
