@@ -26,11 +26,12 @@ const newProjectRole = new ProjectRoles({
   roleType,
   positionsRequired,
   positionsLeft,
+  studentsEnrolledID
 })
 
 newProjectRole.save()
   .then(() => res.json("Role Added"))
-  .catch(err => res.status(400).json('Error: '+err))
+  .catch(err => res.status(400).json('Error: '+ err))
 
 }
 
