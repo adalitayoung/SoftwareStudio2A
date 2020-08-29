@@ -15,7 +15,7 @@ createProjectRoles = (req, res) => {
     })
   }
 
-const projectID = ""; //this shold be project ID: coming in next update
+const projectID = req.body.projectID; //this shold be project ID: coming in next update
 const roleType = req.body.roleType
 const positionsRequired = req.body.positionsRequired
 const positionsLeft = positionsRequired
