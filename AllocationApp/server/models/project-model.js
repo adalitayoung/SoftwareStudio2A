@@ -4,11 +4,10 @@ const Schema = mongoose.Schema
 const Project = new Schema(
     {
         classID: {type: String},
+        createdByID:{type: String},   // coming from user who creates the project as a teacher
+        createdByname:{type: String}, // coming from user who creates the project as a teacher
         name: {type: String},
         description: {type: String},
-        frontEndQuota: {type: Number},
-        backEndQuota: {type: Number},
-        fullStackQuota: {type: Number},
         studentMin: {type: Number},
         studentMax: {type: Number}
     }
