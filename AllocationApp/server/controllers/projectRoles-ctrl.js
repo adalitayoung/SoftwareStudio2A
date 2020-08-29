@@ -17,7 +17,7 @@ createProjectRoles = (req, res) => {
 
 const projectID = ""; //this shold be project ID: coming in next update
 const roleType = req.body.roleType
-const positionsRequired = Number(req.body.positionsRequired)
+const positionsRequired = req.body.positionsRequired
 const positionsLeft = positionsRequired
 const studentsEnrolledID = [];
 
