@@ -7,7 +7,8 @@ const ProjectRoles = new Schema(
     roleType:{type: String},   // unique to this project
     positionsRequired:{type: Number},
     positionsLeft:{type: Number},
-    studentsEnrolledID:{[String]} // This will be an array of IDs of students enrolled to this project into this particular role type
+    studentsEnrolledID:[String] // This will be an array of IDs of students enrolled to this project into this particular role type
+  }
 )
 
 module.exports = mongoose.model('projectRoles',ProjectRoles)
