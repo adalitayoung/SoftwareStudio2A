@@ -1,3 +1,7 @@
+body{
+  background-image: url(/AllocationApp/client/src/components/background.jpg);
+}
+
 .navbar-brand {
   font-family: helvetica;
   font-weight: 800 !important;
@@ -13,8 +17,8 @@
 .signup .form-group {
   font-size: 15px !important;
   font-weight: 600;
-    margin-bottom: 0.8rem;
-    color: gray;
+  margin-bottom: 0.8rem;
+  color: gray;
 }
 
 .form-control {
@@ -74,32 +78,42 @@
 }
 
 .box {
-    display: flex;
-    flex-direction:column;
-    align-items: center !important;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
 }
 
-.hppic {
-    padding-top: 40px;
+.button-container {
+  flex-direction: row;
+  justify-content: center;;
+}
+.button-container a:last-child {
+  margin-left:15px;
 }
 
 .piccontainer {
-    position: relative;
+  position: relative;
    
 }
 
 .text-block {
-    position: absolute;
-    bottom: 100px;
-    right: 100px;
-    background-color: rgb(255,255,255) transparent;
-    color: white;
-    top: 140px;
-    padding-right: 200px;
-    padding-top: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
 }
 
 .fontgradon{
-    font-size: 70px;
-    font-weight: bold;
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.fontauto{
+  font-family: Helvetica;
+  font-size: 32px;
+}
+
+.title-container{
+  margin-bottom:70px;
 }
