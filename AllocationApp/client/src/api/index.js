@@ -24,14 +24,6 @@ export const getAllCourses = () => api.get('/class/getAllClasses')
 
 export const login = loginDetails => api.post('/user/login', loginDetails)
 
-// const apis = {
-//     insertMovie,
-//     getAllMovies,
-//     updateMovieById,
-//     deleteMovieById,
-//     getMovieById,
-// }
-
 const apis = {
     addUserToDatabase,
     startAlgorithm,
