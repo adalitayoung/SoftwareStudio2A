@@ -19,6 +19,8 @@ export const addUserPreference = tempStudent => api.post(`/user/userPreference`,
 export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
+export const getCourseByName = name => api.get(`/class/${name}`)
+export const getAllCourses = () => api.get('/class/getAllClasses')
 
 export const login = loginDetails => api.post('/user/login', loginDetails)
 
@@ -36,6 +38,8 @@ const apis = {
     addUserPreference,
     updatePreference,
     addCourse,
+    getCourseByName,
+    getAllCourses,
     login,
 }
 

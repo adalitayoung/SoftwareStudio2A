@@ -1,6 +1,6 @@
 const Course = require('../models/class-reference.js')
 
-createCourse = (req, res) => {
+createCourse = async (req, res) => {
 
     const body = req.body
     
@@ -20,7 +20,7 @@ createCourse = (req, res) => {
         })
     }
 
-    Course.find({name: course.name}).exec(function(err, courses) {
+    await Course.find({name: course.name}).exec(function(err, courses) {
         if (courses.length){
             return res.status(400).json({
                 success: false,
@@ -43,6 +43,36 @@ createCourse = (req, res) => {
     
 }
 
+returnAllCourses = async (req, res) => {
+    await Course.find().exec(function(err, courses) {
+        if (err) {
+            return res.status(400).json({success: false, error: err})
+        }
+        else if (!courses.length) {
+            return res.status(404).json({success: false, error: 'No Courses Found'})
+        }
+        else{
+            return res.status(200).json({success: true, data: courses})
+        }
+    })
+}
+
+returnCourseByName = async (req, res) => {
+    await Course.findOne({name: req.params.name}).exec(function(err, course) {
+        if (err) {
+            return res.status(400).json({success: false, error: err})
+        }
+        else if (!course) {
+            return res.status(404).json({success: false, error: 'Course not found'})
+        }
+        else {
+            return res.status(200).json({success: true, data: course})
+        }
+    })
+}
+
 module.exports = {
     createCourse,
+    returnAllCourses,
+    returnCourseByName
 }

@@ -33,14 +33,8 @@ class Signin extends Component {
     const {email, password} = this.state
     if (email !== '' && password !== '') {
       await api.login({email, password}).then(res => {
-        console.log(res)
-        if(res.status === 400){
-          window.alert('Email or Password is wrong.')
-          this.props.history.push({
-            pathname: '/Signin',
-            /*state: { user: res.data }*/
-            })
-        } if(res.status === 201){
+        
+        if(res.status === 201){
           window.alert('Welcome ' + email)
           this.props.history.push({
             pathname: '/',
@@ -49,6 +43,7 @@ class Signin extends Component {
         }
       }, error => {
         console.log(error)
+        window.alert('Email or Password is wrong.')
       })
     }
   }
