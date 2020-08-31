@@ -158,7 +158,7 @@ updatePreferences = async (req, res) => {
     })
 }
 
-login = (req, res) => {
+login = async (req, res) => {
     const body = req.body
     if (!body) {
         return res.status(400).json({
@@ -167,14 +167,19 @@ login = (req, res) => {
         })
     }
 
-    User.find({email: body.email}).exec(function(err, users) {
+    await User.find({email: body.email}).exec(function(err, users) {
         if (err){
             return res.status(400).json({
                 success: false,
                 error: err
             })
         }
-
+        if (users[0] == undefined){
+            return res.status(400).json({
+                success: false,
+                message: "User does not exist"
+            })
+        }
         if (users[0].password == body.password){
             return res.status(201).json({
                 success: true,
