@@ -96,7 +96,6 @@ class Signup extends Component {
         </div>
       </div>
     );
-    
   }
   
 }

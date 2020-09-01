@@ -4,9 +4,8 @@ import api from '../api'
 import mail from '../mail.png'
 import lock from '../lock.png'
 import { withRouter } from "react-router-dom";
-
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom'
-
 class Signin extends Component {
 
   constructor(props){
@@ -15,9 +14,9 @@ class Signin extends Component {
       email: '',
       password: '',
       //fullname: ''
+
     }
   }
-
   handleChangeName = async event => {
     const email = event.target.value;
     this.setState({email})
@@ -33,8 +32,14 @@ class Signin extends Component {
     const {email, password} = this.state
     if (email !== '' && password !== '') {
       await api.login({email, password}).then(res => {
-        
-        if(res.status === 201){
+        console.log(res)
+        if(res.status === 400){
+          window.alert('Email or Password is wrong.')
+          this.props.history.push({
+            pathname: '/Signin',
+            /*state: { user: res.data }*/
+            })
+        } if(res.status === 201){
           window.alert('Welcome ' + email)
           this.props.history.push({
             pathname: '/',
@@ -43,11 +48,13 @@ class Signin extends Component {
         }
       }, error => {
         console.log(error)
-        window.alert('Email or Password is wrong.')
       })
     }
   }
-
+  handleClick = () => {
+         this.props.history.push("/UHome");
+         window.location.reload();
+       }
   render(){
     return (
       <div className="signin">
@@ -66,18 +73,18 @@ class Signin extends Component {
                       <label htmlFor="exampleInputPassword1"><img className="lock" src={lock} width="15px"/> Password</label>
                       <input type="password" className="form-control" id="exampleInputPassword1" onChange={this.handleChangePassword} placeholder="Password"></input>
                     </div>
-                    <button id="sign" className="btn btn-primary btn-block" onClick={this.handleSignin}>Sign in</button>
+                    <button id="sign" className="btn btn-primary btn-block" onClick={this.handleClick}>Sign in</button>
                     <p className="account"><Link to="" className="nav-link">Forgot your password?</Link></p>
                   </form>
                 </div>
-              </div>            
-            </div>              
+              </div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
-  
+
 }
 
 export default withRouter(Signin);

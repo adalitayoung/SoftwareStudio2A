@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import '../style/style.css'
 
 import Logo from './Logo'
-import Links from './Links'
+import Links2 from './Links2'
 
 const Container = styled.div.attrs({
     className: 'container',
@@ -13,19 +12,21 @@ const Nav = styled.nav.attrs({
     className: 'navbar navbar-expand-lg navbar-light ',
 })`
     margin-bottom: 20 px;
+    padding-right: 50px;
+    padding-left:50px;
 `
 
-class NavBar extends Component {
+class Nav2 extends Component {
     render() {
         return (
-            <Container>
+
                 <Nav>
                     <Logo />
-                    <Links />
+                    <Links2 />
                 </Nav>
-            </Container>
+
         )
     }
 }
 
-export default NavBar
+export default Nav2
