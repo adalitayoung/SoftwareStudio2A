@@ -114,13 +114,6 @@ updatePreferences = async (req, res) => {
     //find student in user database using email entered in body
     User.find({email: body.email}).exec(function(err, users){
 
-        if (err) {
-            return res.status(404).json({
-                err,
-                message: 'user not found!',
-            })
-        }
-
         //if there is a user 
         if (users.length){
             //get the student id from the users db and assign as tempStudent students id
@@ -152,7 +145,55 @@ updatePreferences = async (req, res) => {
         else {
             return res.status(404).json({
                 err,
-                message: 'user not found!',
+                message: 'No user found with that email',
+            })
+        }
+    })
+}
+
+updateTechBackground = async (req, res) => {
+    const body = req.body
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+
+    //find student in user database using email entered in body
+    User.find({email: body.email}).exec(function(err, users){
+
+        //if there is a user 
+        if (users.length){
+            //get the student id from the users db and assign as tempStudent students id
+            var id = users[0]._id;
+
+            //Check that the student is not already in temp-student db
+            TempStudent.find({studentID: id}).exec(function(err, tempStudents){
+                //if there is a student
+                if (tempStudents.length) {
+                    //Update preferences based on user input
+                    TempStudent.findOneAndUpdate(
+                        {studentID: id},
+                        { $set: { technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
+                            if (err) {
+                                console.log("Something wrong when updating data!");
+                            }
+                        });
+                    
+                    return res.status(200).json({
+                        success: true,
+                        message: "Technical background has been updated"
+                    })
+                
+                }
+            })
+        }
+        else {
+            return res.status(404).json({
+                err,
+                message: 'No user found with that email',
             })
         }
     })
@@ -200,5 +241,6 @@ module.exports = {
     createUser,
     addUserPreference,
     updatePreferences,
+    updateTechBackground,
     login
 }
