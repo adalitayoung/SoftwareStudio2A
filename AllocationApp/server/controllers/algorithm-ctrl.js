@@ -62,10 +62,24 @@ startAlgorithm = async (req, res) => {
                                         if ((role.positionsLeft !== 0) && (student.projectID === null)) {
                                             role.studentsEnrolledID = role.studentsEnrolledID.push(student.studentID)
                                             role.positionsLeft = role.positionsLeft-1
+                                        
                                             ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
-                                                
+                                                if (err) {
+                                                    return res.status(400).json({success: false, error: err})
+                                                }
+                                                else{
+                                                    student.projectID = project._id
+                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                        if (err) {
+                                                            return res.status(400).json({success: false, error: err})
+                                                        }
+                                                        else{
+                                                            console.log(res)
+                                                        }
+                                                    })
+                                                }
+                                                // Need to test if this will work...
                                             })
-                                            student.projectID = project._id
                                         }
                                     })
                                     var second_pref_students = t_students.find(student => student.projectPreference2 === project.projectName)
@@ -86,16 +100,12 @@ startAlgorithm = async (req, res) => {
                                             student.projectID = project._id
                                         }
                                     })
+
+                                    // After records are updated in the database...query all temp students for this class that don't have an assigned projectID
+
                                 })
 
-                                // Add random shuffle of student list
-                                students.forEach(student => {
-                                    // If the student role matches
-                                    var r = project.roleList.find(role => role.roleType === student.technicalBackground)
-                                    if (r.positionsLeft !== 0){
-                                        
-                                    }
-                                })
+                                
                             }
                         })
 

@@ -11,7 +11,7 @@ const api = axios.create({
 // export const getMovieById = id => api.get(`/movie/${id}`)
 
 export const addUserToDatabase = user => api.post(`/user/createUser`, user)
-
+export const deleteUser = email => api.delete(`/user/deleteUser/${email}`)
 export const startAlgorithm = () => api.get(`/algorithm`)
 
 export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)

@@ -6,6 +6,8 @@ const classCtrl = require('../controllers/class-ctrl')
 const router = express.Router();
 
 router.post('/createUser', UserCtrl.createUser)
+router.delete(`/deleteUser/:email`, UserCtrl.deleteUser)
+router.delete(`/deleteUsers/:users`, UserCtrl.deleteUsers)
 router.post('/userPreference', UserCtrl.addUserPreference)
 router.post('/updatePreference', UserCtrl.updatePreferences)
 router.get('/algorithm', AlgorithmCtrl.startAlgorithm)
