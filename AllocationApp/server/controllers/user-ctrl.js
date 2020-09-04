@@ -1,5 +1,6 @@
 const User = require('../models/user-model.js')
 const TempStudent = require('../models/temp-student-model.js')
+const Class = require('../models/class-reference.js')
 
 createUser = (req, res) => {
     const body = req.body
@@ -42,7 +43,7 @@ createUser = (req, res) => {
     })
 }
 
-addUserPreference = (req, res) => {
+addStudentToClass = (req, res) => {
     const body = req.body
     if (!body){
         return res.status(400).json({
@@ -52,6 +53,7 @@ addUserPreference = (req, res) => {
     }
 
     const email = body.email;
+
     const tempStudent = new TempStudent(body)
 
     //find student in user database using email entered in body
@@ -69,26 +71,45 @@ addUserPreference = (req, res) => {
             var id = users[0]._id;
             tempStudent.studentID = id;
 
-            //Check that the student is not already in temp-student db
-            TempStudent.find({studentID: id}).exec(function(err, tempStudents){
+            //find class ID based of class name
+            var className = body.className;
+            var classID;
+            Class.find({name : className}).exec(function(err, classReferences){
+                if (err) {
+                    return res.status(404).json({
+                        err,
+                        message: 'user not found!',
+                    })
+                }
+                if (classReferences.length){
+                    classID = classReferences[0]._id;
+                }
+            })
+
+            //Check that the student is not already enrolled in class 
+            TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
                 if (tempStudents.length){
                     return res.status(400).json({
                         success: false,
-                        error: 'Student has already entered preferences, go to update preferences to edit'
+                        error: 'Student is already enrolled in that class'
                     })
                 }
                 else {
                     tempStudent.projectID = null;
+                    tempStudent.classID = classID;
 
                     tempStudent
                     .save()
                     .then(()=> {
                         return res.status(201).json({
                             success: true,
-                            id: tempStudent.studentID,
-                            message: 'student added',
+                            studentID: tempStudent.studentID,
+                            classID: tempStudent.classID,
+                            message: 'student added to class',
                         })
                     })
+
+                    
                 }   
             })
         }
@@ -101,7 +122,8 @@ addUserPreference = (req, res) => {
     })
 }
 
-updatePreferences = async (req, res) => {
+//a function to update the project preferences and technical background of the students
+addPreferencesBackground = async (req, res) => {
     const body = req.body
 
     if (!body) {
@@ -128,7 +150,8 @@ updatePreferences = async (req, res) => {
                         {studentID: id},
                         { $set: { projectPreference1: body.projectPreference1, 
                             projectPreference2: body.projectPreference2, 
-                            projectPreference3: body.projectPreference3 }}, {new: true}, (err, doc) => {
+                            projectPreference3: body.projectPreference3,
+                            technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
                             if (err) {
                                 console.log("Something wrong when updating data!");
                             }
@@ -150,7 +173,7 @@ updatePreferences = async (req, res) => {
         }
     })
 }
-
+/*
 updateTechBackground = async (req, res) => {
     const body = req.body
 
@@ -198,6 +221,7 @@ updateTechBackground = async (req, res) => {
         }
     })
 }
+*/
 
 login = async (req, res) => {
     const body = req.body
@@ -239,8 +263,8 @@ login = async (req, res) => {
 
 module.exports = {
     createUser,
-    addUserPreference,
-    updatePreferences,
-    updateTechBackground,
+    addStudentToClass,
+    addPreferencesBackground,
+//    updateTechBackground,
     login
 }
