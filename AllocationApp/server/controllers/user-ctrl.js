@@ -43,7 +43,7 @@ createUser = (req, res) => {
     })
 }
 
-addStudentToClass = (req, res) => {
+addStudentToClass = async (req, res) => {
     const body = req.body
     if (!body){
         return res.status(400).json({
@@ -57,7 +57,7 @@ addStudentToClass = (req, res) => {
     const tempStudent = new TempStudent(body)
 
     //find student in user database using email entered in body
-    User.find({email: email}).exec(function(err, users){
+    await User.find({email: email}).exec(function(err, users){
 
         if (err) {
             return res.status(404).json({
@@ -74,7 +74,7 @@ addStudentToClass = (req, res) => {
             //find class ID based of class name
             var className = body.className;
             var classID;
-            Class.find({name : className}).exec(function(err, classReferences){
+             Class.find({name : className}).exec(function(err, classReferences){
                 if (err) {
                     return res.status(404).json({
                         err,
@@ -83,35 +83,36 @@ addStudentToClass = (req, res) => {
                 }
                 if (classReferences.length){
                     classID = classReferences[0]._id;
+                    //Check that the student is not already enrolled in class 
+                     TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
+                        if (tempStudents.length){
+                            return res.status(400).json({
+                                success: false, 
+                                error: 'Student is already enrolled in that class'
+                            })
+                        }
+                        else {
+                            tempStudent.projectID = null;
+                            tempStudent.classID = classID;
+
+                            tempStudent
+                            .save()
+                            .then(()=> {
+                                return res.status(201).json({
+                                    success: true,
+                                    studentID: tempStudent.studentID,
+                                    classID: tempStudent.classID,
+                                    message: 'student added to class',
+                                })
+                            })
+
+                            
+                        }   
+                    })
                 }
             })
 
-            //Check that the student is not already enrolled in class 
-            TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
-                if (tempStudents.length){
-                    return res.status(400).json({
-                        success: false,
-                        error: 'Student is already enrolled in that class'
-                    })
-                }
-                else {
-                    tempStudent.projectID = null;
-                    tempStudent.classID = classID;
-
-                    tempStudent
-                    .save()
-                    .then(()=> {
-                        return res.status(201).json({
-                            success: true,
-                            studentID: tempStudent.studentID,
-                            classID: tempStudent.classID,
-                            message: 'student added to class',
-                        })
-                    })
-
-                    
-                }   
-            })
+            
         }
         else {
             return res.status(404).json({
