@@ -18,6 +18,8 @@ export const addUserPreference = tempStudent => api.post(`/user/userPreference`,
 
 export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
 
+export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
+
 export const addCourse = course => api.post('/class/createClass', course)
 export const getCourseByName = name => api.get(`/class/${name}`)
 export const getAllCourses = () => api.get('/class/getAllClasses')
@@ -37,6 +39,7 @@ const apis = {
     startAlgorithm,
     addUserPreference,
     updatePreference,
+    updateTechBackground,
     addCourse,
     getCourseByName,
     getAllCourses,
