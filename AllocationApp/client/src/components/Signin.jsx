@@ -14,6 +14,7 @@ class Signin extends Component {
     this.state = {
       email: '',
       password: '',
+      msg: '',
       //fullname: ''
     }
   }
@@ -33,13 +34,29 @@ class Signin extends Component {
     const {email, password} = this.state
     if (email !== '' && password !== '') {
       await api.login({email, password}).then(res => {
-        
+        console.log(res)
+
         if(res.status === 201){
-          window.alert('Welcome ' + email)
-          this.props.history.push({
-            pathname: '/',
-            state: { user: res.data }
-            })
+            let msh = res.data
+            let role = msh.role
+              this.setState({msg:'Succesfull Login!'})
+
+              localStorage.setItem("Token","Logged in")
+                if(role=='Student'){
+                    
+                      
+                      window.location='/Student'
+                }
+                else if (role=='Teacher') {
+                    
+                      
+                      window.location='/Teacher'
+                }
+                else if (role=='Admin') {
+                    
+                      
+                      window.location='/Admin'
+                }
         }
       }, error => {
         console.log(error)
@@ -69,6 +86,7 @@ class Signin extends Component {
                     <button id="sign" className="btn btn-primary btn-block" onClick={this.handleSignin}>Sign in</button>
                     <p className="account"><Link to="" className="nav-link">Forgot your password?</Link></p>
                   </form>
+                  {this.state.msg}
                 </div>
               </div>            
             </div>              
