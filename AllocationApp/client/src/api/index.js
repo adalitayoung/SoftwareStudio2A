@@ -10,7 +10,21 @@ const api = axios.create({
 // export const deleteMovieById = id => api.delete(`/movie/${id}`)
 // export const getMovieById = id => api.get(`/movie/${id}`)
 
-export const addUserToDatabase = user => api.post(`/user`, user)
+export const addUserToDatabase = user => api.post(`/user/createUser`, user)
+
+export const startAlgorithm = () => api.get(`/algorithm`)
+
+export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
+
+export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
+
+export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
+
+export const addCourse = course => api.post('/class/createClass', course)
+export const getCourseByName = name => api.get(`/class/${name}`)
+export const getAllCourses = () => api.get('/class/getAllClasses')
+
+export const login = loginDetails => api.post('/user/login', loginDetails)
 
 // const apis = {
 //     insertMovie,
@@ -21,7 +35,15 @@ export const addUserToDatabase = user => api.post(`/user`, user)
 // }
 
 const apis = {
-    addUserToDatabase
+    addUserToDatabase,
+    startAlgorithm,
+    addUserPreference,
+    updatePreference,
+    updateTechBackground,
+    addCourse,
+    getCourseByName,
+    getAllCourses,
+    login,
 }
 
 export default apis
