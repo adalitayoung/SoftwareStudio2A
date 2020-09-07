@@ -44,18 +44,27 @@ class Signin extends Component {
               localStorage.setItem("Token","Logged in")
                 if(role=='Student'){
                     
-                      
-                      window.location='/Student'
+                      this.props.history.push({
+                        pathname: '/Student',
+                        state: { user: res.data }
+                        })
+                      //window.location='/Student'
                 }
                 else if (role=='Teacher') {
                     
-                      
-                      window.location='/Teacher'
+                      this.props.history.push({
+                        pathname: '/Teacher',
+                        state: { user: res.data }
+                        })
+                      //window.location='/Teacher'
                 }
                 else if (role=='Admin') {
                     
-                      
-                      window.location='/Admin'
+                      this.props.history.push({
+                        pathname: '/Admin',
+                        state: { user: res.data }
+                        })
+                      //window.location='/Admin'
                 }
         }
       }, error => {
