@@ -1,3 +1,3 @@
 import Signup from './Register'
-
-export {Signup}
+import TeacherClassList from './TeacherClassList'
+export {Signup, TeacherClassList}

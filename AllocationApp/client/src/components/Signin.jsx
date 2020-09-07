@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import '../style/style.css';
 import api from '../api'
-import mail from '../mail.png'
-import lock from '../lock.png'
+import mail from '../res/mail.png'
+import lock from '../res/lock.png'
 import { withRouter } from "react-router-dom";
 
 import { Link } from 'react-router-dom'
@@ -36,10 +36,19 @@ class Signin extends Component {
         
         if(res.status === 201){
           window.alert('Welcome ' + email)
-          this.props.history.push({
-            pathname: '/',
-            state: { user: res.data }
+          if (res.data.role === "Teacher"){
+            this.props.history.push({
+              pathname: '/teacher/ClassList',
+              state: {user: res.data}
             })
+          }
+          else{
+            this.props.history.push({
+              pathname: '/',
+              state: { user: res.data }
+              })
+          }
+          
         }
       }, error => {
         console.log(error)

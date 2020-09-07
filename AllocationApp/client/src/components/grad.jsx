@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import grad from '../grad.png'
+import grad from '../res/grad.png'
 
 const Wrapper = styled.a.attrs({
     className: 'navbar-brangradds',
