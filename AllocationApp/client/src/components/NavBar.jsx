@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 import Logo from './Logo'
 import Links from './Links'
+import LinksAfterLoggedin from './LinksAfterLoggedin'
+
+
 
 const Container = styled.div.attrs({
     className: 'container',
@@ -17,12 +20,18 @@ const Nav = styled.nav.attrs({
 `
 
 class NavBar extends Component {
+
+
     render() {
+
+const token = localStorage.getItem("Token");
+
         return (
             
                 <Nav>
                     <Logo />
-                    <Links />
+                 
+                   {token!=null ? <LinksAfterLoggedin /> : <Links /> }
                 </Nav>
            
         )
