@@ -1,9 +1,9 @@
 import React from "react";
 import '../style/style.css';
-import signup from '../img1.png'
-import name from '../name.png'
-import mail from '../mail.png'
-import lock from '../lock.png'
+import signup from '../res/img1.png'
+import name from '../res/name.png'
+import mail from '../res/mail.png'
+import lock from '../res/lock.png'
 
 import api from '../api'
 

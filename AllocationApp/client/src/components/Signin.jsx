@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import '../style/style.css';
 import api from '../api'
-import mail from '../mail.png'
-import lock from '../lock.png'
+import mail from '../res/mail.png'
+import lock from '../res/lock.png'
 import { withRouter } from "react-router-dom";
 
 import { Link } from 'react-router-dom'
@@ -42,6 +42,7 @@ class Signin extends Component {
               this.setState({msg:'Succesfull Login!'})
 
               localStorage.setItem("Token","Logged in")
+              window.alert('Welcome ' + email)
                 if(role=='Student'){
                     
                       this.props.history.push({
@@ -53,7 +54,7 @@ class Signin extends Component {
                 else if (role=='Teacher') {
                     
                       this.props.history.push({
-                        pathname: '/Teacher',
+                        pathname: '/teacher/ClassList',
                         state: { user: res.data }
                         })
                       //window.location='/Teacher'
