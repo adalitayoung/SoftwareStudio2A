@@ -10,6 +10,14 @@ body{
   text-align: center;
 }
 
+.navbar {
+  width: 100%;
+  position: fixed !important;
+  height: 13%;
+  background: white;
+  z-index: 10;
+}
+
 .signup .col-lg-5 {
   width: 200px;
 }
@@ -61,6 +69,10 @@ body{
 .row {
   padding-top: 2%;
   padding-bottom: 5%;
+}
+
+.col {
+  z-index: 0;
 }
 
 .name {
@@ -127,5 +139,22 @@ body{
 
 .title-container{
   margin-bottom:70px;
+}
+
+.footer{
+  width: 100%;
+  position: fixed;
+  height: 30%;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.container {
+  margin-bottom: 30%;
+  /* margin-top: 15%; */
 }
 
