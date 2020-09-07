@@ -15,7 +15,7 @@ const Item = styled.div.attrs({
 })``
 
 
-class Links extends Component {
+class LinksAfterLoggedin extends Component {
     render() {
         return (
             <React.Fragment>
@@ -35,4 +35,4 @@ class Links extends Component {
     }
 }
 
-export default Links
+export default LinksAfterLoggedin
