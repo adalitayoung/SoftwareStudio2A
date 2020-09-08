@@ -242,10 +242,20 @@ login = async (req, res) => {
     })
 }
 
+logout = (req, res) => {
+ res.setHeader('auth-token', null)
+  return  res.status(201).json({
+      success: true,
+      message: "User logged out"
+
+  })
+}
+
 module.exports = {
     createUser,
     addUserPreference,
     updatePreferences,
     updateTechBackground,
-    login
+    login,
+    logout
 }
