@@ -25,13 +25,13 @@ updateProject =(req, res) =>{
 }
 
 showProject = (req, res) => {
-  Project.findById(req.params.id) // This is to be updated to find project by teacher's ID
+  Project.findById(req.params.id)
   .then(project => res.json(project))
   .catch(err => res.status(400).json('Error: ' + err))
  }
 
  showMyProjects = (req, res) => {
-   Project.find({createdByID:req.userID}) // This is to be updated to find project by teacher's ID
+   Project.find({createdByID:req.userID}) 
    .then(project => res.json(project))
    .catch(err => res.status(400).json('Error: ' + err))
   }

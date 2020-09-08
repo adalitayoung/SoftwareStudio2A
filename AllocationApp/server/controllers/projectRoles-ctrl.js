@@ -1,7 +1,14 @@
+
+
 const ProjectRoles = require('../models/projectRoles-model.js')
 
+
+
+
+
+
 showProjectRoles = (req, res) => {
-  ProjectRoles.find() // This will be updated to find projectID specific roles
+  ProjectRoles.find({projectID:req.params.id}) // This will be updated to find projectID specific roles
     .then(projectRoles => res.json(projectRoles))
     .catch(err => res.status(400).json('Error: ' + err))
 }
@@ -15,7 +22,7 @@ createProjectRoles = (req, res) => {
     })
   }
 
-const projectID = req.body.projectID; //this shold be project ID: coming in next update
+const projectID = req.body.projectID; // req.params.projectID //this shold be project ID: coming in next update
 const roleType = req.body.roleType
 const positionsRequired = req.body.positionsRequired
 const positionsLeft = positionsRequired
