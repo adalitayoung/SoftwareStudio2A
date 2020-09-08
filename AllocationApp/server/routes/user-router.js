@@ -6,6 +6,7 @@ const classCtrl = require('../controllers/class-ctrl')
 const router = express.Router();
 
 router.post('/createUser', UserCtrl.createUser)
+router.post('/updateUserRole/:user_id/:role', UserCtrl.updateUserRole)
 router.post('/userPreference', UserCtrl.addUserPreference)
 router.post('/updatePreference', UserCtrl.updatePreferences)
 router.post('/updateTechBackground', UserCtrl.updateTechBackground)
