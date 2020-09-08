@@ -225,7 +225,7 @@ login = async (req, res) => {
         if (users[0].password == body.password){
             //Create and assign token
             const token = jwt.sign({_id: users[0].id}, process.env.TOKEN_CODE)
-            res.setHeader('auth-token',token) // this will set browser header to token 
+            res.setHeader('auth-token',token) // this will set browser header to token
 
             return  res.status(201).json({
                 success: true,

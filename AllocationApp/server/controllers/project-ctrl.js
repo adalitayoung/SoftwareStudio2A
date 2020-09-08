@@ -1,4 +1,5 @@
 const Project = require('../models/project-model.js')
+const User = require('../models/user-model')
 
 deleteProject = (req, res) => {
   Project.findByIdAndDelete(req.params.id)
@@ -38,8 +39,8 @@ createProject = (req, res) => {
     })
   }
   const classID = req.body.classID // this will come from classID
-  const createdByID = req.body.createdByID // this is to be changed to project creator's ID
-  const createdByname = req.body.createdByname
+  const createdByID = req.userID
+  const createdByname = req.userName
   const projectName = req.body.projectName
   const description = req.body.description
   const studentMin = req.body.studentMin
