@@ -30,6 +30,12 @@ showProject = (req, res) => {
   .catch(err => res.status(400).json('Error: ' + err))
  }
 
+ showMyProjects = (req, res) => {
+   Project.find({createdByID:req.userID}) // This is to be updated to find project by teacher's ID
+   .then(project => res.json(project))
+   .catch(err => res.status(400).json('Error: ' + err))
+  }
+
 createProject = (req, res) => {
   const body = req.body
   if (!body) {
@@ -66,5 +72,6 @@ createProject = (req, res) => {
    updateProject,
    deleteProject,
    showProject,
+   showMyProjects,
    createProject
  }
