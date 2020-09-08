@@ -8,8 +8,10 @@ router.get('/showRoles', ProjectRolesCtrl.showProjectRoles)
 router.post('/createProjectRole', ProjectRolesCtrl.createProjectRoles)
 
 router.get('/showProject/:id', ProjectCtrl.showProject)
-router.post('/createProject',verify,  ProjectCtrl.createProject)
-router.post('/updateProject/:id',ProjectCtrl.updateProject)
-router.delete('/:id',ProjectCtrl.deleteProject)
+router.get('/showMyProjects', verify, ProjectCtrl.showMyProjects)
+
+router.post('/createProject', verify, ProjectCtrl.createProject)
+router.post('/updateProject/:id', ProjectCtrl.updateProject)
+router.delete('/:id', ProjectCtrl.deleteProject)
 
 module.exports = router
