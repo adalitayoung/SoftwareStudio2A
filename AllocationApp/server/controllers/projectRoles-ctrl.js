@@ -1,11 +1,25 @@
-
-
 const ProjectRoles = require('../models/projectRoles-model.js')
 
+deleteProjectRole = (req, res) => {
+  ProjectRoles.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Role Deleted'))
+    .catch(err => res.status(400).json('Error: ' + err))
+ }
+-
+updateProjectRole = (req, res) => {
+  ProjectRoles.findById(req.params.id)
+  .then(projectRoles =>{
+    projectRoles.projectID = req.body.projectID
+    projectRoles.roleType = req.body.roleType
+    projectRoles.positionsRequired = req.body.positionsRequired
+    projectRoles.positionsLeft = req.body.positionsLeft
+    projectRoles.studentsEnrolledID =  req.body.studentsEnrolledID
 
-
-
-
+    projectRoles.save()
+      .then(() => res.json('Project Role Updated'))
+      .catch(err => res.status(400).json('Error: ' + err))
+  })
+}
 
 showProjectRoles = (req, res) => {
   ProjectRoles.find({projectID:req.params.id}) // This will be updated to find projectID specific roles
@@ -44,5 +58,7 @@ newProjectRole.save()
 
 module.exports = {
   showProjectRoles,
-  createProjectRoles
+  createProjectRoles,
+  deleteProjectRole,
+  updateProjectRole
 }
