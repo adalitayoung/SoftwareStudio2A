@@ -62,7 +62,7 @@ body {
 
 .row {
   padding-top: 2%;
-  padding-bottom: 5%;
+  padding-bottom: 30px;
 }
 
 .col {
@@ -136,7 +136,7 @@ body {
 .footer {
   width: 100%;
   position: fixed;
-  height: 30%;
+  height: 20%;
 }
 
 table.center {
@@ -169,8 +169,8 @@ th {
 }
 
 #classbtn {
-  width: 60%;
-  margin-left: 25%;
+  width: 70%;
+  margin-left: 15%;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   font-size: 10px !important;
@@ -179,6 +179,7 @@ th {
 
 #column {
   margin-top: 150px;
+  padding-bottom: 40px;
   padding-right: 50px;
   padding-left: 50px;
   background-color: rgba(38, 166, 255, 0.17);
@@ -198,4 +199,11 @@ th {
   border-color: white !important;
   background-color: white;
   border-width: 0;
+}
+
+h2 {
+  color: #26a6ff !important;
+  font-weight: 500 !important;
+  padding-left: 20px;
+  text-align: center;
 }

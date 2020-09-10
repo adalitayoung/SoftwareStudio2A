@@ -100,13 +100,6 @@ class TeacherClassList extends Component {
           <div className='col' id='column'>
             <div className='row'>
               <h2>{this.state.user.fullName}'s Classes</h2>
-              <button
-                style={{ width: '15%', position: 'absolute', right: '50px' }}
-                className='btn btn-primary btn-round'
-                onClick={this.addClass}
-              >
-                Add Class
-              </button>
             </div>
             <table className='center' id='table'>
               <tr>
@@ -118,6 +111,18 @@ class TeacherClassList extends Component {
                 <th></th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
+              <button
+                style={{
+                  width: '15%',
+                  position: 'absolute',
+                  right: '50px',
+                  marginTop: '25px',
+                }}
+                className='btn btn-primary btn-round'
+                onClick={this.addClass}
+              >
+                Add Class
+              </button>
             </table>
           </div>
         </div>
