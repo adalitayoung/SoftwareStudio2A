@@ -69,8 +69,8 @@ render() {
               <div className="row">
                     
                     <button style = {{width: "15%", position: "absolute", left: "0"}} className="btn btn-primary btn-block" onClick = {this.viewClass}>Classes</button>
-                    <button style = {{width: "15%", position: "absolute", right: "0"}} className="btn btn-primary btn-block" onClick = {this.viewProject}>Projects</button>
-                    <button style = {{width: "15%", marginLeft: "15%", left: "0"}} className="btn btn-primary btn-block" onClick = {this.enroll}>Enroll in</button>
+                    <button style = {{width: "15%", position: "absolute", right: "0"}} className="btn btn-primary btn-block" onClick = {this.enroll}>Enroll in</button>
+                    <button style = {{width: "15%", marginLeft: "15%", left: "0"}} className="btn btn-primary btn-block" onClick = {this.viewProject}>Projects</button>
               </div>
               <table class="center">
                 <tr>
