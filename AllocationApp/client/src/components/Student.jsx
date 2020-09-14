@@ -42,13 +42,16 @@ edit = async event => {
 
 renderTableData(){
   return this.state.classData.map((course, index) => {
-    const { name, numberOfStudents, __v, _id } = course //destructuring
+    const { studentID, courseName,teacherName, time, room, __v, _id } = course //destructuring
     return (
        <tr key={_id}>
-          <td style={{textAlign: "center"}}>{name}</td>
-          <td style={{textAlign: "center"}}>{numberOfStudents}</td>
+          <td style={{textAlign: "center"}}>{studentID}</td>
+          <td style={{textAlign: "center"}}>{courseName}</td>
+          <td style={{textAlign: "center"}}>{teacherName}</td>
+          <td style={{textAlign: "center"}}>{time}</td>
+          <td style={{textAlign: "center"}}>{room}</td>
           <td>
-            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={this.viewStudents}>
+            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={this.edit}>
                 Edit
             </button>
           </td>
