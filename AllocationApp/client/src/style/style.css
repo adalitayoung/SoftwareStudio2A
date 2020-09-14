@@ -1,4 +1,4 @@
-body{
+body {
   background-image: url(/AllocationApp/client/src/components/background.jpg);
 }
 
@@ -6,7 +6,7 @@ body{
   font-family: helvetica;
   font-weight: 800 !important;
   font-size: 22px !important;
-  color:  #3da2ff  !important;
+  color: #3da2ff !important;
   text-align: center;
 }
 
@@ -39,7 +39,7 @@ body{
   font-weight: 600px !important;
 }
 
-.font-weight{
+.font-weight {
   margin-bottom: 2rem;
   margin-top: 4rem;
   color: #3da2ff;
@@ -60,15 +60,9 @@ body{
   padding-left: 50px;
 }
 
-/* .row {
-  padding-top: 2%;
-  bottom: 0 !important;
-  width: 100%;
-} */
-
 .row {
   padding-top: 2%;
-  padding-bottom: 5%;
+  padding-bottom: 30px;
 }
 
 .col {
@@ -76,11 +70,11 @@ body{
 }
 
 .name {
-  margin-right:5px;
+  margin-right: 5px;
 }
 
 .password {
-  margin-right:5px;
+  margin-right: 5px;
   padding-bottom: 4px;
 }
 
@@ -97,26 +91,24 @@ body{
   text-align: center;
   font-size: 15px;
   padding-top: 10px;
-
 }
 
 .box {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
 }
 
 .button-container {
   flex-direction: row;
-  justify-content: center;;
+  justify-content: center;
 }
 .button-container a:last-child {
-  margin-left:15px;
+  margin-left: 15px;
 }
 
 .piccontainer {
   position: relative;
-   
 }
 
 .text-block {
@@ -127,24 +119,24 @@ body{
   color: white;
 }
 
-.fontgradon{
+.fontgradon {
   font-size: 100px;
   font-weight: bold;
 }
 
-.fontauto{
+.fontauto {
   font-family: Helvetica;
   font-size: 32px;
 }
 
-.title-container{
-  margin-bottom:70px;
+.title-container {
+  margin-bottom: 70px;
 }
 
-.footer{
+.footer {
   width: 100%;
   position: fixed;
-  height: 30%;
+  height: 20%;
 }
 
 table.center {
@@ -158,3 +150,60 @@ table.center {
   /* margin-top: 15%; */
 }
 
+#table {
+  background-color: white;
+  border-radius: 25px;
+  margin-bottom: 50px;
+  padding-top: 100px;
+}
+
+th {
+  padding: 30px;
+  text-align: center !important;
+}
+
+#tdclass {
+  text-align: center !important;
+  padding-bottom: 30px !important;
+  height: 25px;
+}
+
+#classbtn {
+  width: 70%;
+  margin-left: 15%;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 10px !important;
+  background-color: #26a6ff !important;
+}
+
+#column {
+  margin-top: 150px;
+  padding-bottom: 40px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: rgba(38, 166, 255, 0.17);
+  border-radius: 25px;
+}
+
+#edit {
+  margin-left: 30px;
+  height: 20px;
+}
+
+#del {
+  height: 20px;
+}
+
+#icon {
+  border-color: white !important;
+  background-color: white;
+  border-width: 0;
+}
+
+h2 {
+  color: #26a6ff !important;
+  font-weight: 500 !important;
+  padding-left: 20px;
+  text-align: center;
+}
