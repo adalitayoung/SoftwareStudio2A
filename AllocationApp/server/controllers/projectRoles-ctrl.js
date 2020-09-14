@@ -5,7 +5,7 @@ deleteProjectRole = (req, res) => {
     .then(() => res.json('Role Deleted'))
     .catch(err => res.status(400).json('Error: ' + err))
  }
--
+
 updateProjectRole = (req, res) => {
   ProjectRoles.findById(req.params.id)
   .then(projectRoles =>{
