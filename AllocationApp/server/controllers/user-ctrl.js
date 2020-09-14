@@ -42,6 +42,35 @@ createUser = (req, res) => {
     })
 }
 
+updateUserRole = async (req, res) => {
+    const user_id = req.params.user_id;
+    const role = req.params.role;
+
+    if ((user_id !== null) && (role !== null)){
+        await User.findOneAndUpdate({_id: user_id}, 
+            { $set: { role: role }}, {new: true}, (err, doc) => {
+            if (err){
+                return res.status(404).json({
+                    success: false,
+                    error: err
+                })
+            }
+            else{
+                return res.status(200).json({
+                    success: true,
+                    message: "Role updated"
+                })
+            }
+        })
+    }
+    else{
+        return res.status(400).json({
+            success: false,
+            error: 'Valid data must be provided'
+        })
+    }
+}
+
 addUserPreference = (req, res) => {
     const body = req.body
     if (!body){
@@ -242,5 +271,6 @@ module.exports = {
     addUserPreference,
     updatePreferences,
     updateTechBackground,
-    login
+    login,
+    updateUserRole
 }

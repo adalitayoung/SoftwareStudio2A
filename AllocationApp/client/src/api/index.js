@@ -14,6 +14,7 @@ export const addUserToDatabase = user => api.post(`/user/createUser`, user)
 
 export const startAlgorithm = () => api.get(`/algorithm`)
 
+export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
 export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
 
 export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
