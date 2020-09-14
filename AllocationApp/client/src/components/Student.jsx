@@ -6,24 +6,101 @@ import { Link } from 'react-router-dom'
 
 class Student extends Component {
 
-  render(){
+  constructor(props) {
+    super(props)
+    this.state = {
+        user: props.location.state.user,
+        classData: [],
+        isLoading: false,
+    }
+
+      //this.fetchClassList(this.state.user._id)
+}
+
+viewClass = async event => {
+  event.preventDefault();
+  console.log("it works")
+    // redirect to class list
+}
+
+viewProject = async event => {
+  event.preventDefault();
+  console.log("it works")
+    // redirect to project page
+}
+
+enroll = async event => {
+  event.preventDefault();
+  console.log("it works")
+    // redirect to enroll page
+}
+
+edit = async event => {
+  event.preventDefault();
+   // redirect to edit page
+}
+
+renderTableData(){
+  return this.state.classData.map((course, index) => {
+    const { name, numberOfStudents, __v, _id } = course //destructuring
     return (
-      <div className="signin">
-        <div className="container">
+       <tr key={_id}>
+          <td style={{textAlign: "center"}}>{name}</td>
+          <td style={{textAlign: "center"}}>{numberOfStudents}</td>
+          <td>
+            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={this.viewStudents}>
+                Edit
+            </button>
+          </td>
+       </tr>
+    )
+ })
+}
+
+render() {
+  return(
+      <div className="container scrollable">
           <div className="row align-items-center">
-            <div className="col-lg-5">
-              <div className="content">
-                <div className="column">
-                  <h1 className="font-weight-light">Student</h1>
-               
-                </div>
-              </div>            
-            </div>              
+              <div className = "col" style={{marginTop: "10%"}}>
+                <h2>{this.state.user.fullName}'s Classes</h2>
+              <div className="row">
+                    
+                    <button style = {{width: "15%", position: "absolute", left: "0"}} className="btn btn-primary btn-block" onClick = {this.viewClass}>Classes</button>
+                    <button style = {{width: "15%", position: "absolute", right: "0"}} className="btn btn-primary btn-block" onClick = {this.viewProject}>Projects</button>
+                    <button style = {{width: "15%", marginLeft: "15%", left: "0"}} className="btn btn-primary btn-block" onClick = {this.enroll}>Enroll in</button>
+              </div>
+              <table class="center">
+                <tr>
+                  <th style={{textAlign: "center"}}>
+                    ID
+                  </th>
+                  <th style={{textAlign: "center"}}> 
+                    Class Name
+                  </th>
+                  <th style={{textAlign: "center"}}>
+                    Teacher Name
+                  </th>
+                  <th style={{textAlign: "center"}}>
+                    Time
+                  </th>
+                  <th style={{textAlign: "center"}}>
+                    Room
+                  </th>
+                  <th style={{textAlign: "center"}}>
+                    Preference
+                  </th>
+                  </tr>
+                  <tbody>
+                      {this.renderTableData()}
+                  </tbody>
+                </table>
+              </div>
           </div>
-        </div>
+            
       </div>
-    );
-  }
+        
+    )
+}
   
 }
 

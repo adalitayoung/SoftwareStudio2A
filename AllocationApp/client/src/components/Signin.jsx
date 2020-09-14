@@ -49,7 +49,7 @@ class Signin extends Component {
                         pathname: '/Student',
                         state: { user: res.data }
                         })
-                      //window.location='/Student'
+                      window.location='/Student'
                 }
                 else if (role=='Teacher') {
                     
