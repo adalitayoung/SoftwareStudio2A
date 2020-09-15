@@ -13,7 +13,7 @@ body {
 .navbar {
   width: 100%;
   position: fixed !important;
-  height: 8%;
+  height: 10%;
   background: white;
   z-index: 10;
 }
