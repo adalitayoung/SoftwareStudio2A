@@ -6,7 +6,7 @@ import back from '../res/back.png';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
-class TeacherStudentList extends Component {
+class TeacherProjectList extends Component {
   render() {
     return (
       <div className='container scrollable'>
@@ -35,4 +35,4 @@ class TeacherStudentList extends Component {
   }
 }
 
-export default TeacherStudentList;
+export default TeacherProjectList;

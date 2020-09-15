@@ -7,7 +7,12 @@ import Admin from '../components/Admin';
 import SignOut from '../components/SignOut';
 
 import { NavBar, Home, Signin, Footer } from '../components';
-import { Signup, TeacherClassList, TeacherStudentList } from '../pages';
+import {
+  Signup,
+  TeacherClassList,
+  TeacherStudentList,
+  TeacherProjectList,
+} from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -30,6 +35,11 @@ function App() {
           path='/teacher/StudentList'
           exact
           component={TeacherStudentList}
+        />
+        <Route
+          path='/teacher/ProjectList'
+          exact
+          component={TeacherProjectList}
         />
       </Switch>
       <Footer />

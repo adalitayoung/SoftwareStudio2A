@@ -13,5 +13,6 @@ export { default as Signup } from '../pages/Register';
 export { default as Contact } from './Contact';
 export { default as TeacherClassList } from '../pages/TeacherClassList';
 export { default as TeacherStudentList } from '../pages/TeacherStudentList';
+export { default as TeacherProjectList } from '../pages/TeacherProjectList';
 
 export { Links, Logo, NavBar, Footer };
