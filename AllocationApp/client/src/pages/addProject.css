@@ -1,0 +1,104 @@
+.addProject .box {
+    display: flex;
+    flex-direction: row;
+    align-items: unset;
+    padding: 3% 10%; 
+    padding-top: 120px;
+}
+
+.addProject .box > div:first-child {
+    flex-basis:20%;  
+}
+
+.addProject .box__center {
+    justify-content: center;
+    background-color: rgba(38, 166, 255, 0.3);
+    padding: 10px 60px 20px;
+    border-radius: 15px;
+    width: 70%;
+}
+
+.addProject .button-container {
+    display: flex;
+    padding: 3% 10%; 
+    padding-top: 60px;
+}
+
+.button.button--add-project {
+    outline: 0;
+    border: 0;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #3da2ff;
+    color: white;
+}
+
+.button.button--add-project:hover {
+    background-color: #0a86f8;
+}
+
+.button.button--add-role {
+    padding: 8px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: white;
+    color: #3da2ff;
+}
+  
+.addProject .students-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.addProject .split-container {
+    flex-basis: 70%;
+}
+  
+.addProject .form-group {
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #3da2ff;
+}
+
+.addProject .form-control {
+    border-radius: 25px;
+}
+
+.addProject .form-role {
+    width: 90%;
+}
+
+.addProject .form-min {
+    margin-bottom:15px;
+    width: 50%;
+}
+
+.addProject .name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom:15px;
+    color: #3da2ff;
+}
+
+.addProject .namemin {
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom:15px;
+    margin-right: 80px;
+    color: #3da2ff;
+    display: block;
+}
+
+.addProject .namemax {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom:15px;
+    color: #3da2ff;
+}
+

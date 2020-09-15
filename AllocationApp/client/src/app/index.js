@@ -7,7 +7,7 @@ import Admin from '../components/Admin';
 import SignOut from '../components/SignOut';
 
 import { NavBar, Home, Signin, Footer } from '../components'
-import { Signup, TeacherClassList } from '../pages'
+import { Signup, TeacherClassList, AddProject} from '../pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -26,6 +26,7 @@ function App() {
           <Route path="/Admin" exact component={() => <Admin />} />
           <Route path="/SignOut" exact component={() => <SignOut />} />
           <Route path='/teacher/ClassList' exact component = {TeacherClassList} />
+          <Route path='/AddProject' exact component = {AddProject} />
         </Switch>
         <Footer/>
         </Router>

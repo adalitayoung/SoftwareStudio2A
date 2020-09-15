@@ -12,5 +12,6 @@ export { default as Signin } from "./Signin";
 export { default as Signup } from "../pages/Register";
 export { default as Contact } from "./Contact";
 export { default as TeacherClassList} from '../pages/TeacherClassList'
+export { default as AddProject} from '../pages/AddProject';
 
 export {  Links, Logo, NavBar, Footer }
