@@ -13,7 +13,7 @@ body {
 .navbar {
   width: 100%;
   position: fixed !important;
-  height: 13%;
+  height: 8%;
   background: white;
   z-index: 10;
 }
@@ -135,8 +135,7 @@ body {
 
 .footer {
   width: 100%;
-  position: fixed;
-  height: 20%;
+  position: fixed !important;
 }
 
 table.center {
@@ -206,4 +205,9 @@ h2 {
   font-weight: 500 !important;
   padding-left: 20px;
   text-align: center;
+}
+
+#back {
+  margin-top: 30px;
+  width: 25px;
 }
