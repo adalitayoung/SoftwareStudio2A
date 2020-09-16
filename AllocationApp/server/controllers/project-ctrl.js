@@ -1,4 +1,5 @@
 const Project = require('../models/project-model.js')
+const User = require('../models/user-model')
 
 deleteProject = (req, res) => {
   Project.findByIdAndDelete(req.params.id)
@@ -24,10 +25,16 @@ updateProject =(req, res) =>{
 }
 
 showProject = (req, res) => {
-  Project.findById(req.params.id) // This is to be updated to find project by teacher's ID
+  Project.findById(req.params.id)
   .then(project => res.json(project))
   .catch(err => res.status(400).json('Error: ' + err))
  }
+
+ showMyProjects = (req, res) => {
+   Project.find({createdByID:req.userID}) 
+   .then(project => res.json(project))
+   .catch(err => res.status(400).json('Error: ' + err))
+  }
 
 createProject = (req, res) => {
   const body = req.body
@@ -38,8 +45,8 @@ createProject = (req, res) => {
     })
   }
   const classID = req.body.classID // this will come from classID
-  const createdByID = req.body.createdByID // this is to be changed to project creator's ID
-  const createdByname = req.body.createdByname
+  const createdByID = req.userID
+  const createdByname = req.userName
   const projectName = req.body.projectName
   const description = req.body.description
   const studentMin = req.body.studentMin
@@ -65,5 +72,6 @@ createProject = (req, res) => {
    updateProject,
    deleteProject,
    showProject,
+   showMyProjects,
    createProject
  }

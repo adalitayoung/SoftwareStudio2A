@@ -12,4 +12,6 @@ router.post('/updatePreference', UserCtrl.updatePreferences)
 router.post('/updateTechBackground', UserCtrl.updateTechBackground)
 router.get('/algorithm', AlgorithmCtrl.startAlgorithm)
 router.post('/login', UserCtrl.login)
+router.post('/logout', UserCtrl.logout)
+
 module.exports = router
