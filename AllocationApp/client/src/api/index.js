@@ -39,10 +39,10 @@ export const showProject = id => api.get(`/project/showProject/${id}`)
 export const showMyProjects = () => api.get('/project/showMyProjects')
 
 //project roles
-// export createProjectRole = projectRole => api.post('project/createProjectRole', projectRole)
-// export updateProjectRole = id => api.post(`project/updateProjectRole/${id}`)
-// export showRoles = (id) => api.get(`project/showRoles/${id}`)
-// export deleteProjectRole = (id) => api.delete(`project/deleteProjectRole/${id}`)
+export const createProjectRole = projectRole => api.post('project/createProjectRole', projectRole)
+export const updateProjectRole = id => api.post(`project/updateProjectRole/${id}`)
+export const showRoles = id => api.get(`project/showRoles/${id}`)
+export const deleteProjectRole = id => api.delete(`project/deleteProjectRole/${id}`)
 
 const apis = {
     addUserToDatabase,
@@ -54,7 +54,16 @@ const apis = {
     getCourseByName,
     getAllCourses,
     login,
-    logout
+    logout,
+    createProject,
+    updateProject,
+    deleteProject,
+    showProject,
+    showMyProjects,
+    createProjectRole,
+    updateProjectRole,
+    showRoles,
+    deleteProjectRole
 }
 
 export default apis

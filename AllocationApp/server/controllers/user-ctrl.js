@@ -87,18 +87,18 @@ fetchUserData = async (req, res) => {
                       convertedUserID: { $toString: "$_id" }
                    }
                 },
-                { 
-                    "$lookup" : { 
-                        "localField" : "convertedUserID", 
-                        "from" : "tempstudents", 
-                        "foreignField" : "studentID", 
+                {
+                    "$lookup" : {
+                        "localField" : "convertedUserID",
+                        "from" : "tempstudents",
+                        "foreignField" : "studentID",
                         "as" : "tempstudents"
                     }
                 }
             ]
         ).then(response => {
             const result = response.filter(user => ((user.role === user_role)))
-            
+
             classData = [];
 
             result.forEach(user => {
@@ -114,7 +114,7 @@ fetchUserData = async (req, res) => {
                 success: true,
                 data: classData
             })
-            
+
         }, err => {
             return res.status(400).json({
                 success: false,
@@ -188,11 +188,11 @@ addStudentToClass = async (req, res) => {
                 }
                 if (classReferences.length){
                     classID = classReferences[0]._id;
-                    //Check that the student is not already enrolled in class 
+                    //Check that the student is not already enrolled in class
                      TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
                         if (tempStudents.length){
                             return res.status(400).json({
-                                success: false, 
+                                success: false,
                                 error: 'Student is already enrolled in that class'
                             })
                         }
@@ -211,13 +211,13 @@ addStudentToClass = async (req, res) => {
                                 })
                             })
 
-                            
-                        }   
+
+                        }
                     })
                 }
             })
 
-            
+
         }
         else {
             return res.status(404).json({
@@ -254,8 +254,8 @@ addPreferencesBackground = async (req, res) => {
                     //Update preferences based on user input
                     TempStudent.findOneAndUpdate(
                         {studentID: id},
-                        { $set: { projectPreference1: body.projectPreference1, 
-                            projectPreference2: body.projectPreference2, 
+                        { $set: { projectPreference1: body.projectPreference1,
+                            projectPreference2: body.projectPreference2,
                             projectPreference3: body.projectPreference3,
                             technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
 
@@ -391,5 +391,6 @@ module.exports = {
     addStudentToClass,
     addPreferencesBackground,
 //    updateTechBackground,
+    logout
 
 }
