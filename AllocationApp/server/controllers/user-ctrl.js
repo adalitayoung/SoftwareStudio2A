@@ -76,35 +76,52 @@ fetchUserData = async (req, res) => {
     const user_role = req.params.user_role;
     const course_id = req.params.course_id;
 
+    // If the user role and the course is specified
     if ((user_role !== null) && (course_id !== null)) {
-        // await User.find({})
-        // Get all students in a class
-        await User.aggregate([
-            { $lookup: 
+        await User.aggregate(
+            [
                 {
-                    from: "tempStudents",
-                    localField: "studentID",
-                    foreignField: "_id",
-                    as: "tempDetails"
+                    $addFields: {
+                    // For some reason, the ID needed to be converted to a string to merge
+                      convertedUserID: { $toString: "$_id" }
+                   }
+                },
+                { 
+                    "$lookup" : { 
+                        "localField" : "convertedUserID", 
+                        "from" : "tempstudents", 
+                        "foreignField" : "studentID", 
+                        "as" : "tempstudents"
+                    }
                 }
-            }
-        ]).toArray(function(err, res) {
-            if (err) {
-                return res.status(400).json({
-                    success: false,
-                    error: err
+            ]
+        ).then(response => {
+            const result = response.filter(user => ((user.role === user_role)))
+            
+            classData = [];
+
+            result.forEach(user => {
+                user.tempstudents.forEach(entry => {
+                    console.log(entry)
+                    if (entry.classID === course_id) {
+                        console.log('match')
+                        classData.push(user)
+                    }
                 })
-            }
-            else{
-                const result = res.filter(user => ((user.role === user_role) && (user.tempDetails.classID === course_id)))
-                console.log(result)
-                return res.status(200).json({
-                    success: true,
-                    data: result
-                })
-            }
+            })
+            return res.status(200).json({
+                success: true,
+                data: classData
+            })
+            
+        }, err => {
+            return res.status(400).json({
+                success: false,
+                error: err
+            })
         })
     }
+    // If only the user role is specified
     else if ((user_role !== null) && (course_id === null)) {
         await User.find({role: user_role}, function(err, users) {
             if (err) {
@@ -351,8 +368,8 @@ login = async (req, res) => {
 
 module.exports = {
     createUser,
-    addUserPreference,
-    updatePreferences,
+    // addUserPreference,
+    // updatePreferences,
     login,
     updateUserRole,
     fetchUserData,
