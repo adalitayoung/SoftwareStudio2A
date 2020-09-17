@@ -71,6 +71,64 @@ updateUserRole = async (req, res) => {
     }
 }
 
+fetchUserData = async (req, res) => {
+    const user_role = req.params.user_role;
+    const course_id = req.params.course_id;
+
+    if ((user_role !== null) && (course_id !== null)) {
+        // await User.find({})
+        // Get all students in a class
+        await User.aggregate([
+            { $lookup: 
+                {
+                    from: "tempStudents",
+                    localField: "studentID",
+                    foreignField: "_id",
+                    as: "tempDetails"
+                }
+            }
+        ]).toArray(function(err, res) {
+            if (err) {
+                return res.status(400).json({
+                    success: false,
+                    error: err
+                })
+            }
+            else{
+                const result = res.filter(user => ((user.role === user_role) && (user.tempDetails.classID === course_id)))
+                console.log(result)
+                return res.status(200).json({
+                    success: true,
+                    data: result
+                })
+            }
+        })
+    }
+    else if ((user_role !== null) && (course_id === null)) {
+        await User.find({role: user_role}, function(err, users) {
+            if (err) {
+                return res.status(404).json({
+                    success: false,
+                    error: err
+                })
+            }
+            if (users) {
+                return res.status(200).json({
+                    success: true,
+                    userData: users
+                })
+            }
+        })
+    }
+    else{
+        return res.status(400).json({
+            success: false,
+            error: "Please provide valid input"
+        })
+    }
+
+}
+
 addUserPreference = (req, res) => {
     const body = req.body
     if (!body){
@@ -272,5 +330,6 @@ module.exports = {
     updatePreferences,
     updateTechBackground,
     login,
-    updateUserRole
+    updateUserRole,
+    fetchUserData
 }
