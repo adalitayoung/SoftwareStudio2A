@@ -12,13 +12,14 @@ const api = axios.create({
 
 export const addUserToDatabase = user => api.post(`/user/createUser`, user)
 
+
 export const startAlgorithm = () => api.get(`/algorithm`)
 
-export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
+export const addStudentToClass = tempStudent => api.post(`/user/addToClass`, tempStudent)
 
-export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
+export const addPreferencesBackground = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)
 
-export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
+//export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
 export const getCourseByName = name => api.get(`/class/${name}`)
@@ -36,10 +37,10 @@ export const login = loginDetails => api.post('/user/login', loginDetails)
 
 const apis = {
     addUserToDatabase,
+    addStudentToClass,
     startAlgorithm,
-    addUserPreference,
-    updatePreference,
-    updateTechBackground,
+    addPreferencesBackground,
+   // updateTechBackground,
     addCourse,
     getCourseByName,
     getAllCourses,
