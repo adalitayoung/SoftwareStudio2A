@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import logo from '../res/grad.png'
+import logo from '../res/grad.png';
 
 const Wrapper = styled.a.attrs({
-    className: 'navbar-brand',
-})``
+  className: 'navbar-brand',
+})``;
 
 class Logo extends Component {
-    render() {
-        return (
-            <Wrapper>
-                <img src={logo} width="60" height="60"  />
-            </Wrapper>
-        )
-    }
+  render() {
+    return (
+      <Wrapper>
+        <img src={logo} width='50' height='50' />
+      </Wrapper>
+    );
+  }
 }
 
-export default Logo
+export default Logo;

@@ -15,4 +15,6 @@ router.post('/addPreferencesBackground', UserCtrl.addPreferencesBackground)
 //router.post('/updateTechBackground', UserCtrl.updateTechBackground)
 router.get('/algorithm', AlgorithmCtrl.startAlgorithm)
 router.post('/login', UserCtrl.login)
+router.post('/logout', UserCtrl.logout)
+
 module.exports = router

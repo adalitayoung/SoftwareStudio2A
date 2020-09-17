@@ -13,7 +13,7 @@ body {
 .navbar {
   width: 100%;
   position: fixed !important;
-  height: 13%;
+  height: 10%;
   background: white;
   z-index: 10;
 }
@@ -29,6 +29,10 @@ body {
   color: gray;
 }
 
+#signin {
+  padding-top: 20%;
+}
+
 .form-control {
   font-size: 0.8rem !important;
 }
@@ -40,6 +44,15 @@ body {
 }
 
 .font-weight {
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+  color: #3da2ff;
+  font-weight: 600 !important;
+  font-size: 25px;
+}
+
+.signinh1 {
+  text-align: center !important;
   margin-bottom: 2rem;
   margin-top: 4rem;
   color: #3da2ff;
@@ -135,8 +148,7 @@ body {
 
 .footer {
   width: 100%;
-  position: fixed;
-  height: 20%;
+  position: fixed !important;
 }
 
 table.center {
@@ -178,7 +190,7 @@ th {
 }
 
 #column {
-  margin-top: 150px;
+  margin-top: 100px;
   padding-bottom: 40px;
   padding-right: 50px;
   padding-left: 50px;
@@ -206,4 +218,9 @@ h2 {
   font-weight: 500 !important;
   padding-left: 20px;
   text-align: center;
+}
+
+#back {
+  margin-top: 30px;
+  width: 25px;
 }
