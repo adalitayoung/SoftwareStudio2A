@@ -1,3 +1,5 @@
-import Signup from './Register'
-import TeacherClassList from './TeacherClassList'
-export {Signup, TeacherClassList}
+import Signup from './Register';
+import TeacherClassList from './TeacherClassList';
+import TeacherStudentList from './TeacherStudentList';
+import TeacherProjectList from './TeacherProjectList';
+export { Signup, TeacherClassList, TeacherStudentList, TeacherProjectList };
