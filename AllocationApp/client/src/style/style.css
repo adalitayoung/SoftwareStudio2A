@@ -114,6 +114,9 @@ body{
   margin-left:15px;
 }
 
+.adminstbutton-container{
+  width:150px;
+}
 .piccontainer {
   position: relative;
    
@@ -158,3 +161,48 @@ table.center {
   /* margin-top: 15%; */
 }
 
+.adminstfontgradon{
+  top: 178px;
+  left: 862px;
+  width: 303px;
+  height: 60px;
+  font-size: 40px;
+  font-weight: bold;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 50px/61px var(--unnamed-font-family-helvetica-neue);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  text-align: center;
+  font: normal normal bold 50px/61px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #26A6FF;
+  opacity: 1;
+}
+
+.adminstfontauto{
+  top: 254px;
+  left: 917px;
+  width: 193px;
+  height: 23px;
+  font-family: Helvetica;
+  font-size: 32px;
+  font: var(--unnamed-font-style-normal) normal normal 20px/24px var(--unnamed-font-family-helvetica-neue);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  text-align: left;
+  font: normal normal normal 20px/24px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+}
+
+.backgroundbox{
+  position: absolute;
+  background-color:#5ba3d677;
+  left: 570px;
+  top: 390px;
+  width: 760px;
+  height: 444px;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  opacity: 1;
+
+  
+}

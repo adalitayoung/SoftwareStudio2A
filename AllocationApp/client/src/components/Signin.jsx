@@ -42,6 +42,12 @@ class Signin extends Component {
               state: {user: res.data}
             })
           }
+          if (res.data.role === "Admin"){
+            this.props.history.push({
+              pathname: '/admin/AdminStudentList',
+              state: {user: res.data}
+            })
+          }
           else{
             this.props.history.push({
               pathname: '/',

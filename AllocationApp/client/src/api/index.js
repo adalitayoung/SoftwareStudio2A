@@ -23,7 +23,7 @@ export const updateTechBackground = tempStudent => api.post(`/user/updateTechBac
 export const addCourse = course => api.post('/class/createClass', course)
 export const getCourseByName = name => api.get(`/class/${name}`)
 export const getAllCourses = () => api.get('/class/getAllClasses')
-
+export const getAllStudents = () => api.get('/user/getAllStudents')
 export const login = loginDetails => api.post('/user/login', loginDetails)
 
 // const apis = {
@@ -43,6 +43,7 @@ const apis = {
     addCourse,
     getCourseByName,
     getAllCourses,
+    getAllStudents,
     login,
 }
 

@@ -1,3 +1,4 @@
 import Signup from './Register'
 import TeacherClassList from './TeacherClassList'
-export {Signup, TeacherClassList}
+import AdminStudentList from './AdminStudentList'
+export {Signup, TeacherClassList, AdminStudentList}
