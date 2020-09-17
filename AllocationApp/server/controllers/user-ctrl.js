@@ -1,6 +1,7 @@
 const User = require('../models/user-model.js')
 const TempStudent = require('../models/temp-student-model.js')
 const Class = require('../models/class-reference.js')
+const jwt = require('jsonwebtoken')
 
 createUser = (req, res) => {
     const body = req.body
@@ -43,6 +44,110 @@ createUser = (req, res) => {
     })
 }
 
+updateUserRole = async (req, res) => {
+    const user_id = req.params.user_id;
+    const role = req.params.role;
+
+    if ((user_id !== null) && (role !== null)){
+        await User.findOneAndUpdate({_id: user_id},
+            { $set: { role: role }}, {new: true}, (err, doc) => {
+            if (err){
+                return res.status(404).json({
+                    success: false,
+                    error: err
+                })
+            }
+            else{
+                return res.status(200).json({
+                    success: true,
+                    message: "Role updated"
+                })
+            }
+        })
+    }
+    else{
+        return res.status(400).json({
+            success: false,
+            error: 'Valid data must be provided'
+        })
+    }
+}
+
+fetchUserData = async (req, res) => {
+    const user_role = req.params.user_role;
+    const course_id = req.params.course_id;
+
+    // If the user role and the course is specified
+    if ((user_role !== null) && (course_id !== null)) {
+        await User.aggregate(
+            [
+                {
+                    $addFields: {
+                    // For some reason, the ID needed to be converted to a string to merge
+                      convertedUserID: { $toString: "$_id" }
+                   }
+                },
+                {
+                    "$lookup" : {
+                        "localField" : "convertedUserID",
+                        "from" : "tempstudents",
+                        "foreignField" : "studentID",
+                        "as" : "tempstudents"
+                    }
+                }
+            ]
+        ).then(response => {
+            const result = response.filter(user => ((user.role === user_role)))
+
+            classData = [];
+
+            result.forEach(user => {
+                user.tempstudents.forEach(entry => {
+                    console.log(entry)
+                    if (entry.classID === course_id) {
+                        console.log('match')
+                        classData.push(user)
+                    }
+                })
+            })
+            return res.status(200).json({
+                success: true,
+                data: classData
+            })
+
+        }, err => {
+            return res.status(400).json({
+                success: false,
+                error: err
+            })
+        })
+    }
+    // If only the user role is specified
+    else if ((user_role !== null) && (course_id === null)) {
+        await User.find({role: user_role}, function(err, users) {
+            if (err) {
+                return res.status(404).json({
+                    success: false,
+                    error: err
+                })
+            }
+            if (users) {
+                return res.status(200).json({
+                    success: true,
+                    userData: users
+                })
+            }
+        })
+    }
+    else{
+        return res.status(400).json({
+            success: false,
+            error: "Please provide valid input"
+        })
+    }
+
+}
+
 addStudentToClass = async (req, res) => {
     const body = req.body
     if (!body){
@@ -65,7 +170,7 @@ addStudentToClass = async (req, res) => {
                 message: 'user not found!',
             })
         }
-        //if there is a user 
+        //if there is a user
         if (users.length){
             //get the student id from the users db and assign as tempStudent students id
             var id = users[0]._id;
@@ -83,11 +188,11 @@ addStudentToClass = async (req, res) => {
                 }
                 if (classReferences.length){
                     classID = classReferences[0]._id;
-                    //Check that the student is not already enrolled in class 
+                    //Check that the student is not already enrolled in class
                      TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
                         if (tempStudents.length){
                             return res.status(400).json({
-                                success: false, 
+                                success: false,
                                 error: 'Student is already enrolled in that class'
                             })
                         }
@@ -106,13 +211,13 @@ addStudentToClass = async (req, res) => {
                                 })
                             })
 
-                            
-                        }   
+
+                        }
                     })
                 }
             })
 
-            
+
         }
         else {
             return res.status(404).json({
@@ -137,7 +242,7 @@ addPreferencesBackground = async (req, res) => {
     //find student in user database using email entered in body
     User.find({email: body.email}).exec(function(err, users){
 
-        //if there is a user 
+        //if there is a user
         if (users.length){
             //get the student id from the users db and assign as tempStudent students id
             var id = users[0]._id;
@@ -149,20 +254,21 @@ addPreferencesBackground = async (req, res) => {
                     //Update preferences based on user input
                     TempStudent.findOneAndUpdate(
                         {studentID: id},
-                        { $set: { projectPreference1: body.projectPreference1, 
-                            projectPreference2: body.projectPreference2, 
+                        { $set: { projectPreference1: body.projectPreference1,
+                            projectPreference2: body.projectPreference2,
                             projectPreference3: body.projectPreference3,
                             technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
+
                             if (err) {
                                 console.log("Something wrong when updating data!");
                             }
                         });
-                    
+
                     return res.status(200).json({
                         success: true,
                         message: "Preferences have been updated"
                     })
-                
+
                 }
             })
         }
@@ -188,7 +294,7 @@ updateTechBackground = async (req, res) => {
     //find student in user database using email entered in body
     User.find({email: body.email}).exec(function(err, users){
 
-        //if there is a user 
+        //if there is a user
         if (users.length){
             //get the student id from the users db and assign as tempStudent students id
             var id = users[0]._id;
@@ -205,12 +311,12 @@ updateTechBackground = async (req, res) => {
                                 console.log("Something wrong when updating data!");
                             }
                         });
-                    
+
                     return res.status(200).json({
                         success: true,
                         message: "Technical background has been updated"
                     })
-                
+
                 }
             })
         }
@@ -247,7 +353,11 @@ login = async (req, res) => {
             })
         }
         if (users[0].password == body.password){
-            return res.status(201).json({
+            //Create and assign token
+            const token = jwt.sign({_id: users[0].id}, process.env.TOKEN_CODE)
+            res.setHeader('auth-token',token) // this will set browser header to token
+
+            return  res.status(201).json({
                 success: true,
                 fullName: users[0].fullName,
                 role: users[0].role
@@ -262,10 +372,25 @@ login = async (req, res) => {
     })
 }
 
+logout = (req, res) => {
+ res.setHeader('auth-token', null)
+  return  res.status(201).json({
+      success: true,
+      message: "User logged out"
+
+  })
+}
+
 module.exports = {
     createUser,
+    // addUserPreference,
+    // updatePreferences,
+    login,
+    updateUserRole,
+    fetchUserData,
     addStudentToClass,
     addPreferencesBackground,
 //    updateTechBackground,
-    login
+    logout
+
 }
