@@ -164,12 +164,6 @@ addStudentToClass = async (req, res) => {
     //find student in user database using email entered in body
     await User.find({email: email}).exec(function(err, users){
 
-        if (err) {
-            return res.status(404).json({
-                err,
-                message: 'user not found!',
-            })
-        }
         //if there is a user
         if (users.length){
             //get the student id from the users db and assign as tempStudent students id
@@ -179,24 +173,27 @@ addStudentToClass = async (req, res) => {
             //find class ID based of class name
             var className = body.className;
             var classID;
-             Class.find({name : className}).exec(function(err, classReferences){
-                if (err) {
-                    return res.status(404).json({
-                        err,
-                        message: 'user not found!',
-                    })
-                }
+            Class.find({name : className}).exec(function(err, classReferences){
                 if (classReferences.length){
                     classID = classReferences[0]._id;
+                    //Check that class is not full
+                    if(classReferences[0].studentIDS.length>=classReferences[0].numberOfStudents){
+                        return res.status(400).json({
+                            success: false,
+                            error: 'Class has reached max number of students'
+                        })
+                    }
+                    
                     //Check that the student is not already enrolled in class
-                     TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
+                    TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
                         if (tempStudents.length){
                             return res.status(400).json({
                                 success: false,
                                 error: 'Student is already enrolled in that class'
                             })
                         }
-                        else {
+                        else{
+
                             tempStudent.projectID = null;
                             tempStudent.classID = classID;
 
@@ -211,17 +208,28 @@ addStudentToClass = async (req, res) => {
                                 })
                             })
 
-
+                            //add student id to class studentIDS array
+                            Class.findOneAndUpdate({name: className},
+                                { $push: { studentIDS: id,}}, {new: true}, (err, doc) => {
+                                if (err) {
+                                    console.log("Something wrong when updating class data!");
+                                }
+                            });
                         }
+                    })
+                }
+                else{
+                    return res.status(404).json({
+                        success: false,
+                        message: 'class not found!',
                     })
                 }
             })
 
-
         }
         else {
             return res.status(404).json({
-                err,
+                success: false,
                 message: 'user not found!',
             })
         }
@@ -247,7 +255,7 @@ addPreferencesBackground = async (req, res) => {
             //get the student id from the users db and assign as tempStudent students id
             var id = users[0]._id;
 
-            //Check that the student is not already in temp-student db
+            //Check that the student is in temp-student db
             TempStudent.find({studentID: id}).exec(function(err, tempStudents){
                 //if there is a student
                 if (tempStudents.length) {
@@ -270,53 +278,11 @@ addPreferencesBackground = async (req, res) => {
                     })
 
                 }
-            })
-        }
-        else {
-            return res.status(404).json({
-                err,
-                message: 'No user found with that email',
-            })
-        }
-    })
-}
-/*
-updateTechBackground = async (req, res) => {
-    const body = req.body
-
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a body to update',
-        })
-    }
-
-    //find student in user database using email entered in body
-    User.find({email: body.email}).exec(function(err, users){
-
-        //if there is a user
-        if (users.length){
-            //get the student id from the users db and assign as tempStudent students id
-            var id = users[0]._id;
-
-            //Check that the student is not already in temp-student db
-            TempStudent.find({studentID: id}).exec(function(err, tempStudents){
-                //if there is a student
-                if (tempStudents.length) {
-                    //Update preferences based on user input
-                    TempStudent.findOneAndUpdate(
-                        {studentID: id},
-                        { $set: { technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
-                            if (err) {
-                                console.log("Something wrong when updating data!");
-                            }
-                        });
-
-                    return res.status(200).json({
-                        success: true,
-                        message: "Technical background has been updated"
+                else{
+                    return res.status(404).json({
+                        success: false,
+                        message: "Student not enrolled in any classes"
                     })
-
                 }
             })
         }
@@ -328,7 +294,7 @@ updateTechBackground = async (req, res) => {
         }
     })
 }
-*/
+
 
 login = async (req, res) => {
     const body = req.body
