@@ -236,6 +236,84 @@ addStudentToClass = async (req, res) => {
     })
 }
 
+removeFromClass = async (req, res) => {
+    const body = req.body
+    if (!body){
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a user',
+        })
+    }
+
+    const email = body.email;
+
+    const tempStudent = new TempStudent(body)
+
+    //find student in user database using email entered in body
+    await User.find({email: email}).exec(function(err, users){
+
+        //if there is a user
+        if (users.length){
+            //get the student id from the users db and assign as tempStudent students id
+            var id = users[0]._id;
+            tempStudent.studentID = id;
+
+            //find class ID based of class name
+            var className = body.className;
+            var classID;
+            Class.find({name : className}).exec(function(err, classReferences){
+                if (classReferences.length){
+                    classID = classReferences[0]._id;
+                    
+                    //Check that the student is enrolled in class
+                    TempStudent.find({ studentID: id, classID: classID}).exec(function(err, tempStudents){
+                        if (tempStudents.length){
+                            //Remove student id from class reference studentIDS
+                            Class.update({name: className},
+                                { $pull: { studentIDS: id,}}, {new: true}, (err, doc) => {
+                                if (err) {
+                                    console.log("Something wrong when remove student from class");
+                                }
+                            });
+                            TempStudent.deleteOne({ studentID: id, classID: classID }).exec(function(err, tempStudents){
+                                if (err){
+                                    return res.status(404).json({
+                                        success: false,
+                                        error: err
+                                    })
+                                }
+                                return res.status(200).json({
+                                    success: true,
+                                    message: 'Student removed from class'
+                                })
+                            })
+                            
+                        }
+                        else{
+                            return res.status(400).json({
+                                success: false,
+                                error: 'Student is not enrolled in that class'
+                            })
+                        }
+                    })
+                }
+                else{
+                    return res.status(404).json({
+                        success: false,
+                        error: 'class not found!',
+                    })
+                }
+            })
+        }
+        else {
+            return res.status(404).json({
+                success: false,
+                error: 'user not found!',
+            })
+        }
+    })
+}
+
 //a function to update the project preferences and technical background of the students
 addPreferencesBackground = async (req, res) => {
     const body = req.body
@@ -296,6 +374,7 @@ addPreferencesBackground = async (req, res) => {
 }
 
 
+
 login = async (req, res) => {
     const body = req.body
     if (!body) {
@@ -349,14 +428,12 @@ logout = (req, res) => {
 
 module.exports = {
     createUser,
-    // addUserPreference,
-    // updatePreferences,
     login,
     updateUserRole,
     fetchUserData,
     addStudentToClass,
+    removeFromClass,
     addPreferencesBackground,
-//    updateTechBackground,
     logout
 
 }
