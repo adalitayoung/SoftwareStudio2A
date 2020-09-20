@@ -230,105 +230,29 @@ addStudentToClass = async (req, res) => {
 
 //a function to update the project preferences and technical background of the students
 addPreferencesBackground = async (req, res) => {
-    const body = req.body
-
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a body to update',
-        })
-    }
-
-    //find student in user database using email entered in body
-    User.find({email: body.email}).exec(function(err, users){
-
-        //if there is a user
-        if (users.length){
-            //get the student id from the users db and assign as tempStudent students id
-            var id = users[0]._id;
-
-            //Check that the student is not already in temp-student db
-            TempStudent.find({studentID: id}).exec(function(err, tempStudents){
-                //if there is a student
-                if (tempStudents.length) {
-                    //Update preferences based on user input
-                    TempStudent.findOneAndUpdate(
-                        {studentID: id},
-                        { $set: { projectPreference1: body.projectPreference1,
-                            projectPreference2: body.projectPreference2,
-                            projectPreference3: body.projectPreference3,
-                            technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
-
-                            if (err) {
-                                console.log("Something wrong when updating data!");
-                            }
-                        });
-
-                    return res.status(200).json({
-                        success: true,
-                        message: "Preferences have been updated"
-                    })
-
-                }
-            })
-        }
-        else {
-            return res.status(404).json({
-                err,
-                message: 'No user found with that email',
-            })
-        }
-    })
+ 
+          var studentID=req.body.studentID;
+      var projectPreference1=req.body.projectPreference1;
+      var projectPreference2=req.body.projectPreference2;
+      var projectPreference3=req.body.projectPreference3;
+      var technicalBackground=req.body.technicalBackground;
+      const TempStudentxx = new TempStudent({
+        studentID:studentID,
+        projectPreference1:projectPreference1,
+        projectPreference2:projectPreference2,
+        projectPreference3:projectPreference3,
+        technicalBackground:technicalBackground
+      });
+      TempStudentxx.save().then(data=>{
+        console.log("saved")
+        res.send(data)
+      }).catch(err=>{
+          throw err;
+      })   
 }
-/*
-updateTechBackground = async (req, res) => {
-    const body = req.body
 
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a body to update',
-        })
-    }
 
-    //find student in user database using email entered in body
-    User.find({email: body.email}).exec(function(err, users){
 
-        //if there is a user
-        if (users.length){
-            //get the student id from the users db and assign as tempStudent students id
-            var id = users[0]._id;
-
-            //Check that the student is not already in temp-student db
-            TempStudent.find({studentID: id}).exec(function(err, tempStudents){
-                //if there is a student
-                if (tempStudents.length) {
-                    //Update preferences based on user input
-                    TempStudent.findOneAndUpdate(
-                        {studentID: id},
-                        { $set: { technicalBackground: body.technicalBackground }}, {new: true}, (err, doc) => {
-                            if (err) {
-                                console.log("Something wrong when updating data!");
-                            }
-                        });
-
-                    return res.status(200).json({
-                        success: true,
-                        message: "Technical background has been updated"
-                    })
-
-                }
-            })
-        }
-        else {
-            return res.status(404).json({
-                err,
-                message: 'No user found with that email',
-            })
-        }
-    })
-}
-*/
 
 login = async (req, res) => {
     const body = req.body
@@ -360,7 +284,8 @@ login = async (req, res) => {
             return  res.status(201).json({
                 success: true,
                 fullName: users[0].fullName,
-                role: users[0].role
+                role: users[0].role,
+                id: users[0].id
             })
         }
         else if (users[0].password != body.password){

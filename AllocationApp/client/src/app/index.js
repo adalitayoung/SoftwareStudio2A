@@ -5,6 +5,8 @@ import Student from '../components/Student';
 import Teacher from '../components/Teacher';
 import Admin from '../components/Admin';
 import SignOut from '../components/SignOut';
+import Classes from '../components/Classes';
+
 
 import { NavBar, Home, Signin, Footer } from '../components';
 import {
@@ -31,6 +33,7 @@ function App() {
         <Route path='/Admin' exact component={() => <Admin />} />
         <Route path='/SignOut' exact component={() => <SignOut />} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
+        <Route path='/StudentCLasses' exact component={Classes} />
         <Route
           path='/teacher/StudentList'
           exact

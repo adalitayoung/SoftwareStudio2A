@@ -38,17 +38,14 @@ class Signin extends Component {
 
           if (res.status === 201) {
             let msh = res.data;
-            let role = msh.role;
+             let uid = msh.id;
+             let role = msh.role;
             this.setState({ msg: 'Succesfull Login!' });
 
             localStorage.setItem('Token', 'Logged in');
-            window.alert('Welcome ' + email);
+            localStorage.setItem('uid', uid);window.alert('Welcome ' + email);
             if (role == 'Student') {
-              this.props.history.push({
-                pathname: '/Student',
-                state: { user: res.data },
-              });
-              //window.location='/Student'
+              window.location='/Student'
             } else if (role == 'Teacher') {
               this.props.history.push({
                 pathname: '/teacher/ClassList',
