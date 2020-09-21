@@ -26,7 +26,7 @@ export const updateTechBackground = tempStudent => api.post(`/user/updateTechBac
 export const addCourse = course => api.post('/class/createClass', course)
 export const getCourseByName = name => api.get(`/class/${name}`)
 export const getAllCourses = () => api.get('/class/getAllClasses')
-
+export const getAllTeachers = () => api.get('/user/getAllTeachers')
 export const login = loginDetails => api.post('/user/login', loginDetails)
 export const logout = () => api.post('/user/logout')
 
@@ -63,6 +63,7 @@ const apis = {
     createProjectRole,
     updateProjectRole,
     showRoles,
+    fetchUserData,
     deleteProjectRole
 }
 

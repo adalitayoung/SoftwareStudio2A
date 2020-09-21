@@ -55,9 +55,11 @@ class Signin extends Component {
                 state: { user: res.data },
               });
               //window.location='/Teacher'
+              
+              
             } else if (role == 'Admin') {
               this.props.history.push({
-                pathname: '/Admin',
+                pathname: '/Admin/AdminTeacherList',
                 state: { user: res.data },
               });
               //window.location='/Admin'

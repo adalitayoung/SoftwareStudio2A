@@ -12,6 +12,7 @@ import {
   TeacherClassList,
   TeacherStudentList,
   TeacherProjectList,
+  AdminTeacherList,
 } from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,6 +32,7 @@ function App() {
         <Route path='/Admin' exact component={() => <Admin />} />
         <Route path='/SignOut' exact component={() => <SignOut />} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
+        <Route path='/Admin/AdminTeacherList' exact component={AdminTeacherList} />
         <Route
           path='/teacher/StudentList'
           exact

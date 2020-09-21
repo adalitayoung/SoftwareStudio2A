@@ -78,7 +78,7 @@ fetchUserData = async (req, res) => {
     const course_id = req.params.course_id;
 
     // If the user role and the course is specified
-    if ((user_role !== null) && (course_id !== null)) {
+    if ((user_role !== null) && (course_id !== "null")) {
         await User.aggregate(
             [
                 {
@@ -123,7 +123,7 @@ fetchUserData = async (req, res) => {
         })
     }
     // If only the user role is specified
-    else if ((user_role !== null) && (course_id === null)) {
+    else if ((user_role !== null) && (course_id === "null")) {
         await User.find({role: user_role}, function(err, users) {
             if (err) {
                 return res.status(404).json({
