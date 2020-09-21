@@ -12,16 +12,21 @@ const api = axios.create({
 
 export const addUserToDatabase = user => api.post(`/user/createUser`, user)
 
+
 export const startAlgorithm = () => api.get(`/algorithm`)
+
+export const addStudentToClass = tempStudent => api.post(`/user/addToClass`, tempStudent)
+export const removeFromClass = tempStudent => api.post(`/user/removeFromClass`, tempStudent)
 
 export const fetchUserData = (user_role, course_id) => api.get(`/user/fetchUserData/${user_role}/${course_id}`)
 
 export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
 export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
 
-export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
 
-export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
+export const addPreferencesBackground = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)
+
+//export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
 export const getCourseByName = name => api.get(`/class/${name}`)
@@ -46,10 +51,10 @@ export const deleteProjectRole = id => api.delete(`project/deleteProjectRole/${i
 
 const apis = {
     addUserToDatabase,
+    addStudentToClass,
+    removeFromClass,
     startAlgorithm,
-    addUserPreference,
-    updatePreference,
-    updateTechBackground,
+    addPreferencesBackground,
     addCourse,
     getCourseByName,
     getAllCourses,
