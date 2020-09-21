@@ -38,9 +38,7 @@ createCourse = async (req, res) => {
                     })
                 })
         }
-    })
-
-    
+    }) 
 }
 
 returnAllCourses = async (req, res) => {

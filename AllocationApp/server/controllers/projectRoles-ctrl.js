@@ -1,7 +1,28 @@
 const ProjectRoles = require('../models/projectRoles-model.js')
 
+deleteProjectRole = (req, res) => {
+  ProjectRoles.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Role Deleted'))
+    .catch(err => res.status(400).json('Error: ' + err))
+ }
+
+updateProjectRole = (req, res) => {
+  ProjectRoles.findById(req.params.id)
+  .then(projectRoles =>{
+    projectRoles.projectID = req.body.projectID
+    projectRoles.roleType = req.body.roleType
+    projectRoles.positionsRequired = req.body.positionsRequired
+    projectRoles.positionsLeft = req.body.positionsLeft
+    projectRoles.studentsEnrolledID =  req.body.studentsEnrolledID
+
+    projectRoles.save()
+      .then(() => res.json('Project Role Updated'))
+      .catch(err => res.status(400).json('Error: ' + err))
+  })
+}
+
 showProjectRoles = (req, res) => {
-  ProjectRoles.find() // This will be updated to find projectID specific roles
+  ProjectRoles.find({projectID:req.params.id}) // This will be updated to find projectID specific roles
     .then(projectRoles => res.json(projectRoles))
     .catch(err => res.status(400).json('Error: ' + err))
 }
@@ -15,7 +36,7 @@ createProjectRoles = (req, res) => {
     })
   }
 
-const projectID = req.body.projectID; //this shold be project ID: coming in next update
+const projectID = req.body.projectID; // req.params.projectID //this shold be project ID: coming in next update
 const roleType = req.body.roleType
 const positionsRequired = req.body.positionsRequired
 const positionsLeft = positionsRequired
@@ -37,5 +58,7 @@ newProjectRole.save()
 
 module.exports = {
   showProjectRoles,
-  createProjectRoles
+  createProjectRoles,
+  deleteProjectRole,
+  updateProjectRole
 }

@@ -14,6 +14,9 @@ export const addUserToDatabase = user => api.post(`/user/createUser`, user)
 
 export const startAlgorithm = () => api.get(`/algorithm`)
 
+export const fetchUserData = (user_role, course_id) => api.get(`/user/fetchUserData/${user_role}/${course_id}`)
+
+export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
 export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
 
 export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
@@ -23,16 +26,23 @@ export const updateTechBackground = tempStudent => api.post(`/user/updateTechBac
 export const addCourse = course => api.post('/class/createClass', course)
 export const getCourseByName = name => api.get(`/class/${name}`)
 export const getAllCourses = () => api.get('/class/getAllClasses')
-export const getAllStudents = () => api.get('/user/getAllStudents')
-export const login = loginDetails => api.post('/user/login', loginDetails)
 
-// const apis = {
-//     insertMovie,
-//     getAllMovies,
-//     updateMovieById,
-//     deleteMovieById,
-//     getMovieById,
-// }
+export const login = loginDetails => api.post('/user/login', loginDetails)
+export const logout = () => api.post('/user/logout')
+
+
+//project
+export const createProject = projectDetails => api.post('/project/createProject', projectDetails)
+export const updateProject = id => api.post(`/project/updateProject/${id}`)
+export const deleteProject = id => api.delete(`/project/deleteProject/${id}`)
+export const showProject = id => api.get(`/project/showProject/${id}`)
+export const showMyProjects = () => api.get('/project/showMyProjects')
+
+//project roles
+export const createProjectRole = projectRole => api.post('project/createProjectRole', projectRole)
+export const updateProjectRole = id => api.post(`project/updateProjectRole/${id}`)
+export const showRoles = id => api.get(`project/showRoles/${id}`)
+export const deleteProjectRole = id => api.delete(`project/deleteProjectRole/${id}`)
 
 const apis = {
     addUserToDatabase,
@@ -43,8 +53,18 @@ const apis = {
     addCourse,
     getCourseByName,
     getAllCourses,
-    getAllStudents,
     login,
+    logout,
+    createProject,
+    updateProject,
+    deleteProject,
+    showProject,
+    showMyProjects,
+    createProjectRole,
+    updateProjectRole,
+    showRoles,
+    fetchUserData,
+    deleteProjectRole
 }
 
 export default apis
