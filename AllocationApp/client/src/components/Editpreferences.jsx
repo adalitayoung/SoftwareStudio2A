@@ -77,10 +77,23 @@ constructor(props){
             </select>
           </div>
 
-          <div className="col-md-6 col-12">
-            <label for="cars" className="lbl">3. Role Preference</label><br/>
+          <div className="col-md-6 col-12 tp">
+            <label for="cars" className="lbl">4. Technical Background</label><br/>
             <select id="cars" 
-            name="projectPreference2" 
+name="technicalBackground" 
+    value={this.state.technicalBackground} onChange={(e)=>this.setState({technicalBackground:e.target.value})}
+             form="carform" className="form-control">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+            </select>
+          </div>
+         
+           <div className="col-md-6 col-12 tp">
+            <label for="cars" className="lbl">2.Project- Second Preference</label><br/>
+            <select id="cars" 
+name="projectPreference2" 
     value={this.state.projectPreference2} onChange={(e)=>this.setState({projectPreference2:e.target.value})}
              form="carform" className="form-control">
               <option value="volvo">Volvo</option>
@@ -89,23 +102,15 @@ constructor(props){
               <option value="audi">Audi</option>
             </select>
           </div>
-           <div className="col-md-6 col-12 tp">
-            <label for="cars" className="lbl">2.Project- Second Preference</label><br/>
+            <div className="col-md-6 col-12">
+           </div>
+         
+
+           <div className="col-md-6 col-12">
+            <label for="cars" className="lbl">3. Project- Third Preference</label><br/>
             <select id="cars" 
-name="projectPreference3" 
+            name="projectPreference3" 
     value={this.state.projectPreference3} onChange={(e)=>this.setState({projectPreference3:e.target.value})}
-             form="carform" className="form-control">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
-            </select>
-          </div>
-          <div className="col-md-6 col-12 tp">
-            <label for="cars" className="lbl">4. Technical Background</label><br/>
-            <select id="cars" 
-name="technicalBackground" 
-    value={this.state.technicalBackground} onChange={(e)=>this.setState({technicalBackground:e.target.value})}
              form="carform" className="form-control">
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
