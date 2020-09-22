@@ -31,10 +31,22 @@ showProject = (req, res) => {
  }
 
  showMyProjects = (req, res) => {
-   Project.find({createdByID:req.userID}) 
+   Project.find({createdByID:req.userID})
    .then(project => res.json(project))
    .catch(err => res.status(400).json('Error: ' + err))
   }
+
+showAllProjects = (req, res) => {
+  Project.find()
+  .then(project => res.json(project))
+  .catch(err => res.status(400).json('Error: ' + err))
+}
+
+showProjectByName = (req, res) => {
+  Project.find({projectName:req.body.projectName})
+  .then(project => res.json(project))
+  .catch(err => res.status(400).json('Error: ' + err))
+}
 
 createProject = (req, res) => {
   const body = req.body
@@ -73,5 +85,7 @@ createProject = (req, res) => {
    deleteProject,
    showProject,
    showMyProjects,
-   createProject
+   createProject,
+   showAllProjects,
+   showProjectByName
  }
