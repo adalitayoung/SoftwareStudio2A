@@ -4,7 +4,6 @@ import api from '../api';
 
 import edit from '../res/edit.png';
 import del from '../res/delete.png';
-import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
 class TeacherClassList extends Component {
@@ -15,14 +14,14 @@ class TeacherClassList extends Component {
       classData: [],
       isLoading: false,
     };
-
+    console.log(props);
     this.fetchClassList(this.state.user._id);
   }
 
   fetchClassList(userId) {
     api.getAllCourses().then((data) => {
       // need to change class model and check if the course is for that teacher
-      // console.log(data)
+      console.log(data);
       this.setState({ classData: data.data.data });
       console.log(this.state.classData);
     });
@@ -41,7 +40,13 @@ class TeacherClassList extends Component {
   }
 
   viewStudents = async (event) => {
-    event.preventDefault();
+    //add the course ID to each btton and send to
+    const user = this.state.user;
+    const classdata = this.state.classData;
+    this.props.history.push({
+      pathname: '/Teacher/StudentList',
+      state: { user: user, course_id: this.state.classData },
+    });
   };
 
   viewProjects = async (event) => {
