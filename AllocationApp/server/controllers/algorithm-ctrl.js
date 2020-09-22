@@ -5,9 +5,8 @@ const User = require('../models/user-model.js')
 const TempStudent = require('../models/temp-student-model.js')
 
 startAlgorithm = async (req, res) => {
-    const course_name = req.params.course_name
-
-    // Getting the course that the algorithm has been started on
+    const course_name = req.body.course_name
+    console.log(course_name)
     await Course.findOne({name: course_name}).exec(function(err, course) {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -118,10 +117,7 @@ startAlgorithm = async (req, res) => {
 
     })
     
-    return res.status(201).json({
-        success: true,
-        message: 'Algorithm started',
-    })
+    
 }
 
 module.exports = {

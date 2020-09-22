@@ -160,7 +160,27 @@ deleteUser = async (req, res) => {
             return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
         }
         else {
-            return res.status(200).json({success: true})
+            TempStudent.find({studentID: user._id}).exec(function(error, response) {
+                if (response) {
+                    TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
+                        if(tempUser) {
+                            return res.status(200).json({success: true})
+                        }
+                        else{
+                            return res.status(404).json({success: false, error: 'User not found: '+user._id})
+                        }
+                    })
+                }
+                else if (!response) {
+                    return res.status(200).json({success: true})
+
+                }
+                else if (error) {
+                    return res.status(404).json({success: false, error: error})
+                }
+            })
+            
+            
         }
     })
 }
@@ -469,7 +489,7 @@ module.exports = {
     logout,
     deleteUser,
     deleteUsers,
-    addUserPreference,
-    updatePreferences,
+    // addUserPreference,
+    // updatePreferences,
     login
 }
