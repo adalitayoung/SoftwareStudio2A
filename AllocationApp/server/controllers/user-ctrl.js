@@ -2,8 +2,9 @@ const User = require('../models/user-model.js')
 const TempStudent = require('../models/temp-student-model.js')
 const Class = require('../models/class-reference.js')
 const jwt = require('jsonwebtoken')
+const e = require('express')
 
-createUser = (req, res) => {
+createUser = async (req, res) => {
     const body = req.body
     if (!body){
         return res.status(400).json({
@@ -21,11 +22,12 @@ createUser = (req, res) => {
         })
     }
 
-    User.find({email: user.email}).exec(function(err, users){
+    await User.find({email: user.email}).exec(function(err, users){
         if (users.length){
             return res.status(400).json({
                 success: false,
-                error: 'User email already in use'
+                error: 'User email already in use',
+                email: user.email
             })
         }
         else{
@@ -146,6 +148,36 @@ fetchUserData = async (req, res) => {
         })
     }
 
+}
+
+
+deleteUser = async (req, res) => {
+    await User.findOneAndDelete({email: req.params.email}).exec(function (err, user) {
+        if (err) {
+            return res.status(400).json({success: false, error: err})
+        }
+        else if (!user) {
+            return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
+        }
+        else {
+            return res.status(200).json({success: true})
+        }
+    })
+}
+
+deleteUsers = async (req, res) => {
+    await User.deleteMany({email: {$in: req.params.emails}}).exec(function(err, users){
+        console.log(req.params.emails)
+        if (err) {
+            return res.status(400).json({success: false, error: err})
+        }
+        else if (!users) {
+            return res.status(404).json({success: false, error: 'Users not found'})
+        }
+        else {
+            return res.status(200).json({success: true})
+        }
+    })
 }
 
 addStudentToClass = async (req, res) => {
@@ -434,6 +466,10 @@ module.exports = {
     addStudentToClass,
     removeFromClass,
     addPreferencesBackground,
-    logout
-
+    logout,
+    deleteUser,
+    deleteUsers,
+    addUserPreference,
+    updatePreferences,
+    login
 }
