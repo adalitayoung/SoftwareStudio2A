@@ -48,6 +48,12 @@ showProjectByName = (req, res) => {
   .catch(err => res.status(400).json('Error: ' + err))
 }
 
+showClassProjects = (req, res) => {
+  Project.find({classID: req.params.id})
+  .then(project => res.json(project))
+  .catch(err => res.status(400).json('Error: ' + err))
+}
+
 createProject = (req, res) => {
   const body = req.body
   if (!body) {
@@ -87,5 +93,6 @@ createProject = (req, res) => {
    showMyProjects,
    createProject,
    showAllProjects,
-   showProjectByName
+   showProjectByName,
+   showClassProjects
  }
