@@ -39,18 +39,31 @@ class TeacherClassList extends Component {
     console.log(user);
   }
 
-  viewStudents = async (event) => {
-    //add the course ID to each btton and send to
-    const user = this.state.user;
+  getId = async (event) => {
     const classdata = this.state.classData;
+    const user = this.state.user;
+
+    var array = classdata.length;
+    for (var i = 0; i < array; i++) {
+      const id = classdata[i]._id;
+    }
+  };
+
+  viewStudents = async (event) => {
+    const user = this.state.user;
     this.props.history.push({
       pathname: '/Teacher/StudentList',
-      state: { user: user, course_id: this.state.classData },
+      state: { user: user },
     });
   };
 
   viewProjects = async (event) => {
-    event.preventDefault();
+    const user = this.state.user;
+    // const classdata = this.state.classData;
+    this.props.history.push({
+      pathname: '/Teacher/ProjectList',
+      state: { user: user },
+    });
   };
 
   addClass = async (event) => {
@@ -60,7 +73,8 @@ class TeacherClassList extends Component {
 
   renderTableData() {
     return this.state.classData.map((course, index) => {
-      const { name, numberOfStudents, __v, _id } = course; //destructuring
+      const { name, numberOfStudents, _id } = course; //destructuring
+      console.log(_id);
       return (
         <tr key={_id}>
           <td id='tdclass'>{name}</td>
@@ -70,6 +84,7 @@ class TeacherClassList extends Component {
               id='classbtn'
               className='btn btn-primary btn-round'
               onClick={this.viewStudents}
+              value={JSON.stringify({ _id })}
             >
               Students
             </button>

@@ -20,7 +20,6 @@ class TeacherStudentList extends Component {
     const course_id = 'null';
     //role will always be student in this case
     api.fetchUserData('Student', course_id).then((data) => {
-      console.log(data.data.userData);
       this.setState({ studentData: data.data.userData });
     });
   }
