@@ -42,6 +42,7 @@ export const updateProject = id => api.post(`/project/updateProject/${id}`)
 export const deleteProject = id => api.delete(`/project/deleteProject/${id}`)
 export const showProject = id => api.get(`/project/showProject/${id}`)
 export const showMyProjects = () => api.get('/project/showMyProjects')
+export const showClassProjects = id => api.get(`/project/showClassProjects/${id}`)
 
 //project roles
 export const createProjectRole = projectRole => api.post('project/createProjectRole', projectRole)
@@ -68,7 +69,8 @@ const apis = {
     createProjectRole,
     updateProjectRole,
     showRoles,
-    deleteProjectRole
+    deleteProjectRole,
+    showClassProjects
 }
 
 export default apis
