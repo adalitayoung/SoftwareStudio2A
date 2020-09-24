@@ -69,8 +69,49 @@ returnCourseByName = async (req, res) => {
     })
 }
 
+deleteCourse = (req, res) => {
+    Course.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Class deleted'))
+    .catch(err => res.status(400).json('Error: ' + err))
+}
+  
+updateCourse = async (req, res) =>{
+    const id = req.params.id;
+    const className = req.params.name;
+    const numberOfStudents = req.params.numberOfStudents;
+
+    if ((className !== null) && (numberOfStudents !== null)){
+        await Course.findOneAndUpdate({_id: id},
+            { $set: { name: className,
+            numberOfStudents: numberOfStudents }}, {new: true}, (err, doc) => {
+            if (err){
+                return res.status(404).json({
+                    success: false,
+                    error: err
+                })
+            }
+            else{
+                return res.status(200).json({
+                    success: true,
+                    className: className,
+                    message: "Class updated"
+                })
+            }
+        })
+    }
+    else{
+        return res.status(400).json({
+            success: false,
+            error: 'Valid data must be provided'
+        })
+    }
+}
+
+
 module.exports = {
     createCourse,
     returnAllCourses,
-    returnCourseByName
+    returnCourseByName,
+    deleteCourse,
+    updateCourse
 }
