@@ -69,8 +69,33 @@ returnCourseByName = async (req, res) => {
     })
 }
 
+deleteCourse = (req, res) => {
+    Course.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Class deleted'))
+    .catch(err => res.status(400).json('Error: ' + err))
+}
+
+
+  
+//   updateCourse =(req, res) =>{
+//     const course = new Course(body)
+
+//     Course.findById(req.params.id)
+//     .then(course => {
+//       course.classID = req.body.classID
+//       course.name = req.body.name
+//       course.studentIDS = req.body.createdByname
+  
+//       course.save()
+//         .then(() => res.json('Course Updated'))
+//         .catch(err => res.status(400).json('Error: ' + err))
+//     })
+//   }
+
 module.exports = {
     createCourse,
     returnAllCourses,
-    returnCourseByName
+    returnCourseByName,
+    deleteCourse
+    //updateCourse
 }
