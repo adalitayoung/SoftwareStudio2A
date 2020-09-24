@@ -4,7 +4,6 @@ import api from '../api';
 
 import edit from '../res/edit.png';
 import del from '../res/delete.png';
-import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
 class TeacherClassList extends Component {
@@ -15,14 +14,14 @@ class TeacherClassList extends Component {
       classData: [],
       isLoading: false,
     };
-
+    console.log(props);
     this.fetchClassList(this.state.user._id);
   }
 
   fetchClassList(userId) {
     api.getAllCourses().then((data) => {
       // need to change class model and check if the course is for that teacher
-      // console.log(data)
+      console.log(data);
       this.setState({ classData: data.data.data });
       console.log(this.state.classData);
     });
@@ -40,12 +39,31 @@ class TeacherClassList extends Component {
     console.log(user);
   }
 
+  getId = async (event) => {
+    const classdata = this.state.classData;
+    const user = this.state.user;
+
+    var array = classdata.length;
+    for (var i = 0; i < array; i++) {
+      const id = classdata[i]._id;
+    }
+  };
+
   viewStudents = async (event) => {
-    event.preventDefault();
+    const user = this.state.user;
+    this.props.history.push({
+      pathname: '/Teacher/StudentList',
+      state: { user: user },
+    });
   };
 
   viewProjects = async (event) => {
-    event.preventDefault();
+    const user = this.state.user;
+    // const classdata = this.state.classData;
+    this.props.history.push({
+      pathname: '/Teacher/ProjectList',
+      state: { user: user },
+    });
   };
 
   addClass = async (event) => {
@@ -55,7 +73,8 @@ class TeacherClassList extends Component {
 
   renderTableData() {
     return this.state.classData.map((course, index) => {
-      const { name, numberOfStudents, __v, _id } = course; //destructuring
+      const { name, numberOfStudents, _id } = course; //destructuring
+      console.log(_id);
       return (
         <tr key={_id}>
           <td id='tdclass'>{name}</td>
@@ -65,6 +84,7 @@ class TeacherClassList extends Component {
               id='classbtn'
               className='btn btn-primary btn-round'
               onClick={this.viewStudents}
+              value={JSON.stringify({ _id })}
             >
               Students
             </button>
