@@ -12,6 +12,8 @@ const api = axios.create({
 
 export const addUserToDatabase = (user) => api.post(`/user/createUser`, user);
 
+export const deleteUser = email => api.delete(`/api/user/deleteUser/${email}`);
+
 export const startAlgorithm = () => api.get(`/algorithm`);
 
 export const addStudentToClass = (tempStudent) =>

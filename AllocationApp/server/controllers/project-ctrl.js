@@ -81,7 +81,7 @@ createProject = (req, res) => {
   })
 
   newProject.save()
-    .then(() => res.json("Project Created"))
+    .then(() => res.status(200).json("Project Created"))
     .catch(err => res.status(400).json('Error: ' + err))
 
  }
