@@ -12,6 +12,8 @@ const api = axios.create({
 
 export const addUserToDatabase = (user) => api.post(`/user/createUser`, user);
 
+export const deleteUser = email => api.delete(`/api/user/deleteUser/${email}`);
+
 export const startAlgorithm = () => api.get(`/algorithm`);
 
 export const addStudentToClass = (tempStudent) =>
@@ -33,14 +35,14 @@ export const addPreferencesBackground = (tempStudent) =>
 //export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
-export const getCourseByName = name => api.get(`/class/${name}`)
-export const getAllCourses = () => api.get('/class/getAllClasses')
-export const updateCourse = (id, name, numberOfStudents) => api.post(`/class/updateClass/${id}/${name}/${numberOfStudents}`)
-export const deleteCourse = id => api.delete(`/class/deleteClass/${id}`)
+export const getCourseByName = name => api.get(`/class/getClass/${name}`)
 
 export const login = loginDetails => api.post('/user/login', loginDetails)
 export const logout = () => api.post('/user/logout')
 
+export const getAllCourses = () => api.get('/class/getAllClasses')
+export const updateCourse = (id, name, numberOfStudents) => api.post(`/class/updateClass/${id}/${name}/${numberOfStudents}`)
+export const deleteCourse = id => api.delete(`/class/deleteClass/${id}`)
 
 //project
 export const createProject = (projectDetails) =>
