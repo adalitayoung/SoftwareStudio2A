@@ -22,15 +22,14 @@ export const fetchUserData = (user_role, course_id) => api.get(`/user/fetchUserD
 
 export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
 export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
-
-
 export const addPreferencesBackground = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)
 
-//export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
-export const getCourseByName = name => api.get(`/class/${name}`)
+export const getCourseByName = name => api.get(`/class/getClass/${name}`)
 export const getAllCourses = () => api.get('/class/getAllClasses')
+export const updateCourse = (id, name, numberOfStudents) => api.post(`/class/updateClass/${id}/${name}/${numberOfStudents}`)
+export const deleteCourse = id => api.delete(`/class/deleteClass/${id}`)
 
 export const login = loginDetails => api.post('/user/login', loginDetails)
 export const logout = () => api.post('/user/logout')
@@ -59,6 +58,8 @@ const apis = {
     addCourse,
     getCourseByName,
     getAllCourses,
+    updateCourse,
+    deleteCourse,
     login,
     logout,
     createProject,
