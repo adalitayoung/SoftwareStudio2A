@@ -265,8 +265,21 @@ h2 {
   background-color:#5ba3d677;
   left: 570px;
   top: 390px;
-  width: 760px;
-  height: 444px;
+  width: 790px;
+  height: 464px;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  opacity: 1;
+
+  
+}
+.backgroundwhitebox{
+  position: absolute;
+  background-color:#ebeff1;
+  left: 395px;
+  top: 230px;
+  width: 720px;
+  height: 410px;
   transform: translate(-50%, -50%);
   border-radius: 25px;
   opacity: 1;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { NavBar, Home, Signin, Footer } from '../components'
-import { Signup, TeacherClassList, AdminStudentList, AdminTeacherList } from '../pages'
+// import { NavBar, Home, Signin, Footer } from '../components'
+// import { Signup, TeacherClassList, AdminStudentList, AdminTeacherList } from '../pages'
 import Student from '../components/Student';
 import Teacher from '../components/Teacher';
 import Admin from '../components/Admin';
@@ -15,6 +15,7 @@ import {
   TeacherStudentList,
   TeacherProjectList,
   AdminTeacherList,
+  AdminStudentList,
 } from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';

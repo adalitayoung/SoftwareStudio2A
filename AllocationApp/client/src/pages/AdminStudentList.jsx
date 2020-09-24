@@ -11,7 +11,7 @@ class AdminStudentList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            user: props.location.state.user,
+           /* user: props.location.state.user,*/
             studentData: [],
             isLoading: false,
         }
@@ -20,11 +20,11 @@ class AdminStudentList extends Component {
     }
 
     fetchStudentList(){
-        api.getAllStudents().then(data => {
+        api.fetchUserData("Student", null).then(data => {
             // need to change class model and check if the course is for that teacher
             // console.log(data)
-            this.setState({studentData: data.data.data})
-            console.log(this.state.classData)
+            this.setState({studentData: data.data.userData})
+            console.log(this.state.studentData)
         })
     }
 
@@ -90,17 +90,18 @@ class AdminStudentList extends Component {
                         <div className="box title-container">
                             <h2 class="font-weight-light"></h2>
                             <div className="adminstfontgradon">Hello, Admin</div>
-                            <div className="adminstfontauto">Add/Remove Students</div> 
+                            <div className="adminstfontauto">Add/Remove Student</div> 
                         </div>
                         </div>
                         <div className="box adminstbutton-container">
-                        <button type="button" style = {{top: "500px", left: "124px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4", borderRadius: "50px", opacity: "1", fontFamily: "Helvetica", fontSize: "15px", display:"block"}} className="btn btn-primary btn-block" onClick = {this.student}>Student</button>
-                        <button type="button" style = {{top: "472px", left: "124px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button>
+                        
+                        <Link to= "AdminTeacherList"> <button type="button" style = {{top: "472px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button></Link>
                         <button style = {{width: "15%", position: "absolute", right: "0", width: "180px",height: "45px",background: "#26A6FF34 0% 0% no-repeat padding-box", borderRadius: "50px", opacity: "1", fontFamily: "Helvetica", fontSize: "15px", display:"block"}} className="btn btn-primary btn-block" onClick = {this.addStudent}>Add Student</button>
                    </div>
                    
                 </div>
                 <div class="backgroundbox">
+                <div class="backgroundwhitebox">
                     <table class="center">
                         <tr>
                         
@@ -121,7 +122,7 @@ class AdminStudentList extends Component {
                     </div>
                     </div>
                 </div>
-                
+               </div> 
             </div>
             
         )

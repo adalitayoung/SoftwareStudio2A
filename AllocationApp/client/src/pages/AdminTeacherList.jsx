@@ -11,7 +11,7 @@ class AdminTeacherList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            user: props.location.state.user,
+           /* user: props.location.state.user,*/
             teacherData: [],
             isLoading: false,
         }
@@ -94,13 +94,14 @@ class AdminTeacherList extends Component {
                         </div>
                         </div>
                         <div className="box adminstbutton-container">
-                        <button type="button" style = {{top: "500px", left: "124px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4", borderRadius: "50px", opacity: "1", fontFamily: "Helvetica", fontSize: "15px", display:"block"}} className="btn btn-primary btn-block" onClick = {this.student}>Teacher</button>
-                        <button type="button" style = {{top: "472px", left: "124px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Student</button>
-                        <button style = {{width: "15%", position: "absolute", right: "0", width: "180px",height: "45px",background: "#26A6FF34 0% 0% no-repeat padding-box", borderRadius: "50px", opacity: "1", fontFamily: "Helvetica", fontSize: "15px", display:"block"}} className="btn btn-primary btn-block" onClick = {this.addStudent}>Add Teacher</button>
+                        
+                       <Link to= "AdminStudentList"> <button type="button" style = {{top: "472px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.student}>Student</button> </Link>
+                        <button style = {{width: "15%", position: "absolute", right: "0", width: "180px",height: "45px",background: "#26A6FF34 0% 0% no-repeat padding-box", borderRadius: "50px", opacity: "1", fontFamily: "Helvetica", fontSize: "15px", display:"block"}} className="btn btn-primary btn-block" onClick = {this.addTeacher}>Add Teacher</button>
                    </div>
                    
                 </div>
                 <div class="backgroundbox">
+                    <div class="backgroundwhitebox">
                     <table class="center">
                         <tr>
                         
@@ -118,6 +119,7 @@ class AdminTeacherList extends Component {
                             {this.renderTableData()}
                         </tbody>
                     </table>
+                    </div>
                     </div>
                     </div>
                 </div>
