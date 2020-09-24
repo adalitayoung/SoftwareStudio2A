@@ -147,6 +147,55 @@ fetchUserData = async (req, res) => {
   }
 };
 
+deleteUser = async (req, res) => {
+    await User.findOneAndDelete({email: req.params.email}).exec(function (err, user) {
+        if (err) {
+            return res.status(400).json({success: false, error: err})
+        }
+        else if (!user) {
+            return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
+        }
+        else {
+            TempStudent.find({studentID: user._id}).exec(function(error, response) {
+                if (response) {
+                    TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
+                        if(tempUser) {
+                            return res.status(200).json({success: true})
+                        }
+                        else{
+                            return res.status(404).json({success: false, error: 'User not found: '+user._id})
+                        }
+                    })
+                }
+                else if (!response) {
+                    return res.status(200).json({success: true})
+
+                }
+                else if (error) {
+                    return res.status(404).json({success: false, error: error})
+                }
+            })
+            
+            
+        }
+    })
+}
+
+deleteUsers = async (req, res) => {
+    await User.deleteMany({email: {$in: req.params.emails}}).exec(function(err, users){
+        console.log(req.params.emails)
+        if (err) {
+            return res.status(400).json({success: false, error: err})
+        }
+        else if (!users) {
+            return res.status(404).json({success: false, error: 'Users not found'})
+        }
+        else {
+            return res.status(200).json({success: true})
+        }
+    })
+}
+
 addStudentToClass = async (req, res) => {
   const body = req.body;
   if (!body) {
@@ -220,83 +269,21 @@ addStudentToClass = async (req, res) => {
                 }
               );
             }
-        })
-    }
-    else{
-        return res.status(400).json({
-            success: false,
-            error: "Please provide valid input"
-        })
-    }
-
-  })
-}})
-}
-
-
-deleteUser = async (req, res) => {
-    await User.findOneAndDelete({email: req.params.email}).exec(function (err, user) {
-        if (err) {
-            return res.status(400).json({success: false, error: err})
-        }
-        else if (!user) {
-            return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
-        }
-        else {
-            TempStudent.find({studentID: user._id}).exec(function(error, response) {
-                if (response) {
-                    TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
-                        if(tempUser) {
-                            return res.status(200).json({success: true})
-                        }
-                        else{
-                            return res.status(404).json({success: false, error: 'User not found: '+user._id})
-                        }
-                    })
-                }
-                else if (!response) {
-                    return res.status(200).json({success: true})
-
-                }
-                else if (error) {
-                    return res.status(404).json({success: false, error: error})
-                }
-            })
-            
-            
-        }
-    })
-}
-
-deleteUsers = async (req, res) => {
-    await User.deleteMany({email: {$in: req.params.emails}}).exec(function(err, users){
-        console.log(req.params.emails)
-        if (err) {
-            return res.status(400).json({success: false, error: err})
-        }
-        else if (!users) {
-            return res.status(404).json({success: false, error: 'Users not found'})
-        }
-        else {
-            return res.status(200).json({success: true})
-        }
-    })
-}
-
-addStudentToClass = async (req, res) => {
-    const body = req.body
-    if (!body){
-        return res.status(400).json({
+          });
+        } else {
+          return res.status(404).json({
             success: false,
             message: 'class not found!',
           });
         }
-    else {
+      });
+    } else {
       return res.status(404).json({
         success: false,
         message: 'user not found!',
       });
     }
+  });
 };
 
 removeFromClass = async (req, res) => {
