@@ -40,7 +40,7 @@ const projectID = req.body.projectID; // req.params.projectID //this shold be pr
 const roleType = req.body.roleType
 const positionsRequired = req.body.positionsRequired
 const positionsLeft = positionsRequired
-const studentsEnrolledID = [];
+const studentsEnrolledID = req.body.studentsEnrolledID
 
 const newProjectRole = new ProjectRoles({
   projectID,
