@@ -95,8 +95,8 @@ class AdminStudentList extends Component {
                         </div>
                         <div className="box adminstbutton-container">
                         
-                        <Link to= "AdminTeacherList"> <button type="button" style = {{top: "472px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button></Link>
-                        <button style = {{width: "15%", position: "absolute", right: "0", width: "180px",height: "45px",background: "#26A6FF34 0% 0% no-repeat padding-box", borderRadius: "50px", opacity: "1", fontFamily: "Helvetica", fontSize: "15px", display:"block"}} className="btn btn-primary btn-block" onClick = {this.addStudent}>Add Student</button>
+                        <Link to= "AdminTeacherList"> <button  type="button"  style = {{top: "445px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button></Link>
+                        <button type = "button" style = {{position: "absolute", top: "40px", right: "0", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", }} className="btn btn-primary btn-block" onClick = {this.addStudent}>Add Student</button>
                    </div>
                    
                 </div>
