@@ -3,6 +3,8 @@ const e = require('express')
 const User = require('../models/user-model.js');
 const TempStudent = require('../models/temp-student-model.js');
 const Class = require('../models/class-reference.js');
+const Project = require('../models/project-model')
+const ProjectRoles = require('../models/projectRoles-model')
 const jwt = require('jsonwebtoken');
 
 createUser = (req, res) => {
@@ -163,7 +165,10 @@ deleteUser = async (req, res) => {
                    { $pull: {studentIDS: response[0].studentID }}) //remove studentid from classReferences studentIDS araay field
                   .then(data => console.log("studentID removed from ClassReference"))
                   .catch(err => res.status(404).json('Error: ' + err))
-                  
+
+                  removeIDFromProjectRoles(response[0].studentID, response[0].classID)
+
+
                     TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
                         if(tempUser) {
                             return res.status(200).json({success: true})
@@ -186,6 +191,25 @@ deleteUser = async (req, res) => {
         }
     })
 }
+
+function removeIDFromProjectRoles(studentid, classid){
+  //find projects associated with classID
+  Project.find({classID:classid})
+  .then(projects => findStudentProjectsAndDelete(projects, studentid))
+  .catch(err => console.log("No projects found or " + err))
+}
+
+function findStudentProjectsAndDelete(projects, studentid){
+  //loop over projects
+  projects.forEach((project, i) => {
+    ProjectRoles.updateMany({projectID:project._id}, //get project role for the projectid
+    {$pull: {studentsEnrolledID:studentid}})        //pop studentid from that role
+    .then(data => console.log("studentID removed from project role"))
+    .catch(err => res.status(404).json('Error: ' + err))
+  })
+}
+
+
 
 deleteUsers = async (req, res) => {
     await User.deleteMany({email: {$in: req.params.emails}}).exec(function(err, users){
