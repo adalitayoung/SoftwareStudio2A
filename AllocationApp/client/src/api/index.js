@@ -1,8 +1,8 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
-})
+  baseURL: 'http://localhost:3000/api',
+});
 
 // export const insertMovie = payload => api.post(`/movie`, payload)
 // export const getAllMovies = () => api.get(`/movies`)
@@ -10,49 +10,71 @@ const api = axios.create({
 // export const deleteMovieById = id => api.delete(`/movie/${id}`)
 // export const getMovieById = id => api.get(`/movie/${id}`)
 
-export const addUserToDatabase = user => api.post(`/user/createUser`, user)
+export const addUserToDatabase = (user) => api.post(`/user/createUser`, user);
 
-export const startAlgorithm = () => api.get(`/algorithm`)
+export const deleteUser = email => api.delete(`/api/user/deleteUser/${email}`);
 
-export const fetchUserData = (user_role, course_id) => api.get(`/user/fetchUserData/${user_role}/${course_id}`)
+export const startAlgorithm = () => api.get(`/algorithm`);
 
-export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
-export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
+export const addStudentToClass = (tempStudent) =>
+  api.post(`/user/addToClass`, tempStudent);
+export const removeFromClass = (tempStudent) =>
+  api.post(`/user/removeFromClass`, tempStudent);
 
-export const updatePreference = tempStudent => api.post(`/user/updatePreference`, tempStudent)
+export const fetchUserData = (user_role, course_id) =>
+  api.get(`/user/fetchUserData/${user_role}/${course_id}`);
 
-export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
+export const updateUserRole = (user_id, role) =>
+  api.post(`/user/updateUserRole/${user_id}/${role}`);
+export const addUserPreference = (tempStudent) =>
+  api.post(`/user/userPreference`, tempStudent);
+
+export const addPreferencesBackground = (tempStudent) =>
+  api.post(`/user/addPreferencesBackground`, tempStudent);
+
+//export const updateTechBackground = tempStudent => api.post(`/user/updateTechBackground`, tempStudent)
 
 export const addCourse = course => api.post('/class/createClass', course)
-export const getCourseByName = name => api.get(`/class/${name}`)
-export const getAllCourses = () => api.get('/class/getAllClasses')
+export const getCourseByName = name => api.get(`/class/getClass/${name}`)
 
 export const login = loginDetails => api.post('/user/login', loginDetails)
 export const logout = () => api.post('/user/logout')
 
+export const getAllCourses = () => api.get('/class/getAllClasses')
+export const updateCourse = (id, name, numberOfStudents) => api.post(`/class/updateClass/${id}/${name}/${numberOfStudents}`)
+export const deleteCourse = id => api.delete(`/class/deleteClass/${id}`)
 
 //project
-export const createProject = projectDetails => api.post('/project/createProject', projectDetails)
-export const updateProject = id => api.post(`/project/updateProject/${id}`)
-export const deleteProject = id => api.delete(`/project/deleteProject/${id}`)
-export const showProject = id => api.get(`/project/showProject/${id}`)
-export const showMyProjects = () => api.get('/project/showMyProjects')
+export const createProject = (projectDetails) =>
+  api.post('/project/createProject', projectDetails);
+export const updateProject = (id) => api.post(`/project/updateProject/${id}`);
+export const deleteProject = (id) => api.delete(`/project/deleteProject/${id}`);
+export const showProject = (id) => api.get(`/project/showProject/${id}`);
+export const showMyProjects = () => api.get('/project/showMyProjects');
+export const showClassProjects = (id) =>
+  api.get(`/project/showClassProjects/${id}`);
 
 //project roles
-export const createProjectRole = projectRole => api.post('project/createProjectRole', projectRole)
-export const updateProjectRole = id => api.post(`project/updateProjectRole/${id}`)
-export const showRoles = id => api.get(`project/showRoles/${id}`)
-export const deleteProjectRole = id => api.delete(`project/deleteProjectRole/${id}`)
+export const createProjectRole = (projectRole) =>
+  api.post('project/createProjectRole', projectRole);
+export const updateProjectRole = (id) =>
+  api.post(`project/updateProjectRole/${id}`);
+export const showRoles = (id) => api.get(`project/showRoles/${id}`);
+export const deleteProjectRole = (id) =>
+  api.delete(`project/deleteProjectRole/${id}`);
 
 const apis = {
     addUserToDatabase,
+    deleteUser,
+    addStudentToClass,
+    removeFromClass,
     startAlgorithm,
-    addUserPreference,
-    updatePreference,
-    updateTechBackground,
+    addPreferencesBackground,
     addCourse,
     getCourseByName,
     getAllCourses,
+    updateCourse,
+    deleteCourse,
     login,
     logout,
     createProject,
@@ -64,7 +86,9 @@ const apis = {
     updateProjectRole,
     showRoles,
     fetchUserData,
-    deleteProjectRole
+    deleteProjectRole,
+    showClassProjects
 }
 
 export default apis
+

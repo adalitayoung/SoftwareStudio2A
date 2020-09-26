@@ -14,5 +14,8 @@ export { default as Contact } from './Contact';
 export { default as TeacherClassList } from '../pages/TeacherClassList';
 export { default as TeacherStudentList } from '../pages/TeacherStudentList';
 export { default as TeacherProjectList } from '../pages/TeacherProjectList';
+export { default as StudentClassList } from '../pages/StudentClassList';
+export { default as Enroll } from '../pages/Enroll';
+export { default as StudentProjectList } from '../pages/StudentProjectList';
 
 export { Links, Logo, NavBar, Footer };

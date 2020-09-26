@@ -45,7 +45,7 @@ class Signin extends Component {
             window.alert('Welcome ' + email);
             if (role == 'Student') {
               this.props.history.push({
-                pathname: '/Student',
+                pathname: '/student/ClassList',
                 state: { user: res.data },
               });
               //window.location='/Student'

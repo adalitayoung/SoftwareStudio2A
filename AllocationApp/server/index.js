@@ -25,4 +25,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRouter)
 app.use('/api/class', classRouter)
 app.use('/api/project', projectRouter)
+
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+
+module.exports = app
