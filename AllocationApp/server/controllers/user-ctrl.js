@@ -158,6 +158,12 @@ deleteUser = async (req, res) => {
         else {
             TempStudent.find({studentID: user._id}).exec(function(error, response) {
                 if (response) {
+
+                  Class.updateOne( {_id: response[0].classID},
+                   { $pull: {studentIDS: response[0].studentID }}) //remove studentid from classReferences studentIDS araay field
+                  .then(data => console.log("studentID removed from ClassReference"))
+                  .catch(err => res.status(404).json('Error: ' + err))
+                  
                     TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
                         if(tempUser) {
                             return res.status(200).json({success: true})
@@ -175,8 +181,8 @@ deleteUser = async (req, res) => {
                     return res.status(404).json({success: false, error: error})
                 }
             })
-            
-            
+
+
         }
     })
 }
