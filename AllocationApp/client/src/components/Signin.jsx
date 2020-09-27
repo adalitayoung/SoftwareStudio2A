@@ -50,13 +50,13 @@ class Signin extends Component {
               });
               //window.location='/Student'
             } 
-            if (res.data.role === "Teacher"){
+            else if (role === "Teacher"){
               this.props.history.push({
                 pathname: '/teacher/ClassList',
                 state: {user: res.data}
               })
             }
-            if (res.data.role === "Admin"){
+            else if (role === "Admin"){
               this.props.history.push({
                 pathname: '/admin/AdminStudentList',
                 state: {user: res.data}
