@@ -3,6 +3,8 @@ const e = require('express')
 const User = require('../models/user-model.js');
 const TempStudent = require('../models/temp-student-model.js');
 const Class = require('../models/class-reference.js');
+const Project = require('../models/project-model')
+const ProjectRoles = require('../models/projectRoles-model')
 const jwt = require('jsonwebtoken');
 
 createUser = (req, res) => {
@@ -158,14 +160,20 @@ deleteUser = async (req, res) => {
         }
         else {
             TempStudent.find({studentID: user._id}).exec(function(error, response) {
-                console.log(response)
-              if (response) {
+                if (response) {
+                  if(response.length>0){  // this check if returned array has any values
+                    Class.updateOne( {_id: response[0].classID},
+                     { $pull: {studentIDS: response[0].studentID }}) //remove studentid from classReferences studentIDS araay field
+                    .then(data => res.status(200).json("studentID removed from ClassReference"))
+                    .catch(err => res.status(404).json('Error: ' + err))
+                     removeIDFromProjectRoles(response[0].studentID, response[0].classID)
+                  }
                     TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
                         if(tempUser) {
                             return res.status(200).json({success: true})
                         }
                         else{
-                            return res.status(404).json({success: false, error: 'User not found: '+user._id})
+                            return res.status(404).json({success: false, error: 'User not found in Enrollments: '+user._id})
                         }
                     })
                 }
@@ -177,11 +185,30 @@ deleteUser = async (req, res) => {
                     return res.status(404).json({success: false, error: error})
                 }
             })
-            
-            
+
+
         }
     })
 }
+
+function removeIDFromProjectRoles(studentid, classid){
+  //find projects associated with classID
+  Project.find({classID:classid})
+  .then(projects => findStudentProjectsAndDelete(projects, studentid))
+  .catch(err => console.log("No projects found or " + err))
+}
+
+function findStudentProjectsAndDelete(projects, studentid){
+  //loop over projects
+  projects.forEach((project, i) => {
+    ProjectRoles.updateMany({projectID:project._id}, //get project role for the projectid
+    {$pull: {studentsEnrolledID:studentid}})        //pop studentid from that role
+    .then(data => console.log("studentID removed from project role"))
+    .catch(err => res.status(404).json('Error: ' + err))
+  })
+}
+
+
 
 deleteUsers = async (req, res) => {
     await User.deleteMany({email: {$in: req.params.emails}}).exec(function(err, users){
@@ -384,7 +411,7 @@ addPreferencesBackground = async (req, res) => {
   }
 
   //find student in user database using email entered in body
-  User.find({ email: body.email }).exec(function (err, users) {
+  User.find({ _id: req.body.studentID }).exec(function (err, users) {
     //if there is a user
     if (users.length) {
       //get the student id from the users db and assign as tempStudent students id
@@ -464,6 +491,8 @@ login = async (req, res) => {
         success: true,
         fullName: users[0].fullName,
         role: users[0].role,
+        id: users[0]._id,
+        email: users[0].email
       });
     } else if (users[0].password != body.password) {
       return res.status(400).json({

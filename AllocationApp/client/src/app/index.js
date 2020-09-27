@@ -7,6 +7,8 @@ import Student from '../components/Student';
 import Teacher from '../components/Teacher';
 import Admin from '../components/Admin';
 import SignOut from '../components/SignOut';
+import Editpreferences from '../components/Editpreferences';
+
 
 import { NavBar, Home, Signin, Footer } from '../components';
 import {
@@ -44,6 +46,8 @@ function App() {
         <Route path='/student/ClassList/StudentProjectList' exact component={StudentProjectList} />
         <Route path='/teacher/StudentList' exact component={TeacherStudentList}/>
         <Route path='/teacher/ProjectList' exact component={TeacherProjectList}/>
+        <Route path='/student/updatepreferences' exact component={Editpreferences} />
+
       </Switch>
       <Footer />
     </Router>

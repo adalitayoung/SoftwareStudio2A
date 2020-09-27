@@ -13,9 +13,11 @@ class TeacherClassList extends Component {
       user: props.location.state.user,
       classData: [],
       isLoading: false,
+      courseIds: [],
     };
     console.log(props);
     this.fetchClassList(this.state.user._id);
+    this.deleteClass();
   }
 
   fetchClassList(userId) {
@@ -23,7 +25,6 @@ class TeacherClassList extends Component {
       // need to change class model and check if the course is for that teacher
       console.log(data);
       this.setState({ classData: data.data.data });
-      console.log(this.state.classData);
     });
   }
 
@@ -33,36 +34,29 @@ class TeacherClassList extends Component {
     console.log(user);
   }
 
-  deleteClass(user) {
-    // event.preventDefault();
-    console.log('delete');
-    console.log(user);
+  deleteClass(_id) {
+    const class_id = _id;
+    api.deleteCourse(class_id).then((data) => {
+      console.log(data);
+      this.setState({ classData: data.data.data });
+    });
   }
 
-  getId = async (event) => {
-    const classdata = this.state.classData;
+  viewStudents(_id) {
     const user = this.state.user;
-
-    var array = classdata.length;
-    for (var i = 0; i < array; i++) {
-      const id = classdata[i]._id;
-    }
-  };
-
-  viewStudents = async (event) => {
-    const user = this.state.user;
+    // console.log(_id);
     this.props.history.push({
       pathname: '/Teacher/StudentList',
-      state: { user: user },
+      state: { user: user, course: _id },
     });
-  };
+    // console.log(this.state);
+  }
 
-  viewProjects = async (event) => {
+  viewProjects = async (_id) => {
     const user = this.state.user;
-    // const classdata = this.state.classData;
     this.props.history.push({
       pathname: '/Teacher/ProjectList',
-      state: { user: user },
+      state: { user: user, course: _id },
     });
   };
 
@@ -74,37 +68,37 @@ class TeacherClassList extends Component {
   renderTableData() {
     return this.state.classData.map((course, index) => {
       const { name, numberOfStudents, _id } = course; //destructuring
-      console.log(_id);
       return (
         <tr key={_id}>
           <td id='tdclass'>{name}</td>
           <td id='tdclass'>{numberOfStudents}</td>
           <td>
             <button
+              key={_id}
               id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={this.viewStudents}
-              value={JSON.stringify({ _id })}
+              onClick={() => this.viewStudents(_id)}
             >
               Students
             </button>
           </td>
           <td>
             <button
+              key={_id}
               id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={this.viewProjects}
+              onClick={() => this.viewProjects(_id)}
             >
               Projects
             </button>
           </td>
           <td>
-            <button id='icon' onClick={() => this.deleteClass(_id)}>
+            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
               <img id='edit' src={edit} />
             </button>
           </td>
           <td>
-            <button id='icon' onClick={() => this.deleteClass(_id)}>
+            <button id='icon' key={_id} onClick={() => this.deleteClass(_id)}>
               <img id='del' src={del} />
             </button>
           </td>
