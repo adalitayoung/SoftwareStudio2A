@@ -33,8 +33,8 @@ function App() {
         <Route path='/SignOut' exact component={() => <SignOut />} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
         <Route path='/student/ClassList' exact component={StudentClassList} />
-        <Route path='/student/ClassList/Enroll' exact component={Enroll} />
-        <Route path='/student/ClassList/StudentProjectList' exact component={StudentProjectList} />
+        <Route path='/student/Enroll' exact component={Enroll} />
+        <Route path='/student/StudentProjectList' exact component={StudentProjectList} />
         <Route
           path='/teacher/StudentList'
           exact

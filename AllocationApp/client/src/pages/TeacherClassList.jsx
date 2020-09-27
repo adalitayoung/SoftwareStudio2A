@@ -16,10 +16,10 @@ class TeacherClassList extends Component {
       isLoading: false,
     };
 
-    this.fetchClassList(this.state.user._id);
+    this.fetchClassList();
   }
 
-  fetchClassList(userId) {
+  fetchClassList() {
     api.getAllCourses().then((data) => {
       // need to change class model and check if the course is for that teacher
       // console.log(data)
