@@ -411,7 +411,7 @@ addPreferencesBackground = async (req, res) => {
   }
 
   //find student in user database using email entered in body
-  User.find({ email: body.email }).exec(function (err, users) {
+  User.find({ _id: req.body.studentID }).exec(function (err, users) {
     //if there is a user
     if (users.length) {
       //get the student id from the users db and assign as tempStudent students id
@@ -491,6 +491,8 @@ login = async (req, res) => {
         success: true,
         fullName: users[0].fullName,
         role: users[0].role,
+        id: users[0]._id,
+        email: users[0].email
       });
     } else if (users[0].password != body.password) {
       return res.status(400).json({
