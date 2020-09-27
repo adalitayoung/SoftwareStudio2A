@@ -2,28 +2,29 @@
     display: flex;
     flex-direction: row;
     align-items: unset;
-    padding: 3% 10%; 
+    padding: 8% 10%; 
 }
 
-.addClass .box > * {
-    flex-basis:50%;  
+.addClass .box > div:first-child {
+    flex-basis:26%;  
 }
 
 .addClass .box__center {
     justify-content: center;
-    background-color: rgba(38, 166, 255, 0.3);
-    padding: 10px 40px;
+    background-color: #26A6FF2B;
+    padding: 10px 60px 8px;
     border-radius: 15px;
+    width: 50%;
 }
 
 .button.button--add-class {
     outline: 0;
     border: 0;
-    border-radius: 25px;
+    border-radius: 50px;
     padding: 8px 20px;
     font-size: 15px;
     font-weight: 600;
-    background-color: #3da2ff;
+    background-color: #26A6FF;
     color: white;
 }
 
@@ -41,7 +42,7 @@
 
 .addClass .form-control {
     border-radius: 25px;
-    margin-bottom:40px;
+    margin-bottom:15px;
 }
 
 .addClass .name {
@@ -49,6 +50,6 @@
     font-weight: 600;
     margin-top: 25px;
     margin-bottom:15px;
-    color: #3da2ff;
+    color: #26A6FF;
 }
 
