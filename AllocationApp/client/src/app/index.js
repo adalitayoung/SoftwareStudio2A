@@ -6,6 +6,8 @@ import Student from '../components/Student';
 import Teacher from '../components/Teacher';
 import Admin from '../components/Admin';
 import SignOut from '../components/SignOut';
+import Editpreferences from '../components/Editpreferences';
+
 
 import {
   Signup,
@@ -13,6 +15,7 @@ import {
   TeacherClassList,
   TeacherStudentList,
   TeacherProjectList,
+  StudentClassList, Enroll, StudentProjectList
 } from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,6 +37,10 @@ function App() {
         <Route path='/Admin' exact component={() => <Admin />} />
         <Route path='/SignOut' exact component={() => <SignOut />} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
+        <Route path='/student/ClassList' exact component={StudentClassList} />
+        <Route path='/student/ClassList/Enroll' exact component={Enroll} />
+        <Route path='/student/ClassList/StudentProjectList' exact component={StudentProjectList} />
+        <Route path='/student/updatepreferences' exact component={Editpreferences} />
         <Route
           path='/teacher/StudentList'
           exact

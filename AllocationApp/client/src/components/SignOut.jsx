@@ -16,8 +16,9 @@ class SignOut extends React.Component{
   render(){
     
     return(
+    
         <><div>
-      <center><br/><br/> <h1> Logged Out Successfull!</h1> <br/><br/>
+      <center><br/><br/><br/><br/><br/><br/> <h1> Logged Out Successfull!</h1> <br/><br/>
       </center>
        </div><br/><br/><br/></>
       );
