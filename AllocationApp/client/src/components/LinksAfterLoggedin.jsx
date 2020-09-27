@@ -25,7 +25,7 @@ class LinksAfterLoggedin extends Component {
                 <Collapse>
                     <List>
                         <Item>
-                            <Link to="SignOut" className="nav-link"><button id="signnav" className="btn btn-primary">Sign Out</button></Link>
+                            <Link to="/SignOut" className="nav-link"><button id="signnav" className="btn btn-primary">Sign Out</button></Link>
                         </Item>
                       
                     </List>
