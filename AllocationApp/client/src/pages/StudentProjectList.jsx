@@ -21,7 +21,7 @@ class StudentProjectList extends Component {
 
     getProject() {
         const class_id = ''
-        api.showClassProjects(class_id).then( data => {
+        api.showProject(class_id).then( data => {
           this.setState({ projectData: data.data.data})
         })
     }
