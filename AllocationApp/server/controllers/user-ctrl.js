@@ -153,11 +153,13 @@ deleteUser = async (req, res) => {
             return res.status(400).json({success: false, error: err})
         }
         else if (!user) {
+          console.log("delete")
             return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
         }
         else {
             TempStudent.find({studentID: user._id}).exec(function(error, response) {
-                if (response) {
+                console.log(response)
+              if (response) {
                     TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
                         if(tempUser) {
                             return res.status(200).json({success: true})

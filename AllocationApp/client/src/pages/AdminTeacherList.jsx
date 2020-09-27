@@ -33,13 +33,15 @@ class AdminTeacherList extends Component {
         console.log('edit')
         console.log(user)
     }
-
-    deleteClass(user) {
-        // event.preventDefault();
+*/
+     deleteUser(email) {
+        
+       api.deleteUser(email).then(data => {
         console.log('delete')
-        console.log(user)
-    }
-    */
+        window.alert('This ' + email + 'is deleted!');
+    })
+}
+  
    
     teacher = async event => {
         // add function to redirect it to 
@@ -72,7 +74,7 @@ class AdminTeacherList extends Component {
                       <AiOutlineEdit />
                   </td>
                   <td>
-                      <ImCross />
+                  <ImCross onClick={() => this.deleteUser(email)}/>
                   </td>
                </tr>
             )

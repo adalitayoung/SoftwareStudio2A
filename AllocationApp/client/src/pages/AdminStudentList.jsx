@@ -17,29 +17,33 @@ class AdminStudentList extends Component {
         }
 
         this.fetchStudentList()
+    
     }
 
     fetchStudentList(){
         api.fetchUserData("Student", null).then(data => {
-            // need to change class model and check if the course is for that teacher
+            // need to retrieve all the student data made in the database.
             // console.log(data)
             this.setState({studentData: data.data.userData})
             console.log(this.state.studentData)
         })
     }
 
+
     /*editClass(user) {
         // event.preventDefault();
         console.log('edit')
         console.log(user)
     }
-
-    deleteClass(user) {
-        // event.preventDefault();
+*/
+    deleteUser(email) {
+        
+       api.deleteUser(email).then(data => {
         console.log('delete')
-        console.log(user)
-    }
-    */
+        window.alert('This ' + email + 'is deleted!');
+    })
+}
+    
    
     student = async event => {
         // add function to redirect it to 
@@ -72,7 +76,7 @@ class AdminStudentList extends Component {
                       <AiOutlineEdit />
                   </td>
                   <td>
-                      <ImCross />
+                      <ImCross onClick={() => this.deleteUser(email)}/>
                   </td>
                </tr>
             )
@@ -95,7 +99,7 @@ class AdminStudentList extends Component {
                         </div>
                         <div className="box adminstbutton-container">
                         
-                        <Link to= "AdminTeacherList"> <button  type="button"  style = {{top: "445px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button></Link>
+                        <Link to= "AdminTeacherList"> <button type="button"  style = {{top: "445px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button></Link>
                         <button type = "button" style = {{position: "absolute", top: "40px", right: "0", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", }} className="btn btn-primary btn-block" onClick = {this.addStudent}>Add Student</button>
                    </div>
                    
