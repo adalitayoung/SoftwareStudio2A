@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { NavBar, Home, Signin, Footer } from '../components'
 import Student from '../components/Student';
 import Teacher from '../components/Teacher';
 import Admin from '../components/Admin';
@@ -8,9 +9,9 @@ import SignOut from '../components/SignOut';
 import Editpreferences from '../components/Editpreferences';
 
 
-import { NavBar, Home, Signin, Footer } from '../components';
 import {
   Signup,
+  AddClass,
   TeacherClassList,
   TeacherStudentList,
   TeacherProjectList,
@@ -22,6 +23,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 function App() {
+
   return (
     <Router>
       <NavBar />
@@ -29,6 +31,7 @@ function App() {
         <Route path='/' exact component={() => <Home />} />
         <Route path='/Register' exact component={Signup} />
         <Route path='/SignIn' exact component={() => <Signin />} />
+        <Route path="/AddClass" exact component={() => <AddClass />} />
         <Route path='/Student' exact component={() => <Student />} />
         <Route path='/Teacher' exact component={() => <Teacher />} />
         <Route path='/Admin' exact component={() => <Admin />} />
