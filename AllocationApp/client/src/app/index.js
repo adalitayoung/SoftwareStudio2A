@@ -30,7 +30,7 @@ function App() {
         <Route path='/Student' exact component={() => <Student />} />
         <Route path='/Teacher' exact component={() => <Teacher />} />
         <Route path='/Admin' exact component={() => <Admin />} />
-        <Route path='/SignOut' exact component={() => <SignOut />}
+        <Route path='/SignOut' exact component={() => <SignOut />} />
         <Route path='/AddProject' exact component = {AddProject} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
         <Route
