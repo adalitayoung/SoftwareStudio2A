@@ -17,7 +17,7 @@ export const deleteUser = email => api.delete(`/user/deleteUser/${email}`);
 export const startAlgorithm = () => api.get(`/algorithm`);
 
 export const addStudentToClass = (student_id, className) => api.post(`/user/addToClass/${student_id}/${className}`);
-export const removeFromClass = (tempStudent) => api.post(`/user/removeFromClass`, tempStudent);
+export const removeFromClass = (student_id, className) => api.post(`/user/removeFromClass/${student_id}/${className}`);
 
 export const fetchUserData = (user_role, course_id) => api.get(`/user/fetchUserData/${user_role}/${course_id}`);
 
