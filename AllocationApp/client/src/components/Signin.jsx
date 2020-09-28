@@ -38,29 +38,31 @@ class Signin extends Component {
 
           if (res.status === 201) {
             let msh = res.data;
-            let role = msh.role;
+             let uid = msh.id;
+             let role = msh.role;
+             let userEmail = msh.email
             this.setState({ msg: 'Succesfull Login!' });
-
+            localStorage.setItem('email', userEmail)
             localStorage.setItem('Token', 'Logged in');
-            window.alert('Welcome ' + email);
+            localStorage.setItem('uid', uid); //window.alert('Welcome ' + email);
             if (role == 'Student') {
               this.props.history.push({
-                pathname: '/Student',
+                pathname: '/student/ClassList',
                 state: { user: res.data },
               });
               //window.location='/Student'
-            } else if (role == 'Teacher') {
+            } 
+            else if (role === "Teacher"){
               this.props.history.push({
                 pathname: '/teacher/ClassList',
-                state: { user: res.data },
-              });
-              //window.location='/Teacher'
-            } else if (role == 'Admin') {
+                state: {user: res.data}
+              })
+            }
+            else if (role === "Admin"){
               this.props.history.push({
-                pathname: '/Admin',
-                state: { user: res.data },
-              });
-              //window.location='/Admin'
+                pathname: '/admin/AdminStudentList',
+                state: {user: res.data}
+              })
             }
           }
         },
