@@ -38,11 +38,13 @@ class Signin extends Component {
 
           if (res.status === 201) {
             let msh = res.data;
-            let role = msh.role;
+             let uid = msh.id;
+             let role = msh.role;
+             let userEmail = msh.email
             this.setState({ msg: 'Succesfull Login!' });
-
+            localStorage.setItem('email', userEmail)
             localStorage.setItem('Token', 'Logged in');
-            window.alert('Welcome ' + email);
+            localStorage.setItem('uid', uid); //window.alert('Welcome ' + email);
             if (role == 'Student') {
               this.props.history.push({
                 pathname: '/student/ClassList',

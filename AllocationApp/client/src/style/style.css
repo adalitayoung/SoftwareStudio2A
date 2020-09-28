@@ -238,3 +238,31 @@ svg {
 #navbtn {
   padding-bottom: 15px;
 }
+
+
+.clr{
+      color: #26a6ff;
+    }
+    .txt{
+      font-size: 28px;
+      color: #26a6ff;
+      font-weight: 700;
+    }
+    .clr1{
+      color: #26a6ff;
+      font-weight: 650;
+      font-size: 20px;
+    }
+    .bg-frm{
+      background-color: #3da2ff;
+      border-radius: 10px;
+      padding-top: 5px;
+      padding-bottom: 25px;
+    }
+    .tp{
+      margin-top: 10px;
+    }
+    .lbl{
+      color:white;
+      font-weight: 650;
+    }
