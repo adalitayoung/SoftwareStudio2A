@@ -17,9 +17,7 @@ class TeacherProjectList extends Component {
       projectData: [], //stores the output from the api call
       isLoading: false,
     };
-
     this.getProjectData();
-    console.log(this.state.className);
   }
 
   getProjectData() {
@@ -39,6 +37,15 @@ class TeacherProjectList extends Component {
     });
   };
 
+  deleteProject(_id, projectName) {
+    const name = projectName;
+    const classname = this.state.className;
+    api.deleteProject(_id).then((data) => {
+      window.alert(name + ' has been removed from ' + classname);
+      window.location.reload();
+    });
+  }
+
   addProject = async (event) => {
     event.preventDefault();
     // redirect to add class
@@ -53,7 +60,10 @@ class TeacherProjectList extends Component {
           <td id='tdclass'>{description}</td>
           <td id='tdclass'>{createdByname}</td>
           <td>
-            <button id='icon' onClick={() => this.deleteClass(_id)}>
+            <button
+              id='icon'
+              onClick={() => this.deleteProject(_id, projectName)}
+            >
               <img id='del' src={del} />
             </button>
           </td>

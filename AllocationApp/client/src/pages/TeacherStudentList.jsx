@@ -16,7 +16,6 @@ class TeacherStudentList extends Component {
       isLoading: false,
     };
     this.getUserData();
-    console.log(this.state);
   }
 
   getUserData() {
@@ -29,10 +28,9 @@ class TeacherStudentList extends Component {
 
   deleteStudent(_id, email) {
     const student_id = _id;
-    const student_email = email;
-    api.removeFromClass(student_id).then((data) => {
-      console.log(data);
-      console.log(student_email + 'has been removed from the class!');
+    const classname = this.state.className;
+    api.removeFromClass(student_id, classname).then((data) => {
+      window.alert(email + ' has been removed!');
       window.location.reload();
     });
   }
