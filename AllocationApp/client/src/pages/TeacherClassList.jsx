@@ -61,12 +61,11 @@ class TeacherClassList extends Component {
 
   addClass = async (event) => {
     event.preventDefault();
-    // redirect to add class
   };
 
   renderTableData() {
     return this.state.classData.map((course, index) => {
-      const { name, numberOfStudents, _id } = course; //destructuring
+      const { name, numberOfStudents, _id } = course;
       return (
         <tr key={_id}>
           <td id='tdclass'>{name}</td>
