@@ -11,6 +11,7 @@ export { default as Home } from './Home';
 export { default as Signin } from './Signin';
 export { default as Signup } from '../pages/Register';
 export { default as Contact } from './Contact';
+export { default as AddProject} from '../pages/AddProject';
 export { default as AddClass } from '../pages/AddClass';
 export { default as TeacherClassList } from '../pages/TeacherClassList';
 export { default as TeacherStudentList } from '../pages/TeacherStudentList';

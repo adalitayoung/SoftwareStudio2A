@@ -11,6 +11,7 @@ import Editpreferences from '../components/Editpreferences';
 
 import {
   Signup,
+  AddProject,
   AddClass,
   TeacherClassList,
   TeacherStudentList,
@@ -38,6 +39,7 @@ function App() {
         <Route path='/Teacher' exact component={() => <Teacher />} />
         <Route path='/Admin' exact component={() => <Admin />} />
         <Route path='/SignOut' exact component={() => <SignOut />} />
+        <Route path='/AddProject' exact component = {AddProject} />
         <Route path='/admin/AdminTeacherList' exact component={AdminTeacherList} />
         <Route path='/admin/AdminStudentList' exact component={AdminStudentList} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
