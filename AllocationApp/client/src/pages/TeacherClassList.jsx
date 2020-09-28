@@ -15,12 +15,13 @@ class TeacherClassList extends Component {
       isLoading: false,
       courseIds: [],
     };
-    console.log(props);
+
+    //console.log(props);
     this.fetchClassList(this.state.user._id);
-    this.deleteClass();
+    //this.deleteClass();
   }
 
-  fetchClassList(userId) {
+  fetchClassList() {
     api.getAllCourses().then((data) => {
       // need to change class model and check if the course is for that teacher
       console.log(data);

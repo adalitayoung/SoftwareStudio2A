@@ -42,10 +42,10 @@ function App() {
         <Route path='/admin/AdminStudentList' exact component={AdminStudentList} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
         <Route path='/student/ClassList' exact component={StudentClassList} />
-        <Route path='/student/ClassList/Enroll' exact component={Enroll} />
-        <Route path='/student/ClassList/StudentProjectList' exact component={StudentProjectList} />
-        <Route path='/teacher/StudentList' exact component={TeacherStudentList}/>
-        <Route path='/teacher/ProjectList' exact component={TeacherProjectList}/>
+        <Route path='/student/Enroll' exact component={Enroll} />
+        <Route path='/student/StudentProjectList' exact component={StudentProjectList} />
+        <Route path='/teacher/StudentList'exact component={TeacherStudentList} />
+        <Route path='/teacher/ProjectList'exact component={TeacherProjectList} />
         <Route path='/student/updatepreferences' exact component={Editpreferences} />
 
       </Switch>
