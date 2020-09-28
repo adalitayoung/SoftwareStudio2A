@@ -31,7 +31,7 @@ showProject = (req, res) => {
  }
 
  showMyProjects = (req, res) => {
-   Project.find({createdByID:req.userID})
+   Project.find({createdByID:req.body.createdByID})
    .then(project => res.json(project))
    .catch(err => res.status(400).json('Error: ' + err))
   }
@@ -63,8 +63,8 @@ createProject = (req, res) => {
     })
   }
   const classID = req.body.classID // this will come from classID
-  const createdByID = req.userID
-  const createdByname = req.userName
+  const createdByID = req.body.createdByID
+  const createdByname = req.body.createdByname
   const projectName = req.body.projectName
   const description = req.body.description
   const studentMin = req.body.studentMin
