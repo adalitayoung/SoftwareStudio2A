@@ -51,18 +51,18 @@ class Signin extends Component {
                 state: { user: res.data },
               });
               //window.location='/Student'
-            } else if (role == 'Teacher') {
+            } 
+            else if (role === "Teacher"){
               this.props.history.push({
                 pathname: '/teacher/ClassList',
-                state: { user: res.data },
-              });
-              //window.location='/Teacher'
-            } else if (role == 'Admin') {
+                state: {user: res.data}
+              })
+            }
+            else if (role === "Admin"){
               this.props.history.push({
-                pathname: '/Admin',
-                state: { user: res.data },
-              });
-              //window.location='/Admin'
+                pathname: '/admin/AdminStudentList',
+                state: {user: res.data}
+              })
             }
           }
         },

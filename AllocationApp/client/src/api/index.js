@@ -12,7 +12,7 @@ const api = axios.create({
 
 export const addUserToDatabase = (user) => api.post(`/user/createUser`, user);
 
-export const deleteUser = email => api.delete(`/api/user/deleteUser/${email}`);
+export const deleteUser = email => api.delete(`/user/deleteUser/${email}`);
 
 export const startAlgorithm = () => api.get(`/algorithm`);
 
@@ -62,29 +62,30 @@ export const deleteProjectRole = (id) =>
   api.delete(`project/deleteProjectRole/${id}`);
 
 const apis = {
-  addUserToDatabase,
-  addStudentToClass,
-  removeFromClass,
-  startAlgorithm,
-  addPreferencesBackground,
-  addCourse,
-  getCourseByName,
-  getAllCourses,
-  updateCourse,
-  deleteCourse,
-  fetchUserData,
-  login,
-  logout,
-  createProject,
-  updateProject,
-  deleteProject,
-  showProject,
-  showMyProjects,
-  createProjectRole,
-  updateProjectRole,
-  showRoles,
-  deleteProjectRole,
-  showClassProjects,
-};
+    addUserToDatabase,
+    deleteUser,
+    addStudentToClass,
+    removeFromClass,
+    startAlgorithm,
+    addPreferencesBackground,
+    addCourse,
+    getCourseByName,
+    getAllCourses,
+    updateCourse,
+    deleteCourse,
+    login,
+    logout,
+    createProject,
+    updateProject,
+    deleteProject,
+    showProject,
+    showMyProjects,
+    createProjectRole,
+    updateProjectRole,
+    showRoles,
+    fetchUserData,
+    deleteProjectRole,
+    showClassProjects
+}
 
-export default apis;
+export default apis

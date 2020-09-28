@@ -155,6 +155,7 @@ deleteUser = async (req, res) => {
             return res.status(400).json({success: false, error: err})
         }
         else if (!user) {
+          console.log("delete")
             return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
         }
         else {
@@ -167,7 +168,6 @@ deleteUser = async (req, res) => {
                     .catch(err => res.status(404).json('Error: ' + err))
                      removeIDFromProjectRoles(response[0].studentID, response[0].classID)
                   }
-
                     TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
                         if(tempUser) {
                             return res.status(200).json({success: true})
