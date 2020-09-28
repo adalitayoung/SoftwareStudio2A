@@ -34,11 +34,12 @@ class TeacherClassList extends Component {
     console.log(user);
   }
 
-  deleteClass(_id) {
+  deleteClass(_id, name) {
     const class_id = _id;
     api.deleteCourse(class_id).then((data) => {
-      console.log(data);
-      this.setState({ classData: data.data.data });
+      console.log('Class' + name + 'is deleted!');
+      window.alert('This ' + name + 'is deleted!');
+      window.location.reload();
     });
   }
 
@@ -98,7 +99,11 @@ class TeacherClassList extends Component {
             </button>
           </td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.deleteClass(_id)}>
+            <button
+              id='icon'
+              key={_id}
+              onClick={() => this.deleteClass(_id, name)}
+            >
               <img id='del' src={del} />
             </button>
           </td>

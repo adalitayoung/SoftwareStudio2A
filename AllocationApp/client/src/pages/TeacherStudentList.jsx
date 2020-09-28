@@ -16,7 +16,6 @@ class TeacherStudentList extends Component {
       isLoading: false,
     };
     this.getUserData();
-    this.deleteStudent();
     console.log(this.state);
   }
 
@@ -28,11 +27,13 @@ class TeacherStudentList extends Component {
     });
   }
 
-  deleteStudent(_id) {
+  deleteStudent(_id, email) {
     const student_id = _id;
+    const student_email = email;
     api.removeFromClass(student_id).then((data) => {
       console.log(data);
-      this.setState({ studentData: data.data.data });
+      console.log(student_email + 'has been removed from the class!');
+      window.location.reload();
     });
   }
 
@@ -49,7 +50,7 @@ class TeacherStudentList extends Component {
           <td id='tdclass'>{email}</td>
           <td id='tdclass'>{_id}</td>
           <td>
-            <button id='icon' onClick={() => this.deleteClass(_id)}>
+            <button id='icon' onClick={() => this.deleteStudent(_id, email)}>
               <img id='del' src={del} />
             </button>
           </td>
