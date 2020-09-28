@@ -42,21 +42,21 @@ class TeacherClassList extends Component {
     });
   }
 
-  viewStudents(_id) {
+  viewStudents(_id, name) {
     const user = this.state.user;
-    // console.log(_id);
+    const classname = name;
     this.props.history.push({
       pathname: '/Teacher/StudentList',
-      state: { user: user, course: _id },
+      state: { user: user, course: _id, className: classname },
     });
-    // console.log(this.state);
   }
 
-  viewProjects = async (_id) => {
+  viewProjects = async (_id, name) => {
     const user = this.state.user;
+    const classname = name;
     this.props.history.push({
       pathname: '/Teacher/ProjectList',
-      state: { user: user, course: _id },
+      state: { user: user, course: _id, className: classname },
     });
   };
 
@@ -77,7 +77,7 @@ class TeacherClassList extends Component {
               key={_id}
               id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={() => this.viewStudents(_id)}
+              onClick={() => this.viewStudents(_id, name)}
             >
               Students
             </button>
@@ -87,7 +87,7 @@ class TeacherClassList extends Component {
               key={_id}
               id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={() => this.viewProjects(_id)}
+              onClick={() => this.viewProjects(_id, name)}
             >
               Projects
             </button>

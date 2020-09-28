@@ -2,8 +2,9 @@ import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
 import api from '../api';
+import edit from '../res/edit.png';
+import del from '../res/delete.png';
 
-import back from '../res/back.png';
 import { Component } from 'react';
 
 class TeacherProjectList extends Component {
@@ -12,11 +13,13 @@ class TeacherProjectList extends Component {
     this.state = {
       user: props.location.state.user.fullName,
       course: props.location.state.course,
+      className: props.location.state.className,
       projectData: [], //stores the output from the api call
       isLoading: false,
     };
-    console.log(props);
+
     this.getProjectData();
+    console.log(this.state.className);
   }
 
   getProjectData() {
@@ -49,6 +52,11 @@ class TeacherProjectList extends Component {
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
           <td id='tdclass'>{createdByname}</td>
+          <td>
+            <button id='icon' onClick={() => this.deleteClass(_id)}>
+              <img id='del' src={del} />
+            </button>
+          </td>
         </tr>
       );
     });
@@ -75,7 +83,7 @@ class TeacherProjectList extends Component {
           </a>
           <div className='col' id='column'>
             <div className='row'>
-              <h2> Projects in Class:</h2>
+              <h2>Projects in {this.state.className} </h2>
             </div>
             <a
               id='navbtn'

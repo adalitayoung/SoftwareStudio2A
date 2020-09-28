@@ -11,16 +11,27 @@ class TeacherStudentList extends Component {
     this.state = {
       user: props.location.state.user.fullName,
       course: props.location.state.course,
+      className: props.location.state.className,
       studentData: [],
       isLoading: false,
     };
     this.getUserData();
+    this.deleteStudent();
+    console.log(this.state);
   }
 
   getUserData() {
     const id = this.state.course;
     api.fetchUserData('Student', id).then((data) => {
       console.log(data.data.data);
+      this.setState({ studentData: data.data.data });
+    });
+  }
+
+  deleteStudent(_id) {
+    const student_id = _id;
+    api.removeFromClass(student_id).then((data) => {
+      console.log(data);
       this.setState({ studentData: data.data.data });
     });
   }
@@ -35,7 +46,6 @@ class TeacherStudentList extends Component {
       const { email, role, _id } = student; //destructuring
       return (
         <tr key={_id}>
-          <td id='tdclass'>{role}</td>
           <td id='tdclass'>{email}</td>
           <td id='tdclass'>{_id}</td>
           <td>
@@ -43,6 +53,11 @@ class TeacherStudentList extends Component {
               <img id='del' src={del} />
             </button>
           </td>
+          {/* <td>
+            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
+              <img id='edit' src={edit} />
+            </button>
+          </td> */}
         </tr>
       );
     });
@@ -69,11 +84,12 @@ class TeacherStudentList extends Component {
           </a>
           <div className='col' id='column'>
             <div className='row'>
-              <h2>Students in Class: </h2>
+              <h2>Students in {this.state.className} </h2>
             </div>
             <a
               id='navbtn'
-              class='btn btn-primary btn-lg '
+              href='#'
+              class='btn btn-primary btn-lg disabled'
               role='button'
               aria-disabled='true'
             >
@@ -82,7 +98,7 @@ class TeacherStudentList extends Component {
             <a
               id='navbtn'
               href='#'
-              class='btn btn-primary btn-lg disabled'
+              class='btn btn-primary btn-lg'
               role='button'
               aria-disabled='true'
             >
@@ -90,7 +106,6 @@ class TeacherStudentList extends Component {
             </a>
             <table className='center' id='table'>
               <tr>
-                <th id='th'>Student Role</th>
                 <th id='th'>Student Email</th>
                 <th id='th'>Student ID</th>
               </tr>
