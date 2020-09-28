@@ -16,7 +16,9 @@ class TeacherClassList extends Component {
       courseIds: [],
     };
 
+    //console.log(props);
     this.fetchClassList(this.state.user._id);
+    //this.deleteClass();
   }
 
   fetchClassList() {
@@ -36,7 +38,8 @@ class TeacherClassList extends Component {
   deleteClass(_id, name) {
     const class_id = _id;
     api.deleteCourse(class_id).then((data) => {
-      window.alert(name + ' has been deleted!');
+      console.log('Class' + name + 'is deleted!');
+      window.alert('This ' + name + 'is deleted!');
       window.location.reload();
     });
   }
