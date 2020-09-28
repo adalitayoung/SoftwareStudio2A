@@ -38,15 +38,16 @@ export const logout = () => api.post('/user/logout');
 
 //project
 export const createProject = (projectDetails) => api.post('/project/createProject', projectDetails);
-export const updateProject = (id) => api.post(`/project/updateProject/${id}`);
+export const updateProject = (id, projectDetails) => api.post(`/project/updateProject/${id}`, projectDetails);
 export const deleteProject = (id) => api.delete(`/project/deleteProject/${id}`);
-export const showProject = (id) => api.get(`/project/showProject/${id}`);
-export const showMyProjects = () => api.get('/project/showMyProjects');
+export const showProject = (id) => api.get(`/project/showProject/${id}`); //returns a specific project by its id
+export const showMyProjects = (id) => api.get('/project/showMyProjects',id); //to show teacher's project by its id
 export const showClassProjects = (id) => api.get(`/project/showClassProjects/${id}`);
-
+export const showAllProjects = () => api.get('/project/showAllProjects'); // this returns all the project in db
+export const showProjectByName = (name) => api.get(`/project/showProjectByName/${id}`);
 //project roles
 export const createProjectRole = (projectRole) => api.post('project/createProjectRole', projectRole);
-export const updateProjectRole = (id) => api.post(`project/updateProjectRole/${id}`);
+export const updateProjectRole = (id, projectRolesUpdate) => api.post(`project/updateProjectRole/${id}`, projectRolesUpdate);
 export const showRoles = (id) => api.get(`project/showRoles/${id}`);
 export const deleteProjectRole = (id) => api.delete(`project/deleteProjectRole/${id}`);
 
@@ -74,7 +75,9 @@ const apis = {
     showRoles,
     fetchUserData,
     deleteProjectRole,
-    showClassProjects
+    showClassProjects,
+    showAllProjects,
+    showProjectByName
 }
 
 export default apis
