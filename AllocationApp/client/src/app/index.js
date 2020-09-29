@@ -11,10 +11,13 @@ import Editpreferences from '../components/Editpreferences';
 
 import {
   Signup,
+  AddProject,
   AddClass,
   TeacherClassList,
   TeacherStudentList,
   TeacherProjectList,
+  AdminTeacherList,
+  AdminStudentList,
   StudentClassList, Enroll, StudentProjectList
 } from '../pages';
 
@@ -36,21 +39,17 @@ function App() {
         <Route path='/Teacher' exact component={() => <Teacher />} />
         <Route path='/Admin' exact component={() => <Admin />} />
         <Route path='/SignOut' exact component={() => <SignOut />} />
+        <Route path='/AddProject' exact component = {AddProject} />
+        <Route path='/admin/AdminTeacherList' exact component={AdminTeacherList} />
+        <Route path='/admin/AdminStudentList' exact component={AdminStudentList} />
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
         <Route path='/student/ClassList' exact component={StudentClassList} />
-        <Route path='/student/ClassList/Enroll' exact component={Enroll} />
-        <Route path='/student/ClassList/StudentProjectList' exact component={StudentProjectList} />
+        <Route path='/student/Enroll' exact component={Enroll} />
+        <Route path='/student/StudentProjectList' exact component={StudentProjectList} />
+        <Route path='/teacher/StudentList'exact component={TeacherStudentList} />
+        <Route path='/teacher/ProjectList'exact component={TeacherProjectList} />
         <Route path='/student/updatepreferences' exact component={Editpreferences} />
-        <Route
-          path='/teacher/StudentList'
-          exact
-          component={TeacherStudentList}
-        />
-        <Route
-          path='/teacher/ProjectList'
-          exact
-          component={TeacherProjectList}
-        />
+
       </Switch>
       <Footer />
     </Router>

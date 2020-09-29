@@ -15,12 +15,11 @@ class TeacherClassList extends Component {
       isLoading: false,
       courseIds: [],
     };
-    console.log(props);
+
     this.fetchClassList(this.state.user._id);
-    this.deleteClass();
   }
 
-  fetchClassList(userId) {
+  fetchClassList() {
     api.getAllCourses().then((data) => {
       // need to change class model and check if the course is for that teacher
       console.log(data);
@@ -34,40 +33,39 @@ class TeacherClassList extends Component {
     console.log(user);
   }
 
-  deleteClass(_id) {
+  deleteClass(_id, name) {
     const class_id = _id;
     api.deleteCourse(class_id).then((data) => {
-      console.log(data);
-      this.setState({ classData: data.data.data });
+      window.alert(name + ' has been deleted!');
+      window.location.reload();
     });
   }
 
-  viewStudents(_id) {
+  viewStudents(_id, name) {
     const user = this.state.user;
-    // console.log(_id);
+    const classname = name;
     this.props.history.push({
       pathname: '/Teacher/StudentList',
-      state: { user: user, course: _id },
+      state: { user: user, course: _id, className: classname },
     });
-    // console.log(this.state);
   }
 
-  viewProjects = async (_id) => {
+  viewProjects = async (_id, name) => {
     const user = this.state.user;
+    const classname = name;
     this.props.history.push({
       pathname: '/Teacher/ProjectList',
-      state: { user: user, course: _id },
+      state: { user: user, course: _id, className: classname },
     });
   };
 
   addClass = async (event) => {
     event.preventDefault();
-    // redirect to add class
   };
 
   renderTableData() {
     return this.state.classData.map((course, index) => {
-      const { name, numberOfStudents, _id } = course; //destructuring
+      const { name, numberOfStudents, _id } = course;
       return (
         <tr key={_id}>
           <td id='tdclass'>{name}</td>
@@ -77,7 +75,7 @@ class TeacherClassList extends Component {
               key={_id}
               id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={() => this.viewStudents(_id)}
+              onClick={() => this.viewStudents(_id, name)}
             >
               Students
             </button>
@@ -87,7 +85,7 @@ class TeacherClassList extends Component {
               key={_id}
               id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={() => this.viewProjects(_id)}
+              onClick={() => this.viewProjects(_id, name)}
             >
               Projects
             </button>
@@ -98,7 +96,11 @@ class TeacherClassList extends Component {
             </button>
           </td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.deleteClass(_id)}>
+            <button
+              id='icon'
+              key={_id}
+              onClick={() => this.deleteClass(_id, name)}
+            >
               <img id='del' src={del} />
             </button>
           </td>

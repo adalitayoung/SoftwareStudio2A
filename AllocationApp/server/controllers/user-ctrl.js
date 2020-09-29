@@ -155,6 +155,7 @@ deleteUser = async (req, res) => {
             return res.status(400).json({success: false, error: err})
         }
         else if (!user) {
+          console.log("delete")
             return res.status(404).json({success: false, error: 'User not found: '+req.params.email})
         }
         else {
@@ -167,7 +168,6 @@ deleteUser = async (req, res) => {
                     .catch(err => res.status(404).json('Error: ' + err))
                      removeIDFromProjectRoles(response[0].studentID, response[0].classID)
                   }
-
                     TempStudent.findOneAndDelete({studentID: user._id}).exec(function(err, tempUser) {
                         if(tempUser) {
                             return res.status(200).json({success: true})
@@ -208,8 +208,6 @@ function findStudentProjectsAndDelete(projects, studentid){
   })
 }
 
-
-
 deleteUsers = async (req, res) => {
     await User.deleteMany({email: {$in: req.params.emails}}).exec(function(err, users){
         console.log(req.params.emails)
@@ -226,177 +224,164 @@ deleteUsers = async (req, res) => {
 }
 
 addStudentToClass = async (req, res) => {
-  const body = req.body;
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide a user',
-    });
-  }
 
-  const email = body.email;
+    const student_id = req.params.student_id;
+    const className = req.params.className;
+  
+    if (student_id !== null && className !== null) {
+        const tempStudent = new TempStudent();
+        //find student in user database using email entered in body
+        await User.find({ _id: student_id }).exec(function (err, users) {
+            //if there is a user
+            if (users.length) {
+            //get the student id from the users db and assign as tempStudent students id
+            tempStudent.studentID = student_id;
 
-  const tempStudent = new TempStudent(body);
+            //find class ID based of class name
+            Class.find({ name: className }).exec(function (err, classReferences) {
+                if (classReferences.length) {
+                    classID = classReferences[0]._id;
+                    //Check that class is not full
+                    if (classReferences[0].studentIDS.length >=classReferences[0].numberOfStudents) {
+                        return res.status(400).json({
+                        success: false,
+                        error: 'Class has reached max number of students',
+                        });
+                    }
 
-  //find student in user database using email entered in body
-  await User.find({ email: email }).exec(function (err, users) {
-    //if there is a user
-    if (users.length) {
-      //get the student id from the users db and assign as tempStudent students id
-      var id = users[0]._id;
-      tempStudent.studentID = id;
+                    //Check that the student is not already enrolled in class
+                    TempStudent.find({ studentID: student_id, classID: classID }).exec(function (err, tempStudents) {
+                        if (tempStudents.length) {
+                        return res.status(400).json({
+                            success: false,
+                            error: 'Student is already enrolled in that class',
+                        });
+                        } else {
+                            tempStudent.projectID = 'null';
+                            tempStudent.classID = classID;
 
-      //find class ID based of class name
-      var className = body.className;
-      var classID;
-      Class.find({ name: className }).exec(function (err, classReferences) {
-        if (classReferences.length) {
-          classID = classReferences[0]._id;
-          //Check that class is not full
-          if (
-            classReferences[0].studentIDS.length >=
-            classReferences[0].numberOfStudents
-          ) {
-            return res.status(400).json({
-              success: false,
-              error: 'Class has reached max number of students',
-            });
-          }
+                            tempStudent.save().then(() => {
+                                return res.status(201).json({
+                                success: true,
+                                studentID: tempStudent.studentID,
+                                classID: tempStudent.classID,
+                                message: 'student added to class',
+                                });
+                            });
 
-          //Check that the student is not already enrolled in class
-          TempStudent.find({ studentID: id, classID: classID }).exec(function (
-            err,
-            tempStudents
-          ) {
-            if (tempStudents.length) {
-              return res.status(400).json({
-                success: false,
-                error: 'Student is already enrolled in that class',
-              });
-            } else {
-              tempStudent.projectID = 'null';
-              tempStudent.classID = classID;
-
-              tempStudent.save().then(() => {
-                return res.status(201).json({
-                  success: true,
-                  studentID: tempStudent.studentID,
-                  classID: tempStudent.classID,
-                  message: 'student added to class',
-                });
-              });
-
-              //add student id to class studentIDS array
-              Class.findOneAndUpdate(
-                { name: className },
-                { $push: { studentIDS: id } },
-                { new: true },
-                (err, doc) => {
-                  if (err) {
-                    console.log('Something wrong when updating class data!');
-                  }
+                            //add student id to class studentIDS array
+                            Class.findOneAndUpdate(
+                                { name: className },
+                                { $push: { studentIDS: student_id } },
+                                { new: true },(err, doc) => {
+                                if (err) {
+                                    console.log('Something wrong when updating class data!');
+                                }
+                                }
+                            );
+                        }
+                    });
+                } 
+                else {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'class not found!',
+                    });
                 }
-              );
+            });
+            } 
+            else {
+                return res.status(404).json({
+                    success: false,
+                    message: 'user not found!',
+                });
             }
-          });
-        } else {
-          return res.status(404).json({
-            success: false,
-            message: 'class not found!',
-          });
-        }
-      });
-    } else {
-      return res.status(404).json({
-        success: false,
-        message: 'user not found!',
-      });
+        });
+
     }
-  });
+    else {
+        return res.status(400).json({
+          success: false,
+          error: 'Please provide valid input',
+        });
+    }
+
 };
 
 removeFromClass = async (req, res) => {
-  const body = req.body;
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide a user',
-    });
-  }
+    const student_id = req.params.student_id;
+    const className = req.params.className;
 
-  const email = body.email;
-
-  const tempStudent = new TempStudent(body);
-
-  //find student in user database using email entered in body
-  await User.find({ email: email }).exec(function (err, users) {
-    //if there is a user
-    if (users.length) {
-      //get the student id from the users db and assign as tempStudent students id
-      var id = users[0]._id;
-      tempStudent.studentID = id;
-
-      //find class ID based of class name
-      var className = body.className;
-      var classID;
-      Class.find({ name: className }).exec(function (err, classReferences) {
-        if (classReferences.length) {
-          classID = classReferences[0]._id;
-
-          //Check that the student is enrolled in class
-          TempStudent.find({ studentID: id, classID: classID }).exec(function (
-            err,
-            tempStudents
-          ) {
-            if (tempStudents.length) {
-              //Remove student id from class reference studentIDS
-              Class.update(
-                { name: className },
-                { $pull: { studentIDS: id } },
-                { new: true },
-                (err, doc) => {
-                  if (err) {
-                    console.log(
-                      'Something wrong when remove student from class'
-                    );
-                  }
-                }
-              );
-              TempStudent.deleteOne({ studentID: id, classID: classID }).exec(
-                function (err, tempStudents) {
-                  if (err) {
-                    return res.status(404).json({
-                      success: false,
-                      error: err,
-                    });
-                  }
-                  return res.status(200).json({
-                    success: true,
-                    message: 'Student removed from class',
-                  });
-                }
-              );
-            } else {
-              return res.status(400).json({
+    if (student_id !== null && className !== null) {
+        const tempStudent = new TempStudent();
+        //find student in user database using email entered in body
+        await User.find({ _id: student_id }).exec(function (err, users) {
+        //if there is a user
+        if (users.length) {
+            //get the student id from the users db and assign as tempStudent students id
+            tempStudent.studentID = student_id;
+        
+            //find class ID based of class name
+            var classID;
+            Class.find({ name: className }).exec(function (err, classReferences) {
+            if (classReferences.length) {
+                classID = classReferences[0]._id;
+    
+              //Check that the student is enrolled in class
+                TempStudent.find({ studentID: student_id, classID: classID }).exec(function (err,tempStudents) {
+                    if (tempStudents.length) {
+                    //Remove student id from class reference studentIDS
+                        Class.update(
+                        { name: className },
+                        { $pull: { studentIDS: student_id } },
+                        { new: true },(err, doc) => {
+                        if (err) {
+                            console.log('Something wrong when remove student from class');
+                        }
+                        });
+                        TempStudent.deleteOne({ studentID: student_id, classID: classID }).exec(function (err, tempStudents) {
+                            if (err) {
+                                return res.status(404).json({
+                                success: false,
+                                error: err,});
+                            }
+                            return res.status(200).json({
+                                success: true,
+                                message: 'Student removed from class',
+                            });
+                        });
+                    } 
+                    else {
+                        return res.status(400).json({
+                            success: false,
+                            error: 'Student is not enrolled in that class',
+                        });
+                    }
+                });
+            } 
+            else {
+                return res.status(404).json({
                 success: false,
-                error: 'Student is not enrolled in that class',
-              });
+                error: 'class not found!',
+                });
             }
-          });
-        } else {
-          return res.status(404).json({
+            });
+        } 
+        else {
+            return res.status(404).json({
             success: false,
-            error: 'class not found!',
-          });
+            error: 'user not found!',
+            });
         }
-      });
-    } else {
-      return res.status(404).json({
-        success: false,
-        error: 'user not found!',
-      });
+        });
     }
-  });
+    else{
+        return res.status(400).json({
+            success: false,
+            error: 'Please provide valid input',
+        });
+    }
+
 };
 
 //a function to update the project preferences and technical background of the students

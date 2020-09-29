@@ -22,7 +22,7 @@ updateProjectRole = (req, res) => {
 }
 
 showProjectRoles = (req, res) => {
-  ProjectRoles.find({projectID:req.params.id}) // This will be updated to find projectID specific roles
+  ProjectRoles.find({projectID:req.params.id}) // to find projectID specific roles
     .then(projectRoles => res.json(projectRoles))
     .catch(err => res.status(400).json('Error: ' + err))
 }
