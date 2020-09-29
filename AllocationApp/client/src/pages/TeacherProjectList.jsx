@@ -1,9 +1,11 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
 
 import api from '../api';
-
+import edit from '../res/edit.png';
+import del from '../res/delete.png';
 import back from '../res/back.png';
+
+import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
 class TeacherProjectList extends Component {
@@ -12,10 +14,10 @@ class TeacherProjectList extends Component {
     this.state = {
       user: props.location.state.user.fullName,
       course: props.location.state.course,
+      className: props.location.state.className,
       projectData: [], //stores the output from the api call
       isLoading: false,
     };
-    console.log(props);
     this.getProjectData();
   }
 
@@ -27,14 +29,23 @@ class TeacherProjectList extends Component {
     });
   }
 
-  viewStudents = async (event) => {
+  viewStudents(_id, name) {
     const user = this.state.user;
-    const course_id = this.state.course_id;
+    const classname = name;
     this.props.history.push({
       pathname: '/Teacher/StudentList',
-      state: { user: user, course: course_id },
+      state: { user: user, course: _id, className: classname },
     });
-  };
+  }
+
+  deleteProject(_id, projectName) {
+    const name = projectName;
+    const classname = this.state.className;
+    api.deleteProject(_id).then(() => {
+      window.alert(name + ' has been removed from ' + classname);
+      window.location.reload();
+    });
+  }
 
   addProject = async (event) => {
     event.preventDefault();
@@ -42,13 +53,26 @@ class TeacherProjectList extends Component {
   };
 
   renderTableData() {
-    return this.state.projectData.map((project, index) => {
+    return this.state.projectData.map((project) => {
       const { createdByname, projectName, description, _id } = project; //destructuring
       return (
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
           <td id='tdclass'>{createdByname}</td>
+          <td id='tdclass'>{createdByname}</td>
+          <td id='tdclass'>{createdByname}</td>
+          <td>
+            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
+              <img id='edit' src={edit} />
+            </button>
+            <button
+              id='icon'
+              onClick={() => this.deleteProject(_id, projectName)}
+            >
+              <img id='del' src={del} />
+            </button>
+          </td>
         </tr>
       );
     });
@@ -59,46 +83,19 @@ class TeacherProjectList extends Component {
       <div className='container scrollable'>
         <div className='row align-items-center'>
           <a id='back' href='javascript:history.back()'>
-            <svg
-              width='2em'
-              height='2em'
-              viewBox='0 0 16 16'
-              class='bi bi-arrow-left-short'
-              fill='currentColor'
-            >
-              <path
-                fill-rule='evenodd'
-                d='M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z'
-              />
-            </svg>
-            Classes
+            <img width='20px' src={back}></img> &nbsp;Classes
           </a>
           <div className='col' id='column'>
             <div className='row'>
-              <h2> Projects in Class:</h2>
+              <h2>Projects in {this.state.className} </h2>
             </div>
-            <a
-              id='navbtn'
-              class='btn btn-primary btn-lg '
-              role='button'
-              aria-disabled='true'
-            >
-              Students
-            </a>
-            <a
-              id='navbtn'
-              href='#'
-              class='btn btn-primary btn-lg disabled'
-              role='button'
-              aria-disabled='true'
-            >
-              Projects
-            </a>
             <table className='center' id='table'>
               <tr>
                 <th id='th'>Project Name</th>
                 <th id='th'>Project Description</th>
-                <th id='th'>Created By</th>
+                <th id='th'>Role 1</th>
+                <th id='th'>Role 2</th>
+                <th id='th'>Role 3</th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button

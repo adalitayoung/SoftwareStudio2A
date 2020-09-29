@@ -179,8 +179,9 @@ th {
 
 #tdclass {
   text-align: center !important;
-  padding-bottom: 30px !important;
+  padding-bottom: 15px !important;
   height: 25px;
+  padding-top: 15px;
 }
 
 #classbtn {
@@ -315,7 +316,7 @@ svg {
 }
 
 #navbtn {
-  padding-bottom: 15px;
+  margin-bottom: 20px !important;
 }
 
 
