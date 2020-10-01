@@ -6,13 +6,10 @@ let should = chai.should();
 let chaiHttp = require('chai-http');
 let server = require('../index.js');
 
-const algorithmCtrl = require('../controllers/algorithm-ctrl')
-
 const Course = require('../models/class-reference.js')
 const Project = require('../models/project-model.js')
 const ProjectRole = require('../models/projectRoles-model.js')
 const User = require('../models/user-model.js')
-const TempStudent = require('../models/temp-student-model.js')
 
 chai.use(chaiHttp);
 
@@ -217,6 +214,7 @@ describe('Run Algorithm', () => {
         })
     })
 
+    projectPreferences = []
 
     it('should add user preferences', (done) => {
         emails = []
@@ -268,7 +266,7 @@ describe('Run Algorithm', () => {
                 .post('/api/user/addPreferencesBackground/')
                 .send({"email": email, "projectPreference1": preferenceArray[0], 
                     "projectPreference2": preferenceArray[1], "projectPreference3": preferenceArray[2],
-                    "technicalBackground": roles[getRandomInt(3)] })
+                    "technicalBackground": [roles[getRandomInt(3)],roles[getRandomInt(3)]] })
                 .end((err, res) => {
                     res.should.have.status(200);
                     counter++;
@@ -281,61 +279,77 @@ describe('Run Algorithm', () => {
     })
     
 
-    // it('should start algorithm', (done) => {
-    //     // const course = new Course({
-    //     //     "course_name": "Test Class"
-    //     // })
-    //     chai.request(server)
-    //     .get('/api/user/algorithm/')
-    //     .send({"course_name": "Test Class"})
-    //     .end((err, res) => {
-    //         if(err) {
-    //             console.log(err)
-    //         }
-    //         res.should.have.status(200);
-    //         done();
-    //     })
-    // })
-
-    it('should clean up users', (done) => {
-        
-        let array = []
-        for (let i=0; i<50; i++) {
-            array.push(i)
-        }
-
-        var counter = 0;
-        array.forEach(function(i, index, array) {
-            const user = new User({
-                "fullName":"Test"+i,
-                "email":"testemail"+i+"@gmail.com",
-                "password":"password",
-                "role":"Student"
-            });
-
-            chai.request(server)
-            .delete('/api/user/deleteUser/'+user.email)
-            // .send(user)
-            .end((err, res) => {
-                // console.log(err)
-                if(err){
-                    // console.log(err)
-                }
-                // chai.expect(res.status).to.equal(200)
-                res.should.have.status(200)
-                counter++;
-                if (counter == array.length) {
-                    done();
-                }
-            })
+    it('should start algorithm', (done) => {
+        chai.request(server)
+        .get('/api/user/algorithm/')
+        .send({"course_name": "Test Class"})
+        .end((err, res) => {
+            if(err) {
+                console.log(err)
+            }
+            res.should.have.status(200);
+            done();
         })
-        
-
-        
     })
 
+    // it('should clean up users', (done) => {
+        
+    //     let array = []
+    //     for (let i=0; i<50; i++) {
+    //         array.push(i)
+    //     }
+
+    //     var counter = 0;
+    //     array.forEach(function(i, index, array) {
+    //         const user = new User({
+    //             "fullName":"Test"+i,
+    //             "email":"testemail"+i+"@gmail.com",
+    //             "password":"password",
+    //             "role":"Student"
+    //         });
+
+    //         chai.request(server)
+    //         .delete('/api/user/deleteUser/'+user.email)
+    //         // .send(user)
+    //         .end((err, res) => {
+    //             // console.log(err)
+    //             if(err){
+    //                 // console.log(err)
+    //             }
+    //             // chai.expect(res.status).to.equal(200)
+    //             res.should.have.status(200)
+    //             counter++;
+    //             if (counter == array.length) {
+    //                 done();
+    //             }
+    //         })
+    //     })
+        
+
+        
+    // })
+
     // it('should clean up projects', (done) => {
-    // #TODO
+    //     var counter = 0;
+    //     projectPreferences.forEach((project) => {
+    //         chai.request(server)
+    //         .delete('api/project/deleteProject/'+project._id)
+    //         .end((err, res) => {
+    //             if(err) {
+    //                 console.log(err)
+    //             }
+    //             else{
+    //                 res.should.have.status(200)
+    //                 counter++;
+    //                 if (counter == array.length) {
+    //                     done();
+    //                 }
+    //             }
+                
+    //         })
+    //     })
+        
+
     // })
 
     // it('should clean up courses', (done) => {
