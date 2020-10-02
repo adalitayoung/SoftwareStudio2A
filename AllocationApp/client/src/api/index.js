@@ -17,12 +17,14 @@ export const deleteUser = (email) => api.delete(`/user/deleteUser/${email}`);
 export const startAlgorithm = () => api.get(`/algorithm`);
 
 export const addStudentToClass = (student_id, className) =>
-  api.post(`/user/addToClass/${student_id}/${className}`);
+  api.post(`/user/addToClass/${id}/${className}`);
 export const removeFromClass = (student_id, className) =>
   api.post(`/user/removeFromClass/${student_id}/${className}`);
 
 export const fetchUserData = (user_role, course_id) =>
   api.get(`/user/fetchUserData/${user_role}/${course_id}`);
+
+export const getAllStudentIds = (role) = api.get(`/user/getAllStudentIds/${role}`);
 
 export const updateUserRole = (user_id, role) =>
   api.post(`/user/updateUserRole/${user_id}/${role}`);
@@ -74,6 +76,7 @@ const apis = {
   addCourse,
   getCourseByName,
   getAllCourses,
+  getAllStudentIds,
   updateCourse,
   deleteCourse,
   login,

@@ -50,7 +50,8 @@ describe('Run Algorithm', () => {
 
     it('should create a class', () => {
         const course = new Course({
-            "name": "Test Class"
+            "name": "Test Class",
+            "numberOfStudents" : 100
         })
         chai.request(server)
         .post('/api/class/createClass/')
@@ -193,26 +194,104 @@ describe('Run Algorithm', () => {
         
     })
 
-    it('should add users to a class', (done) => {
-        emails = []
-        for (i=0; i<50; i++) {
-            emails.push("testemail"+i+"@gmail.com")
-        }
-        var counter = 0;
+    // emails = []
+    // for (i=0; i<50; i++) {
+    //     emails.push("testemail"+i+"@gmail.com")
+    // }
+    // var counter = 0;
 
-        emails.forEach(email => {
-            chai.request(server)
-            .post('/api/user/addToClass/')
-            .send({"email": email, "className": "Test Class"})
-            .end((err, res) => {
-                res.should.have.status(201);
-                counter++;
-                if(counter === emails.length) {
-                    done()
-                }
+    // emails.forEach(email => {
+    //     chai.request(server)
+    //     .post('/api/user/addToClass/')
+    //     .send({"email": email, "className": "Test Class"})
+    //     .end((err, res) => {
+    //         res.should.have.status(201);
+    //         counter++;
+    //         if(counter === emails.length) {
+    //             done()
+    //         }
+    //     })
+    // })
+
+    it('should add users to a class', (done) => {
+
+        students = []
+        className = "Test Class"
+        var counter = 0;
+        chai.request(server)
+        .get('/api/user/getAllStudentIds/Student')
+        .end((err, res) => {
+            if (err) {
+                console.log(err)
+            }
+            res.should.have.status(200)
+            students = res.body
+            console.log(students.length)
+            students.forEach(function(student, index, array) {
+                id = student._id.toHexString()
+                //console.log(typeof id);
+                chai.request(server)
+                // console.log(student._id)
+                // console.log(className)
+                .post('/api/user/addToClass/id/className')
+                //.send({"student_id": students[i]._id, "className": "Test Class"})
+                .end((err, res) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                    res.should.have.status(200);
+                    counter++;
+                    if(counter === array.length) {
+                        done()
+                    }
+                })
             })
         })
+               
     })
+        
+                    // for(i=0;i<students.length; i++){
+            //     console.log(students[i]._id);
+            //     chai.request(server)
+            //     .post('/api/user/addToClass/students[i]._id/className')
+            //     //.send({"student_id": students[i]._id, "className": "Test Class"})
+            //     .end((err, res) => {
+            //         if (err) {
+            //             console.log(err)
+            //         }
+            //         res.should.have.status(200);
+            //         counter++;
+            //         if(counter === 50) {
+            //             done()
+            //         }
+            //     })
+            // }   
+    //})
+    //})
+
+        // ids = []
+        // User.find({role:"Student"}).exec(function (err, users) {
+        //     for (i=0; i<50; i++) {
+        //         ids.push(users[i]._id);
+        //     }
+        // })
+        // console.log(ids);
+        // var counter = 0;
+
+        // ids.forEach(id => {
+        //     chai.request(server)
+
+        //     .post('/api/user/addToClass/')
+        //     .send({"student_id": id, "className": "Test Class"})
+        //     .end((err, res) => {
+        //         res.should.have.status(201);
+        //         counter++;
+        //         if(counter === ids.length) {
+        //             done()
+        //         }
+        //     })
+        // })
+     
 
     projectPreferences = []
 
