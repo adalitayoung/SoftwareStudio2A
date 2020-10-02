@@ -227,7 +227,7 @@ addStudentToClass = async (req, res) => {
 
     const student_id = req.params.student_id;
     const className = req.params.className;
-  
+
     if (student_id !== null && className !== null) {
         const tempStudent = new TempStudent();
         //find student in user database using email entered in body
@@ -281,7 +281,7 @@ addStudentToClass = async (req, res) => {
                             );
                         }
                     });
-                } 
+                }
                 else {
                     return res.status(404).json({
                         success: false,
@@ -289,7 +289,7 @@ addStudentToClass = async (req, res) => {
                     });
                 }
             });
-            } 
+            }
             else {
                 return res.status(404).json({
                     success: false,
@@ -320,13 +320,13 @@ removeFromClass = async (req, res) => {
         if (users.length) {
             //get the student id from the users db and assign as tempStudent students id
             tempStudent.studentID = student_id;
-        
+
             //find class ID based of class name
             var classID;
             Class.find({ name: className }).exec(function (err, classReferences) {
             if (classReferences.length) {
                 classID = classReferences[0]._id;
-    
+
               //Check that the student is enrolled in class
                 TempStudent.find({ studentID: student_id, classID: classID }).exec(function (err,tempStudents) {
                     if (tempStudents.length) {
@@ -350,7 +350,7 @@ removeFromClass = async (req, res) => {
                                 message: 'Student removed from class',
                             });
                         });
-                    } 
+                    }
                     else {
                         return res.status(400).json({
                             success: false,
@@ -358,7 +358,7 @@ removeFromClass = async (req, res) => {
                         });
                     }
                 });
-            } 
+            }
             else {
                 return res.status(404).json({
                 success: false,
@@ -366,7 +366,7 @@ removeFromClass = async (req, res) => {
                 });
             }
             });
-        } 
+        }
         else {
             return res.status(404).json({
             success: false,
@@ -470,7 +470,12 @@ login = async (req, res) => {
     if (users[0].password == body.password) {
       //Create and assign token
       const token = jwt.sign({ _id: users[0].id }, process.env.TOKEN_CODE);
-      res.setHeader('auth-token', token); // this will set browser header to token
+      let options = {
+             maxAge: 1000 * 60 * 180, // would expire after 180 minutes
+             httpOnly: true // The cookie only accessible by the web server
+            // secure: true
+         }
+      res.cookie("authToken",token, options)
 
       return res.status(201).json({
         success: true,
