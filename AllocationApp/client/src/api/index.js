@@ -49,11 +49,11 @@ export const updateProject = (id, projectDetails) =>
   api.post(`/project/updateProject/${id}`, projectDetails);
 export const deleteProject = (id) => api.delete(`/project/deleteProject/${id}`);
 export const showProject = (id) => api.get(`/project/showProject/${id}`); //returns a specific project by its id
-export const showMyProjects = (id) => api.get('/project/showMyProjects', id); //to show teacher's project by its id
+export const showMyProjects = (createdByID) => api.get('/project/showMyProjects', createdByID); //to show teacher's project by its id
 export const showClassProjects = (id) =>
   api.get(`/project/showClassProjects/${id}`);
 export const showAllProjects = () => api.get('/project/showAllProjects'); // this returns all the project in db
-// export const showProjectByName = (name) => api.get(`/project/showProjectByName/${id}`);
+export const showProjectByName = (projectName) => api.get(`/project/showProjectByName`, projectName);
 //project roles
 export const createProjectRole = (projectRole) =>
   api.post('project/createProjectRole', projectRole);
@@ -89,7 +89,7 @@ const apis = {
   deleteProjectRole,
   showClassProjects,
   showAllProjects,
-  //showProjectByName,
+  showProjectByName,
 };
 
 export default apis;
