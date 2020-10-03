@@ -92,7 +92,8 @@ const apis = {
   showClassProjects,
   showAllProjects,
   showProjectByName,
-  getRolesForBackground
+  getRolesForBackground,
+  addStudentToProjectManually
 };
 
 export default apis;
