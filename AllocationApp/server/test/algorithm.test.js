@@ -48,7 +48,7 @@ describe('Run Algorithm', () => {
         
     })
 
-    it('should create a class', () => {
+    it('should create a class', (done) => {
         const course = new Course({
             "name": "Test Class",
             "numberOfStudents" : 100
@@ -58,6 +58,7 @@ describe('Run Algorithm', () => {
         .send(course)
         .end((err, res) => {
             res.should.have.status(201);
+            done();
         })
     })
 
@@ -194,25 +195,6 @@ describe('Run Algorithm', () => {
         
     })
 
-    // emails = []
-    // for (i=0; i<50; i++) {
-    //     emails.push("testemail"+i+"@gmail.com")
-    // }
-    // var counter = 0;
-
-    // emails.forEach(email => {
-    //     chai.request(server)
-    //     .post('/api/user/addToClass/')
-    //     .send({"email": email, "className": "Test Class"})
-    //     .end((err, res) => {
-    //         res.should.have.status(201);
-    //         counter++;
-    //         if(counter === emails.length) {
-    //             done()
-    //         }
-    //     })
-    // })
-
     it('should add users to a class', (done) => {
 
         students = []
@@ -228,18 +210,18 @@ describe('Run Algorithm', () => {
             students = res.body
             console.log(students.length)
             students.forEach(function(student, index, array) {
-                id = student._id.toHexString()
+                id = student._id;
                 //console.log(typeof id);
                 chai.request(server)
                 // console.log(student._id)
                 // console.log(className)
-                .post('/api/user/addToClass/id/className')
+                .post('/api/user/addToClass/'+id+'/'+className)
                 //.send({"student_id": students[i]._id, "className": "Test Class"})
                 .end((err, res) => {
                     if (err) {
                         console.log(err)
                     }
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     counter++;
                     if(counter === array.length) {
                         done()
@@ -296,62 +278,69 @@ describe('Run Algorithm', () => {
     projectPreferences = []
 
     it('should add user preferences', (done) => {
-        emails = []
-        for (i=0; i<50; i++) {
-            emails.push("testemail"+i+"@gmail.com")
-        }
-        var counter = 0;
-
-        projects = []
         chai.request(server)
-        .get('/api/project/showAllProjects/')
+        .get('/api/user/getAllStudentIds/Student')
         .end((err, res) => {
             if (err) {
                 console.log(err)
             }
             res.should.have.status(200)
-            projects = res.body
+            students = res.body
+        
+            var counter = 0;
 
-            projectPreferences = [projects[0]._id,projects[1]._id, projects[2]._id]
-            roles = ["Front End", "Back End", "Full Stack"]
+            projects = []
+            chai.request(server)
+            .get('/api/project/showAllProjects/')
+            .end((err, res) => {
+                if (err) {
+                    console.log(err)
+                }
+                res.should.have.status(200)
+                projects = res.body
 
-            function shuffleArray(array) {
-                var currentIndex = array.length, temporaryValue, randomIndex;
+                projectPreferences = [projects[0]._id,projects[1]._id, projects[2]._id]
+                roles = ["Front End", "Back End", "Full Stack"]
 
-                // While there remain elements to shuffle...
-                while (0 !== currentIndex) {
+                function shuffleArray(array) {
+                    var currentIndex = array.length, temporaryValue, randomIndex;
 
-                    // Pick a remaining element...
-                    randomIndex = Math.floor(Math.random() * currentIndex);
-                    currentIndex -= 1;
+                    // While there remain elements to shuffle...
+                    while (0 !== currentIndex) {
 
-                    // And swap it with the current element.
-                    temporaryValue = array[currentIndex];
-                    array[currentIndex] = array[randomIndex];
-                    array[randomIndex] = temporaryValue;
+                        // Pick a remaining element...
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
+
+                        // And swap it with the current element.
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+
+                    return array;
                 }
 
-                return array;
-            }
+                function getRandomInt(max) {
+                    return Math.floor(Math.random() * Math.floor(max));
+                }
 
-            function getRandomInt(max) {
-                return Math.floor(Math.random() * Math.floor(max));
-            }
-
-            // Should the project preferences be the ID or the name?
-            emails.forEach(email => {
-                preferenceArray = shuffleArray(projectPreferences)
-                chai.request(server)
-                .post('/api/user/addPreferencesBackground/')
-                .send({"email": email, "projectPreference1": preferenceArray[0], 
-                    "projectPreference2": preferenceArray[1], "projectPreference3": preferenceArray[2],
-                    "technicalBackground": [roles[getRandomInt(3)],roles[getRandomInt(3)]] })
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    counter++;
-                    if(counter === emails.length) {
-                        done()
-                    }
+                // Should the project preferences be the ID or the name?
+                students.forEach(student => {
+                    preferenceArray = shuffleArray(projectPreferences)
+                    chai.request(server)
+                    .post('/api/user/addPreferencesBackground/')
+                    .send({"studentID": student._id, "projectPreference1": preferenceArray[0], 
+                        "projectPreference2": preferenceArray[1], "projectPreference3": preferenceArray[2],
+                        "technicalBackground": [roles[getRandomInt(3)],roles[getRandomInt(3)]] })
+                    .end((err, res) => {
+                        // console.log(err)
+                        res.should.have.status(200);
+                        counter++;
+                        if(counter === students.length) {
+                            done()
+                        }
+                    })
                 })
             })
         })
