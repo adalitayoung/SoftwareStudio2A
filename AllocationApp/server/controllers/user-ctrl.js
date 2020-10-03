@@ -163,9 +163,8 @@ deleteUser = async (req, res) => {
                 if (response) {
                   if(response.length>0){  // this check if returned array has any values
                     Class.updateOne( {_id: response[0].classID},
-                     { $pull: {studentIDS: response[0].studentID },//remove studentid from classReferences studentIDS araay field
-                       $inc: {numberOfStudents: 1}
-                   })
+                     { $pull: {studentIDS: response[0].studentID }})//remove studentid from classReferences studentIDS araay field
+
                     .then(data => res.status(200).json("studentID removed from ClassReference"))
                     .catch(err => res.status(404).json('Error: ' + err))
                      removeIDFromProjectRoles(response[0].studentID, response[0].classID)
