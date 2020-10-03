@@ -59,10 +59,10 @@ export const createProjectRole = (projectRole) =>
   api.post('project/createProjectRole', projectRole);
 export const updateProjectRole = (id, projectRolesUpdate) =>
   api.post(`project/updateProjectRole/${id}`, projectRolesUpdate);
-export const showRoles = (id) => api.get(`project/showRoles/${id}`);
+export const showRoles = (id) => api.get(`/project/showRoles/${id}`);
 export const deleteProjectRole = (id) =>
   api.delete(`project/deleteProjectRole/${id}`);
-
+export const getRolesForBackground = (id) => api.get(`/project/getRolesForBackground/${id}`) // This is class ID
 const apis = {
   addUserToDatabase,
   deleteUser,
@@ -90,6 +90,7 @@ const apis = {
   showClassProjects,
   showAllProjects,
   showProjectByName,
+  getRolesForBackground
 };
 
 export default apis;
