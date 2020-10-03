@@ -1,5 +1,6 @@
 const Project = require('../models/project-model.js')
 const User = require('../models/user-model')
+const ProjectRoles = require('../models/projectRoles-model.js')
 
 deleteProject = (req, res) => {
   Project.findByIdAndDelete(req.params.id)
@@ -86,6 +87,15 @@ createProject = (req, res) => {
 
  }
 
+ addStudentToProjectManually = (req, res) => {
+    ProjectRoles.updateOne({projectID: req.body.projectID, roleType: req.body.roleType},
+      {$push: {studentsEnrolledID: req.body.studentID},
+      $inc: {positionsLeft: -1 }
+  })
+      .then(projectRole => res.status(200).json('Student added to project successfully.'))
+      .catch(err => res.status(400).json('Error: ' + err))
+ }
+
  module.exports = {
    updateProject,
    deleteProject,
@@ -94,5 +104,6 @@ createProject = (req, res) => {
    createProject,
    showAllProjects,
    showProjectByName,
-   showClassProjects
+   showClassProjects,
+   addStudentToProjectManually
  }
