@@ -56,13 +56,15 @@ export const showAllProjects = () => api.get('/project/showAllProjects'); // thi
 export const showProjectByName = (projectName) => api.get(`/project/showProjectByName`, projectName);
 //project roles
 export const createProjectRole = (projectRole) =>
-  api.post('project/createProjectRole', projectRole);
+  api.post('/project/createProjectRole', projectRole);
 export const updateProjectRole = (id, projectRolesUpdate) =>
-  api.post(`project/updateProjectRole/${id}`, projectRolesUpdate);
+  api.post(`/project/updateProjectRole/${id}`, projectRolesUpdate);
 export const showRoles = (id) => api.get(`/project/showRoles/${id}`);
 export const deleteProjectRole = (id) =>
-  api.delete(`project/deleteProjectRole/${id}`);
+  api.delete(`/project/deleteProjectRole/${id}`);
 export const getRolesForBackground = (id) => api.get(`/project/getRolesForBackground/${id}`) // This is class ID
+export const addStudentToProjectManually = (payload) => api.post('/project//addStudentToProjectManually', payload)
+
 const apis = {
   addUserToDatabase,
   deleteUser,
