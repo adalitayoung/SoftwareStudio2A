@@ -17,4 +17,5 @@ router.get('/showAllProjects', ProjectCtrl.showAllProjects)
 router.get('/showProjectByName', ProjectCtrl.showProjectByName)
 router.get('/showClassProjects/:id', ProjectCtrl.showClassProjects)
 router.get('/getRolesForBackground/:id', ProjectRolesCtrl.getRolesForBackground)
+router.post('/addStudentToProjectManually', ProjectCtrl.addStudentToProjectManually)
 module.exports = router
