@@ -13,7 +13,7 @@ const User = require('../models/user-model.js')
 
 chai.use(chaiHttp);
 
-describe('Run Algorithm', () => {
+describe('Run Random Sort Algorithm', () => {
     it('should create users', (done) => {
 
         let array = []
@@ -216,7 +216,6 @@ describe('Run Algorithm', () => {
                 // console.log(student._id)
                 // console.log(className)
                 .post('/api/user/addToClass/'+id+'/'+className)
-                //.send({"student_id": students[i]._id, "className": "Test Class"})
                 .end((err, res) => {
                     if (err) {
                         console.log(err)
@@ -231,6 +230,7 @@ describe('Run Algorithm', () => {
         })
                
     })
+     
 
     projectPreferences = []
 
@@ -304,9 +304,9 @@ describe('Run Algorithm', () => {
     })
     
 
-    it('should start algorithm', (done) => {
+    it('should start randomsort algorithm', (done) => {
         chai.request(server)
-        .get('/api/user/algorithm/')
+        .get('/api/user/randomSort/')
         .send({"course_name": "Test Class"})
         .end((err, res) => {
             if(err) {

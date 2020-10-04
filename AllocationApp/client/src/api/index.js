@@ -15,6 +15,7 @@ export const addUserToDatabase = (user) => api.post(`/user/createUser`, user);
 export const deleteUser = (email) => api.delete(`/user/deleteUser/${email}`);
 
 export const startAlgorithm = () => api.get(`/algorithm`);
+export const startRandomSort = () => api.get(`/randomSort`);
 
 export const addStudentToClass = (student_id, className) =>
   api.post(`/user/addToClass/${id}/${className}`);
@@ -72,6 +73,7 @@ const apis = {
   addStudentToClass,
   removeFromClass,
   startAlgorithm,
+  startRandomSort,
   addPreferencesBackground,
   addCourse,
   getCourseByName,

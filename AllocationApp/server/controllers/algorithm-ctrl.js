@@ -160,6 +160,160 @@ startAlgorithm = async (req, res) => {
     })
 }
 
+randomSort = async (req, res) => {
+    const course_name = req.body.course_name
+    console.log(course_name);
+    // Get Course
+    await Course.findOne({name: course_name}).exec(function(err, course) {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        else if (!course) {
+            return res.status(404).json({
+                success: false,
+                error: 'Cannot find course with the provided name'
+            })
+        }
+        else if (course) {
+            //Get all students enrolled in the course and 
+            TempStudent.find({classID: course._id, projectID: "null"}).exec(function(err, students) {
+                if (err){
+                    return res.status(400).json({success: false, error: err})
+                }
+                else if (!students.length) {
+                    return res.status(404).json({success: false, error: 'There are no students associated with this course'})
+                }
+                else {
+                    // var studentIds = [];
+                    // console.log("Number of students to be sorted: " + students.length);
+                    // students.forEach(student => {
+                    //     studentIds.push(student._id);
+                    // });
+                    //console.log("Student ids: " + studentIds);
+                    
+                    //shuffle ids into an array
+                    function shuffleArray(array) {
+                        var currentIndex = array.length, temporaryValue, randomIndex;
+        
+                        // While there remain elements to shuffle...
+                        while (0 !== currentIndex) {
+        
+                            // Pick a remaining element...
+                            randomIndex = Math.floor(Math.random() * currentIndex);
+                            currentIndex -= 1;
+        
+                            // And swap it with the current element.
+                            temporaryValue = array[currentIndex];
+                            array[currentIndex] = array[randomIndex];
+                            array[randomIndex] = temporaryValue;
+                        }
+        
+                        return array;
+                    }
+
+                    shuffleArray(students);
+
+                    //console.log("Shuffled IDS: " + studentIds);
+
+                    // Get all projects for the course
+                    Project.find({classID: course._id}).exec(function(err, projects) {
+                        if (err){
+                            return res.status(400).json({success: false, error: err})
+                        }
+                        else if (!projects.length){
+                            return res.status(404).json({success: false, error: 'There are no projects associated with this course'})
+                        }
+                        else {
+                            //get project roles
+                            projects.forEach((project, ind, arr) => {
+                                ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
+                                    if (err) {
+                                        return res.status(400).json({success: false, error: err})
+                                    }
+                                    else if (!roles.length) {
+                                        return res.status(404).json({success: false, error: 'There are no roles for this project'})
+                                    }
+                                    else {
+                                        project.roleList = roles
+                                        var allocation = new Promise((resolve, reject) => {
+                                        //console.log(roles);
+                                        //for each project role, add a student that has not been allocated to a project until there are no postions left
+                                        project.roleList.forEach((role, index, array) => {
+                                            students.forEach(student => {
+                                                if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
+                                                    role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
+                                                    role.positionsLeft = role.positionsLeft-1
+                                                    ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                        if (err) {
+                                                            return res.status(400).json({success: false, error: err})
+                                                        }
+                                                        else{
+                                                            student.projectID = project._id
+                                                            TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                if (err) {
+                                                                    return res.status(400).json({success: false, error: err})
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                }
+                                                else{
+                                                    if (index == (array.length -1)){
+                                                        resolve()
+                                                    }
+                                                }
+                                            })
+                                        })  
+                                            allocation.then(() => {
+                                                if (ind == (arr.length -1)){
+                                                    return res.status(200).json({
+                                                        success: true
+                                                    })
+                                                }
+                                            })
+                                        }) 
+                                    }
+                                })                         
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+}
+
+
 module.exports = {
     startAlgorithm,
+    randomSort
 }
+
+    // Get Course
+    // Get all projects for the course
+    // Get all the students enrolled in the course -> add to array and shuffle
+    //Get first  project 
+        //get first project role
+            //if positiions required is greater than or equal to position lefts
+                //add first student to studentsEnrolledIDS
+                //mark temp-student projectid as projectid
+                //remove from array
+                //minus positions left
+            //if positions left == 0
+                //get next project role
+
+        //check if number of students is less than the min requirement and if students in arary
+            //Add students until between min and max
+                // change TEMP STUDENT project id from null to project id 
+                // remove student from array
+            //change project
+
+        // else if full but students still in array
+            // print no more space for students
+            //change project
+
+        //else if no students in array
+            //print all students allocated to projects
+        
+    //else
+        // change project
