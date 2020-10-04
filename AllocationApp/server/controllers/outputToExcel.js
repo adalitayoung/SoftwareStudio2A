@@ -30,7 +30,7 @@ outputToExcel = async(req, res) => {
      ]
     ProjectRoles.find({projectID: project._id})
     Project.find({classID:req.body.classID})
-    .then(projectroles => projectDetailsSheet.addRows(projectroles))
+    .then(projectroles => projectDetailsSheet.addRows(projectroles))    // This is not working
     .catch(err => console.log(err))
 
    })
