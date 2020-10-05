@@ -17,30 +17,44 @@ outputToExcel = async(req, res) => {
     {header: 'Project ID', key: '_id', width: 30},
     {header: 'Project Name', key: 'projectName', width: 20},
     {header: 'Description', key: 'description', width: 100}
-  ]
-   projects.forEach((project, i) => {
+]
+   await projects.forEach((project, i) => {
      worksheet.addRow(project)
-     var projectDetailsSheet = workbook.addWorksheet(project.projectName + " " + i) // These sheets will have project Roles and project Details
-     projectDetailsSheet.columns = [
-      {header: 'Project ID', key: 'projectID', width: 30},
-      {header: 'Role Type', key: 'roleType', width: 30},
-      {header: 'Positions Required', key: 'positionsRequired', width: 30},
-      {header: 'Positions Left', key: 'positionsLeft', width: 30},
-      {header: 'Students Enrolled IDs', key: 'studentsEnrolledID', width: 30},
-     ]
-    ProjectRoles.find({projectID: project._id})
-    Project.find({classID:req.body.classID})
-    .then(projectroles => projectDetailsSheet.addRows(projectroles))    // This is not working
-    .catch(err => console.log(err))
-
    })
    workbook.xlsx.writeFile('projects.xlsx')
+
+   await projects.forEach((project, i) => {
+     var workbook2 = new ExcelJS.Workbook()
+     var projectDetailsSheet = workbook2.addWorksheet(project.projectName + " " + i) // These sheets will have project Roles and project Details
+     projectDetailsSheet.columns = [
+
+       {header: 'Project ID', key: 'projectID', width: 30},
+       {header: 'Role Type', key: 'roleType', width: 30},
+       {header: 'Positions Required', key: 'positionsRequired', width: 30},
+       {header: 'Positions Left', key: 'positionsLeft', width: 30},
+       {header: 'Students Enrolled IDs', key: 'studentsEnrolledID', width: 30}
+     ]
+     ProjectRoles.find({projectID: project._id})
+     .then(projectroles => {
+      projectroles.forEach((roles, i) => {
+        projectDetailsSheet.addRow(roles)
+      });
+     workbook2.xlsx.writeFile(project.projectName + " " + i + ".xlsx")
+     })    // This is not working
+     .catch(err => console.log(err))
+
+   })
+
    res.download('./projects.xlsx', function(err) {
     if (err) {
       console.log(err);
     }
   // deleteFile()  //This deletes the projects.xlsx file created in ./
   })
+}
+
+function mergeExcelData(){
+
 }
 
 function deleteFile(){
@@ -56,3 +70,5 @@ function deleteFile(){
 module.exports ={
   outputToExcel
 }
+
+//
