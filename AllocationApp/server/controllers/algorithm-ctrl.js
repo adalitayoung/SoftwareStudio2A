@@ -178,6 +178,7 @@ randomSort = async (req, res) => {
             //Get all students enrolled in the course and 
             TempStudent.find({classID: course._id, projectID: "null"}).exec(function(err, students) {
                 if (err){
+                    console.log(err)
                     return res.status(400).json({success: false, error: err})
                 }
                 else if (!students.length) {
@@ -210,6 +211,7 @@ randomSort = async (req, res) => {
                     // Get all projects for the course
                     Project.find({classID: course._id}).exec(function(err, projects) {
                         if (err){
+                            console.log(err)
                             return res.status(400).json({success: false, error: err})
                         }
                         else if (!projects.length){
@@ -218,8 +220,11 @@ randomSort = async (req, res) => {
                         else {
                             //get project roles
                             projects.forEach((project, ind, arr) => {
+                                console.log('line 221')
+                                // console.log(project._id)
                                 ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
                                     if (err) {
+                                        console.log(err)
                                         return res.status(400).json({success: false, error: err})
                                     }
                                     else if (!roles.length) {
@@ -227,42 +232,110 @@ randomSort = async (req, res) => {
                                     }
                                     else {
                                         project.roleList = roles
-                                        var allocation = new Promise((resolve, reject) => {
-                                            //for each project role, add a student that has not been allocated to a project until there are no postions left
-                                            students.forEach(student => {
-                                                project.roleList.forEach((role, index, array) => {
-                                                    if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
-                                                        role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
-                                                        role.positionsLeft = role.positionsLeft-1
-                                                        ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
-                                                            if (err) {
-                                                                return res.status(400).json({success: false, error: err})
-                                                            }
-                                                            else{
-                                                                student.projectID = project._id
-                                                                TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
-                                                                    if (err) {
-                                                                        return res.status(400).json({success: false, error: err})
-                                                                    }
-                                                                })
-                                                            }
-                                                        })
-                                                    }
-                                                    else{
-                                                        if (index == (array.length -1)){
-                                                            resolve()
+                                        // const run = async() => {
+
+                                            console.log('running')
+                                            console.log(project._id)
+                                            // var promises = []
+                                            // console.log(students.length)
+                                            var allocation = new Promise((resolve, reject) => {
+                                            
+                                                students.forEach((student) => {
+                                                    project.roleList.forEach((role, index, array) => {
+                                                        
+                                                        console.log(role.positionsLeft)
+                                                        if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
+                                                            console.log(student.studentID)
+                                                            role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
+                                                            role.positionsLeft = role.positionsLeft-1
+                                                            student.projectID = project._id
+
+                                                            ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                                if (err) {
+                                                                    console.log(err)
+                                                                    return res.status(400).json({success: false, error: err})
+                                                                }
+                                                                else{
+                                                                    console.log('line 250')
+                                                                    console.log(student.projectID)
+                                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                        if (err) {
+                                                                            console.log(err)
+                                                                            return res.status(400).json({success: false, error: err})
+                                                                        }
+                                                                    })
+                                                                }
+                                                            })
                                                         }
-                                                    }
+                                                        else{
+                                                            // console.log('no more')
+
+                                                            if (index == (array.length -1)){
+                                                                resolve()
+                                                            }
+                                                        }
+                                                    })
                                                 })
-                                            })  
-                                        }) 
-                                        allocation.then(() => {
-                                            if (ind == (arr.length -1)){
-                                                return res.status(200).json({
-                                                    success: true
-                                                })
-                                            }
-                                        })
+                                                
+                                            })
+                                            allocation.then(() => {
+                                                if (ind == (arr.length -1)){
+                                                    console.log('hereeee')
+                                                    // return res.status(200).json({
+                                                    //     success: true
+                                                    // })
+                                                }
+                                            })
+                                            // const outputs = await Promise.all(promises);
+                                            // outputs.forEach((result) => console.log(result));
+
+                                            // var allocation = new Promise((resolve, reject) => {
+                                            //     //for each project role, add a student that has not been allocated to a project until there are no postions left
+                                            //     students.forEach(student => {
+                                            //         project.roleList.forEach((role, index, array) => {
+                                            //             if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
+                                            //                 role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
+                                            //                 role.positionsLeft = role.positionsLeft-1
+                                            //                 ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                            //                     if (err) {
+                                            //                         return res.status(400).json({success: false, error: err})
+                                            //                     }
+                                            //                     else{
+                                            //                         student.projectID = project._id
+                                            //                         TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                            //                             if (err) {
+                                            //                                 return res.status(400).json({success: false, error: err})
+                                            //                             }
+                                            //                         })
+                                            //                     }
+                                            //                 })
+                                            //             }
+                                            //             else{
+                                            //                 if (index == (array.length -1)){
+                                            //                     resolve()
+                                            //                 }
+                                            //             }
+                                            //         })
+                                            //     })  
+                                            // }) 
+                                            // console.log(promises.length)
+                                            // await Promise.all(promises).then(() => {
+                                            //     if (ind == (arr.length -1)){
+                                            //         return res.status(200).json({
+                                            //             success: true
+                                            //         })
+                                            //     }
+                                            // })
+
+                                        // }
+                                        // run()
+                                        // allocation.then(() => {
+                                        //     if (ind == (arr.length -1)){
+                                        //         return res.status(200).json({
+                                        //             success: true
+                                        //         })
+                                        //     }
+                                        // })
                                     }
                                 })                         
                             })
