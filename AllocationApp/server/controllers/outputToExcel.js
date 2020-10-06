@@ -3,6 +3,12 @@ const Project = require('../models/project-model')
 const ProjectRoles = require('../models/projectRoles-model')
 const ExcelJS = require('exceljs')
 const fs = require('fs')
+var xlsx = require('xlsx')
+var path = require('path')
+var targetDir = path.join(__dirname, '../');
+var files = fs.readdirSync(targetDir)
+var combinedData = []
+
 
 outputToExcel = async(req, res) => {
   Project.find({classID:req.body.classID})
@@ -17,11 +23,11 @@ outputToExcel = async(req, res) => {
     {header: 'Project ID', key: '_id', width: 30},
     {header: 'Project Name', key: 'projectName', width: 20},
     {header: 'Description', key: 'description', width: 100}
-]
+  ]
    await projects.forEach((project, i) => {
      worksheet.addRow(project)
    })
-   workbook.xlsx.writeFile('projects.xlsx')
+   await workbook.xlsx.writeFile('projects.xlsx')
 
    await projects.forEach((project, i) => {
      var workbook2 = new ExcelJS.Workbook()
@@ -40,35 +46,58 @@ outputToExcel = async(req, res) => {
         projectDetailsSheet.addRow(roles)
       });
      workbook2.xlsx.writeFile(project.projectName + " " + i + ".xlsx")
-     })    // This is not working
+     })
      .catch(err => console.log(err))
 
    })
+    mergeData()
 
-   res.download('./projects.xlsx', function(err) {
+   res.download('./ClassProjects.xlsx', function(err) {
+// res.sendFile(targetDir+'/ClassProjects.xlsx', function(err) {
     if (err) {
       console.log(err);
     }
-  // deleteFile()  //This deletes the projects.xlsx file created in ./
+   deleteFiles()  //This deletes all the xlsx files created in ./
   })
 }
 
-function mergeExcelData(){
-
+function readFileToJson(filename){
+  var wb = xlsx.readFile(filename)
+  var firstTabName = wb.SheetNames[0]
+  var ws = wb.Sheets[firstTabName]
+  var data = xlsx.utils.sheet_to_json(ws)
+  return data
 }
 
-function deleteFile(){
-    const filepath ='./projects.xlsx'
-    fs.unlink(filepath, (err) => {
-    if (err) {
-      console.error(err)
-      return
+function mergeData(){
+  files.forEach((file, i) => {
+    if(path.parse(file).ext ==='.xlsx' && file !== 'projects.xlsx'){
+      combinedData = combinedData.concat(readFileToJson(path.join(targetDir,file)))
     }
   })
+
+  var newWB = xlsx.readFile('./projects.xlsx')
+  var newWS = xlsx.utils.json_to_sheet(combinedData)
+  xlsx.utils.book_append_sheet(newWB, newWS, "Roless")
+  xlsx.writeFile(newWB, "./ClassProjects.xlsx")
+}
+
+function deleteFiles(){
+    var filepath =''
+    files.forEach((file, i) => {
+      if(path.parse(file).ext ==='.xlsx'){
+        filepath = targetDir+file
+        console.log(filepath)
+        fs.unlink(filepath, (err) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
+      }
+    })
 }
 
 module.exports ={
   outputToExcel
 }
-
-//
