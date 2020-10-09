@@ -65,6 +65,8 @@ export const deleteProjectRole = (id) =>
 export const getRolesForBackground = (id) => api.get(`/project/getRolesForBackground/${id}`) // This is class ID
 export const addStudentToProjectManually = (payload) => api.post('/project/addStudentToProjectManually', payload)
 
+export const outputToExcel = (classID) => api.post('user//outputToExcel', classID)
+
 const apis = {
   addUserToDatabase,
   deleteUser,
@@ -93,7 +95,8 @@ const apis = {
   showAllProjects,
   showProjectByName,
   getRolesForBackground,
-  addStudentToProjectManually
+  addStudentToProjectManually,
+  outputToExcel
 };
 
 export default apis;
