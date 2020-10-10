@@ -88,7 +88,7 @@ function deleteFiles(){
       if(path.parse(file).ext ==='.xlsx'){
         //console.log(file)
         filepath = targetDir+file
-      //  console.log(filepath)
+        console.log('Deleted file--> ' + filepath)
         fs.unlink(filepath, (err) => {
         if (err) {
           console.error(err)
