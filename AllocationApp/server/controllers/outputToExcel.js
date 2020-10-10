@@ -50,7 +50,7 @@ outputToExcel = async(req, res) => {
      .catch(err => console.log(err))
 
    })
-    mergeData()
+  await  mergeData()
 
    res.download('./ClassProjects.xlsx', function(err) {
 // res.sendFile(targetDir+'/ClassProjects.xlsx', function(err) {
@@ -86,6 +86,7 @@ function deleteFiles(){
     var filepath =''
     files.forEach((file, i) => {
       if(path.parse(file).ext ==='.xlsx'){
+        //console.log(file)
         filepath = targetDir+file
         console.log(filepath)
         fs.unlink(filepath, (err) => {
