@@ -47,6 +47,16 @@ class TeacherProjectList extends Component {
     });
   }
 
+  exportProject(_id) {
+    const name = this.state.projectName;
+    const classname = this.state.className;
+
+    api.deleteProject(_id).then(() => {
+      window.alert(name + ' has been removed from ' + classname);
+      window.location.reload();
+    });
+  }
+
   addProject = async (event) => {
     event.preventDefault();
     // redirect to add class
@@ -59,13 +69,7 @@ class TeacherProjectList extends Component {
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td id='tdclass'>{createdByname}</td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
-              <img id='edit' src={edit} />
-            </button>
             <button
               id='icon'
               onClick={() => this.deleteProject(_id, projectName)}
@@ -88,14 +92,24 @@ class TeacherProjectList extends Component {
           <div className='col' id='column'>
             <div className='row'>
               <h2>Projects in {this.state.className} </h2>
+              <button
+                style={{
+                  width: '25%',
+                  position: 'absolute',
+                  right: '50px',
+                  marginTop: '25px',
+                }}
+                className='btn btn-primary btn-round'
+                onClick={this.exportProject}
+              >
+                Download Project details
+              </button>
             </div>
+            <br></br>
             <table className='center' id='table'>
               <tr>
                 <th id='th'>Project Name</th>
                 <th id='th'>Project Description</th>
-                <th id='th'>Role 1</th>
-                <th id='th'>Role 2</th>
-                <th id='th'>Role 3</th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button
