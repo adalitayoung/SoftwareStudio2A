@@ -14,7 +14,12 @@ class AddClass extends Component {
     }
   }
 
-  handleRegisterUser = async event => {
+  handleAddClass = async (event) => {
+    const email = event.target.value;
+    this.setState({ className });
+  };
+
+  handleRegisterClass = async event => {
     event.preventDefault();
     let studentID = localStorage.getItem('uid');
     const {className} = this.state
@@ -50,10 +55,10 @@ class AddClass extends Component {
           <div className="box__center">
             <div className="form-group">
               <div className="name">Class Name</div>
-              <input type="className" className="form-control" id="ExampleInputClassName1" onChange={(e)=>this.setState({className:e.target.value})}></input>
+              <input type="className" className="form-control" id="ExampleInputClassName1" onChange={this.handleAddClass}></input>
             </div>
             <div className="box button-container">
-              <button type="button" className="button button--add-class" onClick={this.handleRegisterUser}>Add Class</button>
+              <button type="button" className="button button--add-class" onClick={this.handleRegisterClass}>Add Class</button>
             </div>
           </div>
         </div>
