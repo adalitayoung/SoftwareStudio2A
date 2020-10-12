@@ -188,12 +188,20 @@ th {
 }
 
 #classbtn {
-  width: 70%;
+  width: 80%;
   margin-left: 15%;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   font-size: 10px !important;
   background-color: #26a6ff !important;
+}
+#algobtn {
+  width: 80%;
+  margin-left: 15%;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 10px !important;
+  background-color: #1984d1 !important;
 }
 
 #projectbtn {
