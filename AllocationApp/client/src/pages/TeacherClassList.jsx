@@ -59,8 +59,17 @@ class TeacherClassList extends Component {
     });
   };
 
+  algorithm(name) {
+    api.startAlgorithm().then((data) => {
+      window.alert(name + 'has been allocated!');
+    });
+  }
+
   addClass = async (event) => {
     event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddClass',
+    });
   };
 
   renderTableData() {
@@ -88,6 +97,16 @@ class TeacherClassList extends Component {
               onClick={() => this.viewProjects(_id, name)}
             >
               Projects
+            </button>
+          </td>
+          <td>
+            <button
+              key={_id}
+              id='algobtn'
+              className='btn btn-primary btn-round'
+              onClick={() => this.algorithm(_id, name)}
+            >
+              Allocate
             </button>
           </td>
           <td>
@@ -123,6 +142,7 @@ class TeacherClassList extends Component {
                 <th id='th'>Number of Students</th>
                 <th id='th'>View Students</th>
                 <th id='th'>View Projects</th>
+                <th id='th'>Allocate to Project</th>
                 <th></th>
                 <th></th>
               </tr>
