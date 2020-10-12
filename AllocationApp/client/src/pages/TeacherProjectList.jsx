@@ -23,6 +23,8 @@ class TeacherProjectList extends Component {
 
   getProjectData() {
     const class_id = this.state.course;
+    localStorage.setItem('classID', class_id);
+    console.log(localStorage);
     api.showClassProjects(class_id).then((data) => {
       console.log(data);
       this.setState({ projectData: data.data });
@@ -50,9 +52,14 @@ class TeacherProjectList extends Component {
   exportProject() {
     const id = this.state.course;
     api.outputToExcel(id).then((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       //save to client as .xlsx file
     });
+  }
+
+  addStudentToProject() {
+    // redirect to new page
+    //call the manual add student to project api
   }
 
   addProject = async (event) => {
@@ -67,6 +74,15 @@ class TeacherProjectList extends Component {
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
+          <td id='editicon'>
+            <button
+              key={_id}
+              className='btn btn-primary btn-round'
+              onClick={() => this.addStudentToProject(_id)}
+            >
+              Add Student to project
+            </button>
+          </td>
           <td>
             <button
               id='icon'
