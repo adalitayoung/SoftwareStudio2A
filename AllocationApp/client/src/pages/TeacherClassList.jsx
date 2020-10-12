@@ -16,21 +16,25 @@ class TeacherClassList extends Component {
       courseIds: [],
     };
 
-    this.fetchClassList(this.state.user._id);
+    this.fetchClassList();
   }
 
   fetchClassList() {
     api.getAllCourses().then((data) => {
-      // need to change class model and check if the course is for that teacher
       console.log(data);
       this.setState({ classData: data.data.data });
     });
   }
 
-  editClass(user) {
-    // event.preventDefault();
-    console.log('edit');
-    console.log(user);
+  editClass(_id, name) {
+    localStorage.setItem('classID', _id);
+    localStorage.setItem('className', name);
+    console.log(localStorage.className);
+
+    this.props.history.push({
+      pathname: '/EditClass',
+      state: { course: _id },
+    });
   }
 
   deleteClass(_id, name) {
@@ -110,7 +114,11 @@ class TeacherClassList extends Component {
             </button>
           </td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
+            <button
+              id='icon'
+              key={_id}
+              onClick={() => this.editClass(_id, name)}
+            >
               <img id='edit' src={edit} />
             </button>
           </td>
