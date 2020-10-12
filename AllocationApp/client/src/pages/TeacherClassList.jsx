@@ -60,7 +60,7 @@ class TeacherClassList extends Component {
   };
 
   algorithm(name) {
-    api.startAlgorithm().then((data) => {
+    api.startAlgorithm().then(() => {
       window.alert(name + 'has been allocated!');
     });
   }

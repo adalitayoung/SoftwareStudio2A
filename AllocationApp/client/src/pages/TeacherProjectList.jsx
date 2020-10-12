@@ -47,13 +47,11 @@ class TeacherProjectList extends Component {
     });
   }
 
-  exportProject(_id) {
-    const name = this.state.projectName;
-    const classname = this.state.className;
-
-    api.deleteProject(_id).then(() => {
-      window.alert(name + ' has been removed from ' + classname);
-      window.location.reload();
+  exportProject() {
+    const id = this.state.course;
+    api.outputToExcel(id).then((data) => {
+      console.log(data.data);
+      //save to client as .xlsx file
     });
   }
 
@@ -99,8 +97,9 @@ class TeacherProjectList extends Component {
                   right: '50px',
                   marginTop: '25px',
                 }}
+                id='export'
                 className='btn btn-primary btn-round'
-                onClick={this.exportProject}
+                onClick={this.exportProject()}
               >
                 Download Project details
               </button>
