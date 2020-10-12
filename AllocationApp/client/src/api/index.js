@@ -72,6 +72,7 @@ const apis = {
   addUserToDatabase,
   deleteUser,
   addStudentToClass,
+  updateUserRole,
   removeFromClass,
   startAlgorithm,
   addPreferencesBackground,
