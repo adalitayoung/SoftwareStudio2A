@@ -1,9 +1,9 @@
 const Course = require('../models/class-reference.js')
-
+const Enrolment = require('../models/temp-student-model')
 createCourse = async (req, res) => {
 
     const body = req.body
-    
+
     if (!body) {
         return res.status(400).json({
             success: false,
@@ -38,7 +38,7 @@ createCourse = async (req, res) => {
                     })
                 })
         }
-    }) 
+    })
 }
 
 returnAllCourses = async (req, res) => {
@@ -74,7 +74,7 @@ deleteCourse = (req, res) => {
     .then(() => res.json('Class deleted'))
     .catch(err => res.status(400).json('Error: ' + err))
 }
-  
+
 updateCourse = async (req, res) =>{
     const id = req.params.id;
     const className = req.params.name;
@@ -107,11 +107,17 @@ updateCourse = async (req, res) =>{
     }
 }
 
+showMyclasses = async(req, res) =>{
+  Course.find({studentIDS:req.params.id}, 'name')
+  .then(classes => res.json(classes))
+  .catch(err => res.status(400).json('Error: ' + err))
+}
 
 module.exports = {
     createCourse,
     returnAllCourses,
     returnCourseByName,
     deleteCourse,
-    updateCourse
+    updateCourse,
+    showMyclasses
 }

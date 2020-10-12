@@ -38,6 +38,7 @@ export const getAllCourses = () => api.get('/class/getAllClasses');
 export const updateCourse = (id, name, numberOfStudents) =>
   api.post(`/class/updateClass/${id}/${name}/${numberOfStudents}`);
 export const deleteCourse = (id) => api.delete(`/class/deleteClass/${id}`);
+export const showMyclasses = (id) => api.get(`/class/showMyclasses/${id}`);
 
 export const login = (loginDetails) => api.post('/user/login', loginDetails);
 export const logout = () => api.post('/user/logout');
