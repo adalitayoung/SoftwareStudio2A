@@ -5,7 +5,7 @@ const FooterPage = () => {
   return (
     <MDBFooter color='blue' className='footer font-small pt-4 mt-4'>
       <MDBContainer fluid className='text-center text-md-left'>
-        <MDBRow>
+        {/* <MDBRow>
           <MDBCol md='6'>
             <h5 className='title'>Contact us</h5>
             <p className='title'>
@@ -20,7 +20,7 @@ const FooterPage = () => {
               </li>
             </ul>
           </MDBCol>
-        </MDBRow>
+        </MDBRow> */}
       </MDBContainer>
       <div className='footer-copyright text-center py-3'>
         <MDBContainer fluid>

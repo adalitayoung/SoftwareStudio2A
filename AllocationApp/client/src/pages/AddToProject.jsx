@@ -6,32 +6,16 @@ import back from '../res/back.png';
 import api from '../api';
 import '../style/style.css';
 
-class EditClass extends Component {
+class AddToProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: localStorage.user,
-      className: '',
+      studentName: '',
       numberOfStudents: '',
+      role: '',
       courseName: localStorage.className,
     };
-
-    console.log(localStorage);
-
-    if (this.state.user === 'undefined') {
-      localStorage.setItem('user', this.state.user.fullName);
-    }
-    console.log(this.state);
-  }
-
-  editClass() {
-    const id = localStorage.classID;
-    const numberOfStudents = this.state.numberOfStudents;
-    const name = this.state.className;
-
-    api.updateCourse(id, name, numberOfStudents).then((data) => {
-      console.log(data);
-    });
   }
 
   render() {
@@ -47,31 +31,33 @@ class EditClass extends Component {
           </div>
           <div className='box__center'>
             <div className='form-group'>
-              <h3>Update Details for class: {this.state.courseName} </h3>
-              <div className='name'>Update Class Name</div>
+              <h3>Manually add a student to Project: </h3>
+
+              <div>number of places available: </div>
+              <div>Roles available: </div>
+              <br></br>
+              <div className='name'>Student Name</div>
               <input
                 type='className'
                 className='form-control'
                 id='ExampleInputClassName1'
-                onChange={(e) => this.setState({ className: e.target.value })}
+                onChange={(e) => this.setState({ studentName: e.target.value })}
               ></input>
-              <div className='name'>Update Number of students</div>
+              <div className='name'>Role</div>
               <input
                 type='className'
                 className='form-control'
                 id='ExampleInputClassName1'
-                onChange={(e) =>
-                  this.setState({ numberOfStudents: e.target.value })
-                }
+                onChange={(e) => this.setState({ role: e.target.value })}
               ></input>
             </div>
             <div className='box button-container'>
               <button
                 type='button'
                 className='button button--add-class'
-                onClick={this.editClass()}
+                // onClick={}
               >
-                Update Class Details
+                Add to Project
               </button>
             </div>
           </div>
@@ -80,5 +66,4 @@ class EditClass extends Component {
     );
   }
 }
-
-export default EditClass;
+export default AddToProject;

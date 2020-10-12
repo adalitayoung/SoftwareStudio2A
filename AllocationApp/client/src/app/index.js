@@ -11,6 +11,7 @@ import Editpreferences from '../components/Editpreferences';
 import {
   Signup,
   AddProject,
+  AddToProject,
   AddClass,
   EditClass,
   TeacherClassList,
@@ -21,6 +22,7 @@ import {
   StudentClassList,
   Enroll,
   StudentProjectList,
+  AllocatedStudents,
 } from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -42,6 +44,8 @@ function App() {
         <Route path='/Admin' exact component={() => <Admin />} />
         <Route path='/SignOut' exact component={() => <SignOut />} />
         <Route path='/AddProject' exact component={AddProject} />
+        <Route path='/AddToProject' exact component={AddToProject} />
+        <Route path='/AllocatedStudents' exact component={AllocatedStudents} />
         <Route
           path='/admin/AdminTeacherList'
           exact

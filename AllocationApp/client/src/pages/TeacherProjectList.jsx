@@ -24,6 +24,7 @@ class TeacherProjectList extends Component {
   getProjectData() {
     const class_id = this.state.course;
     localStorage.setItem('classID', class_id);
+    localStorage.setItem('className', this.state.className);
     console.log(localStorage);
     api.showClassProjects(class_id).then((data) => {
       console.log(data);
@@ -57,9 +58,27 @@ class TeacherProjectList extends Component {
     });
   }
 
-  addStudentToProject() {
-    // redirect to new page
-    //call the manual add student to project api
+  addStudentToProject(_id, name) {
+    // localStorage.setItem('classID', _id);
+    // localStorage.setItem('className', name);
+    // console.log(localStorage.className);
+    console.log('whats happening');
+    this.props.history.push({
+      pathname: '/AddToProject',
+      state: { course: _id, className: name },
+    });
+  }
+
+  viewAllocations(_id, projectName) {
+    // localStorage.setItem('classID', _id);
+    // localStorage.setItem('className', name);
+    // console.log(localStorage.className);
+    const name = projectName;
+    localStorage.setItem('projectName', name);
+    this.props.history.push({
+      pathname: '/AllocatedStudents',
+      state: { course: _id, projectName: name },
+    });
   }
 
   addProject = async (event) => {
@@ -74,13 +93,14 @@ class TeacherProjectList extends Component {
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
-          <td id='editicon'>
+          <td>
             <button
               key={_id}
+              id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={() => this.addStudentToProject(_id)}
+              onClick={() => this.viewAllocations(_id, projectName)}
             >
-              Add Student to project
+              View Project Roles
             </button>
           </td>
           <td>
@@ -125,6 +145,7 @@ class TeacherProjectList extends Component {
               <tr>
                 <th id='th'>Project Name</th>
                 <th id='th'>Project Description</th>
+                <th id='th'>Project Allocations</th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button

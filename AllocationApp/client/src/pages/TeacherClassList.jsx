@@ -15,7 +15,8 @@ class TeacherClassList extends Component {
       isLoading: false,
       courseIds: [],
     };
-
+    console.log(localStorage);
+    localStorage.setItem('user', this.state.user.fullName);
     this.fetchClassList();
   }
 
@@ -150,7 +151,7 @@ class TeacherClassList extends Component {
                 <th id='th'>Number of Students</th>
                 <th id='th'>View Students</th>
                 <th id='th'>View Projects</th>
-                <th id='th'>Allocate to Project</th>
+                <th id='th'>Algorithm</th>
                 <th></th>
                 <th></th>
               </tr>
