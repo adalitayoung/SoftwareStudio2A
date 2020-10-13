@@ -25,7 +25,7 @@ class TeacherProjectList extends Component {
     const class_id = this.state.course;
     localStorage.setItem('classID', class_id);
     localStorage.setItem('className', this.state.className);
-    console.log(localStorage);
+
     api.showClassProjects(class_id).then((data) => {
       console.log(data);
       this.setState({ projectData: data.data });
@@ -71,13 +71,14 @@ class TeacherProjectList extends Component {
 
   viewAllocations(_id, projectName) {
     // localStorage.setItem('classID', _id);
-    // localStorage.setItem('className', name);
+    localStorage.setItem('projectID', _id);
+
     // console.log(localStorage.className);
     const name = projectName;
     localStorage.setItem('projectName', name);
     this.props.history.push({
       pathname: '/AllocatedStudents',
-      state: { course: _id, projectName: name },
+      state: { projectID: _id, projectName: name },
     });
   }
 
@@ -100,7 +101,7 @@ class TeacherProjectList extends Component {
               className='btn btn-primary btn-round'
               onClick={() => this.viewAllocations(_id, projectName)}
             >
-              View Project Roles
+              View Project Details
             </button>
           </td>
           <td>

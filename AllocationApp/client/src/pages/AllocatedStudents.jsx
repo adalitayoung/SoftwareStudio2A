@@ -17,27 +17,24 @@ class AllocatedStudents extends Component {
       projectName: localStorage.projectName,
       projectData: [], //stores the output from the api call
       isLoading: false,
+      projectID: localStorage.projectID,
     };
-    console.log(this.state);
     this.showRoles();
+    console.log(localStorage.projectID);
   }
 
   showRoles() {
-    const class_id = this.state.course;
-    localStorage.setItem('classID', class_id);
+    //get project ID
+    const project_id = this.state.projectID;
+    localStorage.setItem('classID', project_id);
     localStorage.setItem('className', this.state.className);
-    console.log(localStorage);
-    api.showRoles(class_id).then((data) => {
-      console.log(data);
-      //   this.setState({ projectData: data.data });
+
+    api.showRoles(project_id).then((data) => {
+      this.setState({ projectData: data.data });
     });
   }
 
   addStudentToProject(_id) {
-    // localStorage.setItem('classID', _id);
-    // localStorage.setItem('className', name);
-    // console.log(localStorage.className);
-    console.log('whats happening');
     this.props.history.push({
       pathname: '/AddToProject',
       state: { course: _id },
@@ -96,6 +93,18 @@ class AllocatedStudents extends Component {
                 onClick={() => this.addStudentToProject()}
               >
                 Add Student to project
+              </button>
+              <button
+                style={{
+                  width: '25%',
+                  position: 'absolute',
+                  right: '400px',
+                  marginTop: '25px',
+                }}
+                className='btn btn-primary btn-round'
+                onClick={() => this.addStudentToProject()}
+              >
+                create a new role
               </button>
             </table>
           </div>
