@@ -56,6 +56,7 @@ enroll = async event => {
 
 edit(id){
   const user = this.state.user;
+  console.log(id)
   this.props.history.push({
     pathname: '/student/updatepreferences',
     state: {user: user, course: id}
@@ -71,7 +72,7 @@ renderTableData(){
           <td id='tdclass'>{name}</td>
           <td id='tdclass'>{numberOfStudents}</td>
           <td>
-            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={() => this.edit(_id)}>
+            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={(course) => this.edit(_id)}>
                 Edit
             </button>
           </td>
