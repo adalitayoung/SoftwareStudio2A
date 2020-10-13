@@ -23,6 +23,8 @@ class TeacherProjectList extends Component {
 
   getProjectData() {
     const class_id = this.state.course;
+    localStorage.setItem('classID', class_id);
+    console.log(localStorage);
     api.showClassProjects(class_id).then((data) => {
       console.log(data);
       this.setState({ projectData: data.data });
@@ -47,6 +49,19 @@ class TeacherProjectList extends Component {
     });
   }
 
+  exportProject() {
+    const id = this.state.course;
+    api.outputToExcel(id).then((data) => {
+      // console.log(data.data);
+      //save to client as .xlsx file
+    });
+  }
+
+  addStudentToProject() {
+    // redirect to new page
+    //call the manual add student to project api
+  }
+
   addProject = async (event) => {
     event.preventDefault();
     // redirect to add class
@@ -59,13 +74,16 @@ class TeacherProjectList extends Component {
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td>
-            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
-              <img id='edit' src={edit} />
+          <td id='editicon'>
+            <button
+              key={_id}
+              className='btn btn-primary btn-round'
+              onClick={() => this.addStudentToProject(_id)}
+            >
+              Add Student to project
             </button>
+          </td>
+          <td>
             <button
               id='icon'
               onClick={() => this.deleteProject(_id, projectName)}
@@ -88,14 +106,25 @@ class TeacherProjectList extends Component {
           <div className='col' id='column'>
             <div className='row'>
               <h2>Projects in {this.state.className} </h2>
+              <button
+                style={{
+                  width: '25%',
+                  position: 'absolute',
+                  right: '50px',
+                  marginTop: '25px',
+                }}
+                id='export'
+                className='btn btn-primary btn-round'
+                onClick={this.exportProject()}
+              >
+                Download Project details
+              </button>
             </div>
+            <br></br>
             <table className='center' id='table'>
               <tr>
                 <th id='th'>Project Name</th>
                 <th id='th'>Project Description</th>
-                <th id='th'>Role 1</th>
-                <th id='th'>Role 2</th>
-                <th id='th'>Role 3</th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button

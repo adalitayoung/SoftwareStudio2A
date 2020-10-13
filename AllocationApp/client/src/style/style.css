@@ -22,6 +22,10 @@ body {
   width: 200px;
 }
 
+.signup {
+  padding-top: 10%;
+}
+
 .signup .form-group {
   font-size: 15px !important;
   font-weight: 600;
@@ -30,7 +34,7 @@ body {
 }
 
 #signin {
-  padding-top: 20%;
+  padding-top: 30%;
 }
 
 .form-control {
@@ -120,8 +124,8 @@ body {
   margin-left: 15px;
 }
 
-.adminstbutton-container{
-  width:150px;
+.adminstbutton-container {
+  width: 150px;
 }
 .piccontainer {
   position: relative;
@@ -159,11 +163,10 @@ table.center {
   margin-right: auto;
   width: 100%;
 }
-
+/* 
 .container {
-  margin-bottom: 30%;
-  /* margin-top: 15%; */
-}
+  /* margin-bottom: 30%; */
+/* margin-top: 15%; */
 
 #table {
   background-color: white;
@@ -185,8 +188,23 @@ th {
 }
 
 #classbtn {
-  width: 70%;
+  width: 80%;
   margin-left: 15%;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 10px !important;
+  background-color: #26a6ff !important;
+}
+#algobtn {
+  width: 80%;
+  margin-left: 15%;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 10px !important;
+  background-color: #1984d1 !important;
+}
+
+#projectbtn {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   font-size: 10px !important;
@@ -225,23 +243,6 @@ h2 {
   text-align: center;
 }
 
-.hpbutton {
-  color: "white";
-  background-color: #3da2ff;
-  padding: "10px 24px";
-  font-family: "Arial";
-  margin: "6px 4px";
-  text-align: "center";
-  position: "absoluteright";
-
-  font-size: "20px";
-  border-radius: "10px";
-  border: "none";
-  display: "inline-block";
-  min-width: "140px";
-  max-width: "140px";
-}
-
 #back {
   position: absolute;
   left: 10%;
@@ -252,30 +253,32 @@ h2 {
   display: flex;
 }
 
-.adminstfontgradon{
+.adminstfontgradon {
   top: 178px;
   left: 862px;
   width: 303px;
   height: 60px;
   font-size: 40px;
   font-weight: bold;
-  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 50px/61px var(--unnamed-font-family-helvetica-neue);
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold)
+    50px/61px var(--unnamed-font-family-helvetica-neue);
   letter-spacing: var(--unnamed-character-spacing-0);
   text-align: center;
   font: normal normal bold 50px/61px Helvetica Neue;
   letter-spacing: 0px;
-  color: #26A6FF;
+  color: #26a6ff;
   opacity: 1;
 }
 
-.adminstfontauto{
+.adminstfontauto {
   top: 254px;
   left: 917px;
   width: 193px;
   height: 23px;
   font-family: Helvetica;
   font-size: 32px;
-  font: var(--unnamed-font-style-normal) normal normal 20px/24px var(--unnamed-font-family-helvetica-neue);
+  font: var(--unnamed-font-style-normal) normal normal 20px/24px
+    var(--unnamed-font-family-helvetica-neue);
   letter-spacing: var(--unnamed-character-spacing-0);
   text-align: left;
   font: normal normal normal 20px/24px Helvetica Neue;
@@ -284,9 +287,9 @@ h2 {
   opacity: 1;
 }
 
-.backgroundbox{
+.backgroundbox {
   position: absolute;
-  background-color:#5ba3d677;
+  background-color: #5ba3d677;
   left: 570px;
   top: 390px;
   width: 790px;
@@ -294,12 +297,23 @@ h2 {
   transform: translate(-50%, -50%);
   border-radius: 25px;
   opacity: 1;
-
-  
 }
-.backgroundwhitebox{
+
+.backgroundboxaddy {
   position: absolute;
-  background-color:#ebeff1;
+  background-color: #5ba3d677;
+  left: 25%;
+  right: 25%;
+  width: 50%;
+  height: 24%;
+  border-radius: 25px;
+  opacity: 1;
+  padding: 7%;
+}
+
+.backgroundwhitebox {
+  position: absolute;
+  background-color: #ebeff1;
   left: 395px;
   top: 230px;
   width: 720px;
@@ -307,8 +321,17 @@ h2 {
   transform: translate(-50%, -50%);
   border-radius: 25px;
   opacity: 1;
+}
 
-  
+.backgroundwhiteboxaddy {
+  position: absolute;
+  background-color: #ebeff1;
+  width: 75%;
+  height: fit-content;
+  border-radius: 25px;
+  opacity: 1;
+  margin-top: -9%;
+  padding-top: 4%;
 }
 
 svg {
@@ -319,30 +342,46 @@ svg {
   margin-bottom: 20px !important;
 }
 
+.clr {
+  color: #26a6ff;
+}
+.txt {
+  font-size: 28px;
+  color: #26a6ff;
+  font-weight: 700;
+}
+.clr1 {
+  color: #26a6ff;
+  font-weight: 650;
+  font-size: 20px;
+}
+.bg-frm {
+  background-color: #3da2ff;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 25px;
+}
+.tp {
+  margin-top: 10px;
+}
+.lbl {
+  color: white;
+  font-weight: 650;
+}
 
-.clr{
-      color: #26a6ff;
-    }
-    .txt{
-      font-size: 28px;
-      color: #26a6ff;
-      font-weight: 700;
-    }
-    .clr1{
-      color: #26a6ff;
-      font-weight: 650;
-      font-size: 20px;
-    }
-    .bg-frm{
-      background-color: #3da2ff;
-      border-radius: 10px;
-      padding-top: 5px;
-      padding-bottom: 25px;
-    }
-    .tp{
-      margin-top: 10px;
-    }
-    .lbl{
-      color:white;
-      font-weight: 650;
-    }
+#body {
+  padding-left: 0;
+  padding-right: 0;
+  height: 100%;
+}
+
+.img-fluid {
+  width: 100%;
+  height: 1100px !important;
+}
+
+h6 {
+  margin-left: 15px;
+  color: rgb(61, 61, 61);
+  font-weight: 400 !important;
+}

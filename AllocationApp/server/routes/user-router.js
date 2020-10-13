@@ -3,6 +3,7 @@ const express = require('express')
 const AlgorithmCtrl = require('../controllers/algorithm-ctrl')
 const UserCtrl = require('../controllers/user-ctrl')
 const classCtrl = require('../controllers/class-ctrl')
+const OutputToExcelCtrl = require('../controllers/outputToExcel')
 const router = express.Router();
 
 router.post('/createUser', UserCtrl.createUser)
@@ -20,5 +21,6 @@ router.get('/algorithm', AlgorithmCtrl.startAlgorithm)
 router.get('/randomSort', AlgorithmCtrl.randomSort)
 router.post('/login', UserCtrl.login)
 router.post('/logout', UserCtrl.logout)
+router.post('/outputToExcel', OutputToExcelCtrl.outputToExcel)
 
 module.exports = router
