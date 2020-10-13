@@ -298,6 +298,19 @@ h2 {
   border-radius: 25px;
   opacity: 1;
 }
+
+.backgroundboxaddy {
+  position: absolute;
+  background-color: #5ba3d677;
+  left: 25%;
+  right: 25%;
+  width: 50%;
+  height: 24%;
+  border-radius: 25px;
+  opacity: 1;
+  padding: 7%;
+}
+
 .backgroundwhitebox {
   position: absolute;
   background-color: #ebeff1;
@@ -308,6 +321,17 @@ h2 {
   transform: translate(-50%, -50%);
   border-radius: 25px;
   opacity: 1;
+}
+
+.backgroundwhiteboxaddy {
+  position: absolute;
+  background-color: #ebeff1;
+  width: 75%;
+  height: fit-content;
+  border-radius: 25px;
+  opacity: 1;
+  margin-top: -9%;
+  padding-top: 4%;
 }
 
 svg {

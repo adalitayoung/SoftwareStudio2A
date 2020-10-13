@@ -30,25 +30,28 @@ class AdminUpdateUserRole extends Component {
             <div className="container scrollable">
                 <div className="row align-items-center">
                     <div className="col" style={{marginTop:"10%"}}>
-                    <div className="box title-container">
-                        <div className="adminstfontgradon">Update {this.state.fullName}'s Role </div>
-                    </div>
+                        <div className="box title-container">
+                            <div style={{color: "#26a6ff", font: "normal normal bold 50px/61px Helvetica Neue"}}>Update {this.state.fullName}'s Role </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="backgroundbox">
-                    <div class="backgroundwhitebox">
-                        <div>
-                            <label>Role</label>
-                            <select id="role">
-                                <option value="ADMIN">Admin</option>
-                                <option value="TEACHER">Teacher</option>
-                                <option value="STUDENT">Student</option>
-                            </select>
+                <div className="row backgroundboxaddy">
+                    <div className="row backgroundwhiteboxaddy">
+                        <div className="col" style={{marginLeft: '35%'}}> 
+                            <div style={{margin: "auto"}} className="align-items-center">
+                                <label style={{paddingRight: '3%'}}>Role  </label>
+                                <select id="role">
+                                    <option value="ADMIN">Admin</option>
+                                    <option value="TEACHER">Teacher</option>
+                                    <option value="STUDENT">Student</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button className="btn btn-primary" onClick={() => this.updateRole()}>Update</button>
+                            </div>
                         </div>
-                        <div className="button-container">
-                            <button onClick={() => this.updateRole()}>Update</button>
-                        </div>
+                        
                         
                     </div>
                </div> 
