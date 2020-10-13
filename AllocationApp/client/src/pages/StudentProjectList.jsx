@@ -11,18 +11,20 @@ class StudentProjectList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      user: props.location.state.user,
+      user: props.location.state.user.fullName,
+      //course: props.location.state.course,
+      //className: props.location.state.className,
       projectData: [],
       isLoading: false,
     };
     console.log(props);
-    this.getProject(this.state.user._id);
+    this.getProject();
   }
 
     getProject() {
-        const class_id = ''
-        api.showProject(class_id).then( data => {
-          this.setState({ projectData: data.data.data})
+        //const class_id = this.state.course;
+        api.showAllProjects().then( data => {
+          this.setState({ projectData: data.data})
         })
     }
 
@@ -64,14 +66,14 @@ class StudentProjectList extends Component {
 
       renderTableData() {
         return this.state.projectData.map((course) => {
-          const { name, des, role, _id} = course;
+          const { projectName, description, createdByname, _id} = course;
 
           return (
             <tr key={_id}>
-              <td id='tdclass'>{name}</td>
-              <td id='tdclass'>{des}</td>
+              <td id='tdclass'>{projectName}</td>
+              <td id='tdclass'>{description}</td>
               <td id='tdClass'>
-                {role}
+                {createdByname}
               </td>
             </tr>
           )
@@ -93,7 +95,7 @@ class StudentProjectList extends Component {
                 <tr>
                     <th id='th'>Project Name</th>
                     <th id='th'>Project Description</th>
-                    <th id='th'>Role</th>
+                    <th id='th'>Creator</th>
                     <th></th>
                     <th></th>
                 </tr>

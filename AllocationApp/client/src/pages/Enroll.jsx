@@ -10,15 +10,15 @@ class Enroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: props.location.state.user,
+      user: props.location.state.user.fullName,
       classData: [],
       isLoading: false,
     };
     console.log(props);
-    this.getClasses(this.state.user._id);
+    this.getClasses();
   }
 
-    getClasses(userID) {
+    getClasses() {
         //display classes to join
         api.getAllCourses().then((data) => {
           console.log(data);
@@ -27,10 +27,17 @@ class Enroll extends Component {
         });
     }
 
-    join = async event => {
-        event.preventDefault();
-        console.log("join");
-        //add the student to the class
+    // join = async event => {
+    //     event.preventDefault();
+    //     console.log("join");
+    //     //add the student to the class
+    // }
+    
+    join(_id, studentID, courseName) {
+      //const name = studentID;
+      api.addStudentToClass(studentID, courseName).then(() => {
+        window.alert(studentID + " is enrolled into class.")
+      })
     }
 
     viewClass = async event => {
@@ -65,19 +72,19 @@ class Enroll extends Component {
     
     renderTable() {
       return this.state.classData.map((course, index) => {
-        const { name, teacher, _id } = course; //destructuring
+        const { name, numberOfStudents, _id } = course; //destructuring
         console.log(_id);
         return (
           <tr key={_id}>
             <td id='tdclass'>{name}</td>
-            <td id='tdclass'>{teacher}</td>
+            <td id='tdclass'>{numberOfStudents}</td>
             <td>
               <button
                 style = {{width: "70%", marginLeft: "15%"}} 
                 className="btn btn-primary btn-block"
                 onClick={this.join}
               >
-                Enrol
+                Enroll
               </button>
             </td>
           </tr>

@@ -13,7 +13,7 @@ class StudentClassList extends Component {
         classData: [],
         isLoading: false,
     }
-    this.fetchClassList(this.state.user._id)
+    this.fetchClassList()
 }
 
 fetchClassList(){
@@ -54,20 +54,24 @@ enroll = async event => {
   })    // redirect to enroll page
 }
 
-edit = async event => {
-  event.preventDefault();
+edit(id){
+  const user = this.state.user;
+  this.props.history.push({
+    pathname: '/student/updatepreferences',
+    state: {user: user, course: id}
+  })
    // redirect to edit page
 }
 
 renderTableData(){
   return this.state.classData.map((course) => {
-    const { name, numOfStudent, _id } = course //destructuring
+    const { name, numberOfStudents, _id } = course //destructuring
     return (
        <tr key={_id}>
           <td id='tdclass'>{name}</td>
-          <td id='tdclass'>{numOfStudent}</td>
+          <td id='tdclass'>{numberOfStudents}</td>
           <td>
-            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={this.edit}>
+            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={() => this.edit(_id)}>
                 Edit
             </button>
           </td>
@@ -81,7 +85,7 @@ render() {
       <div className="container scrollable">
           <div className="row align-items-center">
               <div className = "col" id='column'>
-                <h2>{this.state.user.fullName}'s Classes</h2>
+                <h2>{this.state.user.fullName}'s Classes</h2> 
               <div className="row">                    
                   <button style = {{width: "15%", position: "absolute", marginLeft: ""}} className="btn btn-primary btn-block" onClick = {this.viewClass}>Classes</button>
                   <button style = {{width: "15%", marginLeft: "16%", left: "0"}} className="btn btn-primary btn-block" onClick = {this.viewProject}>Projects</button>
