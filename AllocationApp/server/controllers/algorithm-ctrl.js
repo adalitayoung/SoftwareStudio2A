@@ -243,7 +243,7 @@ randomSort = async (req, res) => {
                                                 students.forEach((student) => {
                                                     project.roleList.forEach((role, index, array) => {
                                                         
-                                                        console.log(role.positionsLeft)
+                                                        //console.log(role.positionsLeft)
                                                         if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
                                                             console.log(student.studentID)
                                                             role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
@@ -256,8 +256,8 @@ randomSort = async (req, res) => {
                                                                     return res.status(400).json({success: false, error: err})
                                                                 }
                                                                 else{
-                                                                    console.log('line 250')
-                                                                    console.log(student.projectID)
+                                                                    // console.log('line 250')
+                                                                    // console.log(student.projectID)
                                                                     TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
                                                                         if (err) {
                                                                             console.log(err)
@@ -345,6 +345,15 @@ randomSort = async (req, res) => {
             })
         }
     })
+    // await TempStudent.find({projectID: "null"}).exec(function(err, students) {
+    //     if (err) {
+    //         console.log(err)
+    //         return res.status(400).json({success: false, error: err})
+    //     }
+    //     if(students){
+    //         console.log("Number of students that have not been allocated a project: " + students.length);
+    //     }
+    // })
 }
 
 

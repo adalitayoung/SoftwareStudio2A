@@ -129,47 +129,47 @@ describe('Run Random Sort Algorithm', () => {
                 new ProjectRole({
                     "projectID": projects[0]._id,
                     "roleType": "Front End",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID": projects[0]._id,
                     "roleType": "Back End",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[0]._id,
                     "roleType": "Full Stack",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[1]._id,
                     "roleType": "Front End",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[1]._id,
                     "roleType": "Back End",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[1]._id,
                     "roleType": "Full Stack",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[2]._id,
                     "roleType": "Front End",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[2]._id,
                     "roleType": "Back End",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
                 new ProjectRole({
                     "projectID":projects[2]._id,
                     "roleType": "Full Stack",
-                    "positionsRequired": 4
+                    "positionsRequired": 6
                 }),
             ]
 
