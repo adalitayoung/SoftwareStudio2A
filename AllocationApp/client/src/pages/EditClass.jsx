@@ -39,15 +39,19 @@ class EditClass extends Component {
       <div className='signup addClass'>
         <div className='box'>
           <div className='box__left'>
-            <Link to='/teacher/ClassList'>
-              <div className='name'>
-                <img width='20px' src={back}></img> &nbsp;Classes
-              </div>
-            </Link>
+            <a id='back' href='javascript:history.back()'>
+              <img width='20px' src={back}></img> &nbsp;Classes
+            </a>
           </div>
-          <div className='box__center'>
+          <div
+            className='box__center'
+            style={{ marginTop: '-100px', width: '50%' }}
+          >
             <div className='form-group'>
-              <h3>Update Details for class: {this.state.courseName} </h3>
+              <br></br>
+              <br></br>
+              <h2>{this.state.courseName} </h2>
+              <br></br>
               <div className='name'>Update Class Name</div>
               <input
                 type='className'
