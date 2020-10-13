@@ -67,6 +67,7 @@ class TeacherProjectList extends Component {
 
   viewAllocations(_id, projectName) {
     localStorage.setItem('projectID', _id);
+    localStorage.setItem('projectName', projectName);
 
     // console.log(localStorage.className);
     const name = projectName;

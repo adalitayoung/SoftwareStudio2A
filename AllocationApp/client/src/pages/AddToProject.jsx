@@ -19,6 +19,7 @@ class AddToProject extends Component {
       positionsLeft: '',
     };
     console.log(this.state.projectID);
+    console.log(localStorage);
   }
 
   addStudent() {
@@ -48,7 +49,7 @@ class AddToProject extends Component {
           >
             <div className='form-group'>
               <br></br>
-              <h2>Add a student to Project: </h2>
+              <h2>Add a student to {localStorage.projectName} </h2>
               <br></br>
               <br></br>
               <div className='name'>Student Name</div>
