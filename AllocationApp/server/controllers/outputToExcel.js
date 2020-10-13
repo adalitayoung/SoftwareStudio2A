@@ -11,7 +11,8 @@ var combinedData = []
 
 
 outputToExcel = async(req, res) => {
-  Project.find({classID:req.body.classID})
+  console.log(req.params.id)
+  Project.find({classID:req.params.id})
   .then(projects => exportDataToSheet(req, res, projects))
   .catch(err => console.log(err))
 }

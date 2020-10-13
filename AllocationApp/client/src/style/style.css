@@ -196,7 +196,7 @@ th {
   background-color: #26a6ff !important;
 }
 #algobtn {
-  width: 80%;
+  width: 90%;
   margin-left: 15%;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
@@ -232,7 +232,7 @@ th {
 
 #icon {
   border-color: white !important;
-  background-color: white;
+  background-color: transparent;
   border-width: 0;
 }
 

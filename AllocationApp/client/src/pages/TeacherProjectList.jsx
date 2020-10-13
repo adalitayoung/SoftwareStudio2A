@@ -24,7 +24,8 @@ class TeacherProjectList extends Component {
   getProjectData() {
     const class_id = this.state.course;
     localStorage.setItem('classID', class_id);
-    console.log(localStorage);
+    localStorage.setItem('className', this.state.className);
+
     api.showClassProjects(class_id).then((data) => {
       console.log(data);
       this.setState({ projectData: data.data });
@@ -57,14 +58,32 @@ class TeacherProjectList extends Component {
     });
   }
 
-  addStudentToProject() {
-    // redirect to new page
-    //call the manual add student to project api
+  addStudentToProject(_id, name) {
+    this.props.history.push({
+      pathname: '/AddToProject',
+      state: { course: _id, className: name },
+    });
+  }
+
+  viewAllocations(_id, projectName) {
+    localStorage.setItem('projectID', _id);
+    localStorage.setItem('projectName', projectName);
+
+    // console.log(localStorage.className);
+    const name = projectName;
+    localStorage.setItem('projectName', name);
+    this.props.history.push({
+      pathname: '/AllocatedStudents',
+      state: { projectID: _id, projectName: name },
+    });
   }
 
   addProject = async (event) => {
     event.preventDefault();
-    // redirect to add class
+    event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddProject',
+    });
   };
 
   renderTableData() {
@@ -74,13 +93,14 @@ class TeacherProjectList extends Component {
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
-          <td id='editicon'>
+          <td>
             <button
               key={_id}
+              id='classbtn'
               className='btn btn-primary btn-round'
-              onClick={() => this.addStudentToProject(_id)}
+              onClick={() => this.viewAllocations(_id, projectName)}
             >
-              Add Student to project
+              View Project Details
             </button>
           </td>
           <td>
@@ -125,6 +145,7 @@ class TeacherProjectList extends Component {
               <tr>
                 <th id='th'>Project Name</th>
                 <th id='th'>Project Description</th>
+                <th id='th'>Project Allocations</th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button
