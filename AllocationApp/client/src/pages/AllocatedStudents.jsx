@@ -1,11 +1,6 @@
 import React from 'react';
-
 import api from '../api';
-import edit from '../res/edit.png';
-import del from '../res/delete.png';
 import back from '../res/back.png';
-
-import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
 class AllocatedStudents extends Component {
@@ -41,6 +36,13 @@ class AllocatedStudents extends Component {
     });
   }
 
+  // createProjectRole(_id) {
+  //   this.props.history.push({
+  //     pathname: '/CreateProjectRole',
+  //     state: { course: _id },
+  //   });
+  // }
+
   deleteProject(_id, projectName) {
     const name = projectName;
     const classname = this.state.className;
@@ -68,7 +70,7 @@ class AllocatedStudents extends Component {
       <div className='container scrollable'>
         <div className='row align-items-center'>
           <a id='back' href='javascript:history.back()'>
-            <img width='20px' src={back}></img> &nbsp;Classes
+            <img width='20px' src={back}></img> &nbsp;Projects
           </a>
           <div className='col' id='column'>
             <div className='row'>
@@ -94,7 +96,7 @@ class AllocatedStudents extends Component {
               >
                 Add Student to project
               </button>
-              <button
+              {/* <button
                 style={{
                   width: '25%',
                   position: 'absolute',
@@ -102,10 +104,10 @@ class AllocatedStudents extends Component {
                   marginTop: '25px',
                 }}
                 className='btn btn-primary btn-round'
-                onClick={() => this.addStudentToProject()}
+                onClick={() => this.createProjectRole()}
               >
                 create a new role
-              </button>
+              </button> */}
             </table>
           </div>
         </div>

@@ -111,7 +111,7 @@ class TeacherClassList extends Component {
               className='btn btn-primary btn-round'
               onClick={() => this.algorithm(_id, name)}
             >
-              Allocate
+              Auto Allocate
             </button>
           </td>
           <td>

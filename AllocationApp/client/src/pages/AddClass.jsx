@@ -42,13 +42,14 @@ class AddClass extends Component {
       <div className='signup addClass'>
         <div className='box'>
           <div className='box__left'>
-            <Link to='/teacher/ClassList'>
-              <div className='name'>
-                <img width='20px' src={back}></img> &nbsp;Classes
-              </div>
-            </Link>
+            <a id='back' href='javascript:history.back()'>
+              <img width='20px' src={back}></img> &nbsp;Classes
+            </a>
           </div>
-          <div className='box__center'>
+          <div
+            className='box__center'
+            style={{ marginTop: '-100px', width: '50%' }}
+          >
             <div className='form-group'>
               <div className='name'>Class Name</div>
               <input

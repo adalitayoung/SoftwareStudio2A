@@ -15,7 +15,22 @@ class AddToProject extends Component {
       numberOfStudents: '',
       role: '',
       courseName: localStorage.className,
+      projectID: localStorage.projectID,
+      positionsLeft: '',
     };
+    console.log(this.state.projectID);
+  }
+
+  addStudent() {
+    const id = this.state.projectID;
+    const role = this.state.roleType;
+    const positions = this.state.positionsLeft;
+    const studentID = this.state.studentName;
+    api
+      .addStudentToProjectManually(id, role, studentID, positions)
+      .then((data) => {
+        console.log(data);
+      });
   }
 
   render() {
@@ -23,18 +38,18 @@ class AddToProject extends Component {
       <div className='signup addClass'>
         <div className='box'>
           <div className='box__left'>
-            <Link to='/teacher/ClassList'>
-              <div className='name'>
-                <img width='20px' src={back}></img> &nbsp;Classes
-              </div>
-            </Link>
+            <a id='back' href='javascript:history.back()'>
+              <img width='20px' src={back}></img> &nbsp;Project
+            </a>
           </div>
-          <div className='box__center'>
+          <div
+            className='box__center'
+            style={{ marginTop: '-100px', width: '50%' }}
+          >
             <div className='form-group'>
-              <h3>Manually add a student to Project: </h3>
-
-              <div>number of places available: </div>
-              <div>Roles available: </div>
+              <br></br>
+              <h2>Add a student to Project: </h2>
+              <br></br>
               <br></br>
               <div className='name'>Student Name</div>
               <input
@@ -51,11 +66,18 @@ class AddToProject extends Component {
                 onChange={(e) => this.setState({ role: e.target.value })}
               ></input>
             </div>
+            <div className='name'>Positions Left</div>
+            <input
+              type='className'
+              className='form-control'
+              id='ExampleInputClassName1'
+              onChange={(e) => this.setState({ positionsLeft: e.target.value })}
+            ></input>
             <div className='box button-container'>
               <button
                 type='button'
                 className='button button--add-class'
-                // onClick={}
+                onClick={this.addStudent()}
               >
                 Add to Project
               </button>

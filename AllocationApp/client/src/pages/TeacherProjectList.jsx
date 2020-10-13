@@ -59,10 +59,6 @@ class TeacherProjectList extends Component {
   }
 
   addStudentToProject(_id, name) {
-    // localStorage.setItem('classID', _id);
-    // localStorage.setItem('className', name);
-    // console.log(localStorage.className);
-    console.log('whats happening');
     this.props.history.push({
       pathname: '/AddToProject',
       state: { course: _id, className: name },
@@ -70,7 +66,6 @@ class TeacherProjectList extends Component {
   }
 
   viewAllocations(_id, projectName) {
-    // localStorage.setItem('classID', _id);
     localStorage.setItem('projectID', _id);
 
     // console.log(localStorage.className);
@@ -84,7 +79,10 @@ class TeacherProjectList extends Component {
 
   addProject = async (event) => {
     event.preventDefault();
-    // redirect to add class
+    event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddProject',
+    });
   };
 
   renderTableData() {
