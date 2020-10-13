@@ -228,17 +228,26 @@ deleteUsers = async (req, res) => {
 
 addStudentToClass = async (req, res) => {
 
-    const student_id = req.params.student_id;
+   // const id = req.params.student_id;
     const className = req.params.className;
+    const id = req.params.student_id;
 
-    if (student_id !== null && className !== null) {
+    // var mongoose = require('mongoose');
+    // var mongoObjectId = mongoose.Types.ObjectId(id);
+
+    //console.log(typeof id);
+    if ( req.params.student_id !== null && className !== null) {
         const tempStudent = new TempStudent();
+        
         //find student in user database using email entered in body
-        await User.find({ _id: student_id }).exec(function (err, users) {
+        await User.find({_id : id}).exec(function (err, users) {
             //if there is a user
+            if (err) {
+              console.log(err)
+            }
             if (users.length) {
             //get the student id from the users db and assign as tempStudent students id
-            tempStudent.studentID = student_id;
+            tempStudent.studentID = users[0]._id;
 
             //find class ID based of class name
             Class.find({ name: className }).exec(function (err, classReferences) {
@@ -253,7 +262,7 @@ addStudentToClass = async (req, res) => {
                     }
 
                     //Check that the student is not already enrolled in class
-                    TempStudent.find({ studentID: student_id, classID: classID }).exec(function (err, tempStudents) {
+                    TempStudent.find({ studentID: users[0]._id, classID: classID }).exec(function (err, tempStudents) {
                         if (tempStudents.length) {
                         return res.status(400).json({
                             success: false,
@@ -266,7 +275,7 @@ addStudentToClass = async (req, res) => {
                             tempStudent.save().then(() => {
                                 return res.status(201).json({
                                 success: true,
-                                studentID: tempStudent.studentID,
+                                id: tempStudent.studentID,
                                 classID: tempStudent.classID,
                                 message: 'student added to class',
                                 });
@@ -275,7 +284,7 @@ addStudentToClass = async (req, res) => {
                             //add student id to class studentIDS array
                             Class.findOneAndUpdate(
                                 { name: className },
-                                { $push: { studentIDS: student_id } },
+                                { $push: { studentIDS: users[0]._id } },
                                 { new: true },(err, doc) => {
                                 if (err) {
                                     console.log('Something wrong when updating class data!');
@@ -448,6 +457,14 @@ addPreferencesBackground = async (req, res) => {
   });
 };
 
+getAllStudentIds =  (req, res) => {
+    const role = req.params.role;
+    console.log(role);
+      User.find({role:role})
+      .then(user => res.json(user))
+      .catch(err => res.status(400).json('Error: ' + err))
+}
+
 login = async (req, res) => {
   const body = req.body;
   if (!body) {
@@ -511,6 +528,7 @@ module.exports = {
     logout,
     deleteUser,
     deleteUsers,
+    getAllStudentIds,
     // addUserPreference,
     // updatePreferences,
     login
