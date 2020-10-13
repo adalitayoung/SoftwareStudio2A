@@ -12,7 +12,7 @@ import StudentClassList from './StudentClassList';
 import StudentProjectList from './StudentProjectList';
 import Enroll from './Enroll';
 import AllocatedStudents from './AllocatedStudents';
-
+import AdminUpdateUserRole from './AdminUpdateUserRole';
 export {
   Signup,
   TeacherClassList,
@@ -28,4 +28,5 @@ export {
   AddToProject,
   EditClass,
   AllocatedStudents,
+  AdminUpdateUserRole
 };

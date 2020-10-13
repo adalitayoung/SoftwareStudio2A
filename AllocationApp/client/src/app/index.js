@@ -23,6 +23,7 @@ import {
   Enroll,
   StudentProjectList,
   AllocatedStudents,
+  AdminUpdateUserRole
 } from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -56,6 +57,8 @@ function App() {
           exact
           component={AdminStudentList}
         />
+        <Route 
+          path='/admin/UpdateUserRole' exact component={AdminUpdateUserRole}/>
         <Route path='/teacher/ClassList' exact component={TeacherClassList} />
         <Route path='/student/ClassList' exact component={StudentClassList} />
         <Route path='/student/Enroll' exact component={Enroll} />
