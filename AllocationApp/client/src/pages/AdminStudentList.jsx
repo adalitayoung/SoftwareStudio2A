@@ -60,6 +60,12 @@ class AdminStudentList extends Component {
         // redirect to add class
     }
 
+    updateRole(id, username) {
+        this.props.history.push({
+            pathname: '/admin/UpdateUserRole',
+            state: { user_id: id, userName: username},
+        });
+    }
 
     renderTableData() {
         
@@ -73,7 +79,7 @@ class AdminStudentList extends Component {
                   
                   
                   <td>
-                      <AiOutlineEdit />
+                      <AiOutlineEdit onClick={() => this.updateRole(_id, fullName)}/>
                   </td>
                   <td>
                       <ImCross onClick={() => this.deleteUser(email)}/>
@@ -91,11 +97,11 @@ class AdminStudentList extends Component {
 
                     <div className="row">
                         <div class="text-block">
-                        <div className="box title-container">
-                            <h2 class="font-weight-light"></h2>
-                            <div className="adminstfontgradon">Hello, Admin</div>
-                            <div className="adminstfontauto">Add/Remove Student</div> 
-                        </div>
+                            <div className="box title-container">
+                                <h2 class="font-weight-light"></h2>
+                                <div className="adminstfontgradon">Hello, Admin</div>
+                                <div className="adminstfontauto">Add/Remove Student</div> 
+                            </div>
                         </div>
                         <div className="box adminstbutton-container">
                         

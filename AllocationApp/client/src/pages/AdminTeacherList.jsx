@@ -58,6 +58,13 @@ class AdminTeacherList extends Component {
         // redirect to add class
     }
 
+    updateRole(id, username) {
+        this.props.history.push({
+            pathname: '/admin/UpdateUserRole',
+            state: { user_id: id, userName: username},
+        });
+    }
+
 
     renderTableData() {
         
@@ -71,7 +78,7 @@ class AdminTeacherList extends Component {
                   
                   
                   <td>
-                      <AiOutlineEdit />
+                      <AiOutlineEdit onClick={() => this.updateRole(_id, fullName)}/>
                   </td>
                   <td>
                   <ImCross onClick={() => this.deleteUser(email)}/>

@@ -163,7 +163,8 @@ deleteUser = async (req, res) => {
                 if (response) {
                   if(response.length>0){  // this check if returned array has any values
                     Class.updateOne( {_id: response[0].classID},
-                     { $pull: {studentIDS: response[0].studentID }}) //remove studentid from classReferences studentIDS araay field
+                     { $pull: {studentIDS: response[0].studentID }})//remove studentid from classReferences studentIDS araay field
+
                     .then(data => res.status(200).json("studentID removed from ClassReference"))
                     .catch(err => res.status(404).json('Error: ' + err))
                      removeIDFromProjectRoles(response[0].studentID, response[0].classID)
@@ -202,7 +203,9 @@ function findStudentProjectsAndDelete(projects, studentid){
   //loop over projects
   projects.forEach((project, i) => {
     ProjectRoles.updateMany({projectID:project._id}, //get project role for the projectid
-    {$pull: {studentsEnrolledID:studentid}})        //pop studentid from that role
+    {$pull: {studentsEnrolledID:studentid}, //pop studentid from that role
+    $inc: {positionsLeft: 1}
+  })
     .then(data => console.log("studentID removed from project role"))
     .catch(err => res.status(404).json('Error: ' + err))
   })
@@ -287,7 +290,7 @@ addStudentToClass = async (req, res) => {
                             );
                         }
                     });
-                } 
+                }
                 else {
                     return res.status(404).json({
                         success: false,
@@ -295,7 +298,7 @@ addStudentToClass = async (req, res) => {
                     });
                 }
             });
-            } 
+            }
             else {
                 return res.status(404).json({
                     success: false,
@@ -326,13 +329,13 @@ removeFromClass = async (req, res) => {
         if (users.length) {
             //get the student id from the users db and assign as tempStudent students id
             tempStudent.studentID = student_id;
-        
+
             //find class ID based of class name
             var classID;
             Class.find({ name: className }).exec(function (err, classReferences) {
             if (classReferences.length) {
                 classID = classReferences[0]._id;
-    
+
               //Check that the student is enrolled in class
                 TempStudent.find({ studentID: student_id, classID: classID }).exec(function (err,tempStudents) {
                     if (tempStudents.length) {
@@ -356,7 +359,7 @@ removeFromClass = async (req, res) => {
                                 message: 'Student removed from class',
                             });
                         });
-                    } 
+                    }
                     else {
                         return res.status(400).json({
                             success: false,
@@ -364,7 +367,7 @@ removeFromClass = async (req, res) => {
                         });
                     }
                 });
-            } 
+            }
             else {
                 return res.status(404).json({
                 success: false,
@@ -372,7 +375,7 @@ removeFromClass = async (req, res) => {
                 });
             }
             });
-        } 
+        }
         else {
             return res.status(404).json({
             success: false,
@@ -484,7 +487,7 @@ login = async (req, res) => {
     if (users[0].password == body.password) {
       //Create and assign token
       const token = jwt.sign({ _id: users[0].id }, process.env.TOKEN_CODE);
-      res.setHeader('auth-token', token); // this will set browser header to token
+      //res.setHeader('auth-token', token); // this will set browser header to token
 
       return res.status(201).json({
         success: true,
@@ -509,6 +512,7 @@ logout = (req, res) => {
     message: 'User logged out',
   });
 };
+
 
 module.exports = {
     createUser,

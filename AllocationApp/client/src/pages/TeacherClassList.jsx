@@ -16,21 +16,25 @@ class TeacherClassList extends Component {
       courseIds: [],
     };
 
-    this.fetchClassList(this.state.user._id);
+    this.fetchClassList();
   }
 
   fetchClassList() {
     api.getAllCourses().then((data) => {
-      // need to change class model and check if the course is for that teacher
       console.log(data);
       this.setState({ classData: data.data.data });
     });
   }
 
-  editClass(user) {
-    // event.preventDefault();
-    console.log('edit');
-    console.log(user);
+  editClass(_id, name) {
+    localStorage.setItem('classID', _id);
+    localStorage.setItem('className', name);
+    console.log(localStorage.className);
+
+    this.props.history.push({
+      pathname: '/EditClass',
+      state: { course: _id },
+    });
   }
 
   deleteClass(_id, name) {
@@ -59,8 +63,17 @@ class TeacherClassList extends Component {
     });
   };
 
+  algorithm(name) {
+    api.startAlgorithm().then(() => {
+      window.alert(name + 'has been allocated!');
+    });
+  }
+
   addClass = async (event) => {
     event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddClass',
+    });
   };
 
   renderTableData() {
@@ -91,7 +104,21 @@ class TeacherClassList extends Component {
             </button>
           </td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
+            <button
+              key={_id}
+              id='algobtn'
+              className='btn btn-primary btn-round'
+              onClick={() => this.algorithm(_id, name)}
+            >
+              Allocate
+            </button>
+          </td>
+          <td>
+            <button
+              id='icon'
+              key={_id}
+              onClick={() => this.editClass(_id, name)}
+            >
               <img id='edit' src={edit} />
             </button>
           </td>
@@ -123,6 +150,7 @@ class TeacherClassList extends Component {
                 <th id='th'>Number of Students</th>
                 <th id='th'>View Students</th>
                 <th id='th'>View Projects</th>
+                <th id='th'>Allocate to Project</th>
                 <th></th>
                 <th></th>
               </tr>

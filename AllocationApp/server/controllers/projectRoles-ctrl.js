@@ -1,4 +1,5 @@
 const ProjectRoles = require('../models/projectRoles-model.js')
+const Project = require('../models/project-model.js')
 
 deleteProjectRole = (req, res) => {
   ProjectRoles.findByIdAndDelete(req.params.id)
@@ -56,9 +57,23 @@ newProjectRole.save()
 
 }
 
+getRolesForBackground = (req, res) =>{
+  Project.find({classID: req.params.id})
+  .then(project => getRoles(req, res ,project[0]._id))
+  .catch(err => res.status(400).json('Error: ' + err))
+
+}
+
+function getRoles(req, res, classID){
+  ProjectRoles.find({projectID:classID}, 'roleType') // to find projectID specific roles
+    .then(roles => res.json(roles))
+    .catch(err => res.status(400).json('Error: ' + err))
+}
+
 module.exports = {
   showProjectRoles,
   createProjectRoles,
   deleteProjectRole,
-  updateProjectRole
+  updateProjectRole,
+  getRolesForBackground
 }
