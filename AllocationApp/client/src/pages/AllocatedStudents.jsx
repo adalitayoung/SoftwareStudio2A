@@ -15,13 +15,11 @@ class AllocatedStudents extends Component {
       projectID: localStorage.projectID,
     };
     this.showRoles();
-    console.log(localStorage.projectID);
   }
 
   showRoles() {
-    //get project ID
     const project_id = this.state.projectID;
-    localStorage.setItem('classID', project_id);
+    localStorage.setItem('projectID', project_id);
     localStorage.setItem('className', this.state.className);
 
     api.showRoles(project_id).then((data) => {
@@ -35,13 +33,6 @@ class AllocatedStudents extends Component {
       state: { course: _id },
     });
   }
-
-  // createProjectRole(_id) {
-  //   this.props.history.push({
-  //     pathname: '/CreateProjectRole',
-  //     state: { course: _id },
-  //   });
-  // }
 
   deleteProject(_id, projectName) {
     const name = projectName;
@@ -96,18 +87,6 @@ class AllocatedStudents extends Component {
               >
                 Add Student to project
               </button>
-              {/* <button
-                style={{
-                  width: '25%',
-                  position: 'absolute',
-                  right: '400px',
-                  marginTop: '25px',
-                }}
-                className='btn btn-primary btn-round'
-                onClick={() => this.createProjectRole()}
-              >
-                create a new role
-              </button> */}
             </table>
           </div>
         </div>
