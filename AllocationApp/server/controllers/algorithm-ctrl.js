@@ -1,4 +1,4 @@
-const { replaceOne } = require('../models/class-reference.js')
+const { replaceOne, count } = require('../models/class-reference.js')
 const Course = require('../models/class-reference.js')
 const Project = require('../models/project-model.js')
 const projectRolesModel = require('../models/projectRoles-model.js')
@@ -220,11 +220,60 @@ randomSort = async (req, res) => {
                             return res.status(404).json({success: false, error: 'There are no projects associated with this course'})
                         }
                         else {
+                            var smallestGroup = parseInt(students.length/projects.length) //16
+                            var difference = students.length%projects.length //2
+                            var extra = projects.length%difference //1
+                            var groupSizeSmall = [projects.length]
+                            console.log("Extra " + extra)
+                            console.log("Difference " + difference)
+                            groupSizeSmall[0] = smallestGroup;
+                            
+                            if(difference == 1){
+                                for(i = 1; i<projects.length-1;i++){
+                                    groupSizeSmall[i] = smallestGroup
+                                }
+                                groupSizeSmall[projects.length-1] = smallestGroup+difference
+                            }else{
+                                for(i=1; i<projects.length; i++){
+                                    groupSizeSmall[i] = smallestGroup+extra;
+                                }
+                            }
+
+                            console.log("Group Sizes small: " + groupSizeSmall);
+
+                            var groupSizeLarge = [students.length]
+                            
+                            for(j=0; j<groupSizeSmall.length; j++){
+                                var count = 0
+
+                                for(i =0; i< students.length; i++){
+                                    if(count < groupSizeSmall[j] ){
+                                        groupSizeLarge[i] = j;
+                                        count++;
+                                    }
+                                    if(count == groupSizeSmall[j]){
+                                        j++
+                                        count = 0
+                                    }
+                                }
+                            }
+
+                           // console.log("Group Sizes Large:" + groupSizeLarge);
+
+                            students.forEach((student, ind, array) => {
+                                student.tempProjID = groupSizeLarge[ind]
+                            })
+
                             //get project roles
                             projects.forEach((project, ind, arr) => {
                                 console.log('line 221')
-                                // console.log(project._id)
-                                var count = 0;
+                                
+                                var projectIndex = projects.indexOf(project)
+                                console.log("ProjectINdex: "+ projectIndex)
+                                var groupSizeValue = groupSizeSmall[projectIndex]
+                                console.log("groupSizeValue: "+ groupSizeValue)
+                                var ThisProjStudents = students.filter(student => student.tempProjID == projectIndex)
+                                console.log(ThisProjStudents.length)
 
                                 ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
                                     if (err) {
@@ -237,78 +286,47 @@ randomSort = async (req, res) => {
                                     else {
 
                                         project.roleList = roles
-                                        // const run = async() => {
+                                        // const run = async() => 
                                             console.log('running')
                                             console.log(project._id)
                                             // var promises = []
+
                                             var allocation = new Promise((resolve, reject) => {
-                                                students.forEach((student) => {
-                                                    var j = 0;
-
+                                                
+                                                ThisProjStudents.forEach((student) => {
                                                     project.roleList.forEach((role, index, array) => {
-                                                        // var totalPotistions =0;
-                                                        // roles.forEach((role)=>{
-                                                        //     totalPotistions += parseInt(role.positionsRequired)
-                                                        // })
-
-                                                        var smallestGroup = parseInt(students.length/projects.length) //16
-                                                        var difference = students.length%projects.length //2
-                                                        var extra = projects.length%difference //1
-                                                        var groupSizes = [projects.length]
-                                                        groupSizes[0] = smallestGroup;
-                                                        
-                                                        if(difference == 1){
-                                                            //console.log("!!");
-                                                            for(i = 1; i<projects.length-1;i++){
-                                                                groupSizes[i] = smallestGroup
-                                                            }
-                                                            groupSizes[projects.length-1] = smallestGroup+difference
-                                                        }else{
-                                                            //console.log("??");
-                                                            for(i=1; i<projects.length; i++){
-                                                                groupSizes[i] = smallestGroup+extra;
+                                                        if ((role.positionsLeft !== 0) && (student.projectID === 'null') ) {
+                                                            //console.log("!!!")
+                                                            //console.log(student.studentID)
+                                                            role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
+                                                            role.positionsLeft = role.positionsLeft-1
+                                                            student.projectID = project._id
+                                                            //console.log(count);
+                                                            ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                                
+                                                                if (err) {
+                                                                    console.log(err)
+                                                                    return res.status(400).json({success: false, error: err})
+                                                                }
+                                                                else{
+                                                                    // console.log('line 250')
+                                                                    // console.log(student.projectID)
+                                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                        if (err) {
+                                                                            console.log(err)
+                                                                            return res.status(400).json({success: false, error: err})
+                                                                        }
+                                                                    })
+                                                                }
+                                                            })  
+                                                        }
+                                                        else{
+                                                            if (index == (array.length -1)){
+                                                                resolve()
                                                             }
                                                         }
-                                                        
-                                                        console.log("J: " + j)
-                                                        console.log("Group Size: " + groupSizes[j]);
-                                                        
-                                                            if ((role.positionsLeft !== 0) && (student.projectID === 'null') && (count < groupSizes[j]+1) ) {
-                                                                //console.log(student.studentID)
-                                                                role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
-                                                                role.positionsLeft = role.positionsLeft-1
-                                                                student.projectID = project._id
-                                                                //j++
-                                                                ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
-                                                                    
-                                                                    if (err) {
-                                                                        console.log(err)
-                                                                        return res.status(400).json({success: false, error: err})
-                                                                    }
-                                                                    else{
-                                                                        // console.log('line 250')
-                                                                        // console.log(student.projectID)
-                                                                        TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
-                                                                            if (err) {
-                                                                                console.log(err)
-                                                                                return res.status(400).json({success: false, error: err})
-                                                                            }
-                                                                        })
-                                                                    }
-                                                                })  
-                                                                count++;
-                                                                j=j+1
-                                                                console.log(count);
-                                                            }
-                                                            else{
-                                                                if (index == (array.length -1)){
-                                                                    resolve()
-                                                                }
-                                                            }
-                                                            
                                                     })
                                                 })
-                                                
                                             })
                                             allocation.then(() => {
                                                 if (ind == (arr.length -1)){

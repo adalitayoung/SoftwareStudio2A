@@ -17,7 +17,7 @@ describe('Run Random Sort Algorithm', () => {
     it('should create users', (done) => {
 
         let array = []
-        for (let i=0; i< 43; i++) {
+        for (let i=0; i< 55; i++) {
             array.push(i)
         }
         
