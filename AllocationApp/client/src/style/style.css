@@ -195,7 +195,7 @@ th {
   font-size: 10px !important;
   background-color: #26a6ff !important;
 }
-#algobtn {
+.algobtn {
   width: 90%;
   margin-left: 15%;
   padding-top: 10px !important;
