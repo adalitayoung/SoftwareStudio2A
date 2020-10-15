@@ -1,11 +1,10 @@
 const Course = require('../models/class-reference.js')
 const Project = require('../models/project-model.js')
 const ProjectRole = require('../models/projectRoles-model.js')
-const User = require('../models/user-model.js')
 const TempStudent = require('../models/temp-student-model.js')
 
 startAlgorithm = async (req, res) => {
-    const course_name = req.body.course_name
+    const course_name = req.params.course
     console.log(course_name)
     await Course.findOne({name: course_name}).exec(function(err, course) {
         if (err) {
@@ -27,123 +26,420 @@ startAlgorithm = async (req, res) => {
                     return res.status(404).json({success: false, error: 'There are no projects associated with this course'})
                 }
                 else {
-                    projects.forEach(project => {
-                        
-                        ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
-                            if (err) {
-                                return res.status(400).json({success: false, error: err})
-                            }
-                            else if (!roles.length) {
-                                return res.status(404).json({success: false, error: 'There are no roles for this project'})
-                            }
-                            else {
-                                project.roleList = roles
-                                // projectList.push(project)
-                            }
-                        })
 
-                        // Getting all the students enrolled in the course that have the required role for the project.
-                        TempStudent.find({courseID: course._id, technicalBackground: {$in :project.roleList}}).exec(function(err, students) {
-                            if (err){
-                                return res.status(400).json({success: false, error: err})
-                            }
-                            else if (!students.length) {
-                                return res.status(404).json({success: false, error: 'There are no students associated with this course and the required project roles'})
-                            }
-                            else {
-                                // Address project requirements then student preferences
-                                project.roleList.forEach(role => {
-                                    // Get all students from the course that match this specific role
-                                    var t_students = students.find(student => student.technicalBackground === role.roleType)
-                                    var first_pref_students = t_students.find(student => student.projectPreference1 === project.projectName)
-                                    first_pref_students.forEach(student => {
-                                        // If there are available spots and student is not assigned to a group
-                                        if ((role.positionsLeft !== 0) && (student.projectID === null)) {
-                                            role.studentsEnrolledID = role.studentsEnrolledID.push(student.studentID)
-                                            role.positionsLeft = role.positionsLeft-1
-                                        
-                                            ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                    TempStudent.find({classID: course._id}).exec(function(err, students) {
+                        allocatedStudents = students.filter(student => student.projectID != "null")
+                        if (allocatedStudents.length > 0){
+                        // If they already have an allocation clear it and start again.
+                            students.forEach(student => {
+
+                                student.projectID = "null"
+
+                                TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                    if (err) {
+                                        return res.status(400).json({success: false, error: err})
+                                    }
+                                    else{
+                                        projects.forEach((project, ind, arr) => {
+                        
+                                            ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
                                                 if (err) {
                                                     return res.status(400).json({success: false, error: err})
                                                 }
-                                                else{
-                                                    student.projectID = project._id
-                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
-                                                        if (err) {
-                                                            return res.status(400).json({success: false, error: err})
+                                                else if (!roles.length) {
+                                                    return res.status(404).json({success: false, error: 'There are no roles for this project'})
+                                                }
+                                                else {
+                                                    roles.forEach(role => {
+                                                        role.studentsEnrolledID = []
+                                                        role.positionsLeft = role.positionsRequired
+                                                        ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res) {
+                                                            if (err){
+                                                                return res.status(400).json({success: false, error: err})
+                                                            }
+                                                            else{
+                                                                execute()
+                                                            }
+                                                        })
+                                                    })
+
+                                                }
+                                            })
+                                        })
+                                    }
+                                })
+                            })
+                            
+                        }
+                        else{
+                            execute()
+                        }
+                    })
+
+                    function execute() {
+                        projects.forEach((project, ind, arr) => {
+                        
+                            ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
+                                if (err) {
+                                    return res.status(400).json({success: false, error: err})
+                                }
+                                else if (!roles.length) {
+                                    return res.status(404).json({success: false, error: 'There are no roles for this project'})
+                                }
+                                else {
+                                    project.roleList = roles
+                                    project.smallRoleList = roles.map(role => role.roleType)
+                                    // Getting all the students enrolled in the course that have the required role for the project.
+                                  
+                                    TempStudent.find({classID: course._id, technicalBackground: { $elemMatch: {$in :project.smallRoleList}}}).exec(function(err, students) {
+                                        if (err){
+                                            return res.status(400).json({success: false, error: err})
+                                        }
+                                        else if (!students.length) {
+                                            return res.status(404).json({success: false, error: 'There are no students associated with this course and the required project roles'})
+                                        }
+                                        else {
+                                            // Address project requirements then student preferences
+                                            var allocation = new Promise((resolve, reject) => {
+                                                project.roleList.forEach((role, index, array) => {
+                                                    // Get all students from the course that match this specific role
+                                                    var t_students = students.filter(student => student.technicalBackground.includes(role.roleType))
+        
+                                                    var first_pref_students = t_students.filter(student => student.projectPreference1 === (""+project._id))
+    
+                                                    first_pref_students.forEach(student => {
+                                                        // If there are available spots and student is not assigned to a group
+                                                        if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
+                                                            role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID  
+                                                            role.positionsLeft = role.positionsLeft-1
+                                                            ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                                if (err) {
+                                                                    return res.status(400).json({success: false, error: err})
+                                                                }
+                                                                else{
+                                                                    student.projectID = project._id
+                                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                        if (err) {
+                                                                            return res.status(400).json({success: false, error: err})
+                                                                        }
+                                                                        else{
+                                                                            var second_pref_students = t_students.filter(student => student.projectPreference2 === (""+project._id))
+                                                                            second_pref_students.forEach(student => {
+                                                                                // If there are available spots and student is not assigned to a group
+                                                                                if ((role.positionsLeft !== 0) && (student.projectID === "null")) {
+                                                                                    role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID  
+                                                                                    role.positionsLeft = role.positionsLeft-1
+                                                                                    student.projectID = project._id
+                                                                                    ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                                                        if (err) {
+                                                                                            return res.status(400).json({success: false, error: err})
+                                                                                        }
+                                                                                        else{
+                                                                                            student.projectID = project._id
+                                                                                            TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                                                if (err) {
+                                                                                                    return res.status(400).json({success: false, error: err})
+                                                                                                }
+                                                                                                else{
+                                                                                                    var third_pref_students = t_students.filter(student => student.projectPreference3 === (""+project._id))
+    
+                                                                                                    third_pref_students.forEach(student => {
+                                                                                                        // If there are available spots and student is not assigned to a group
+                                                                                                        if ((role.positionsLeft !== 0) && (student.projectID === "null")) {
+                                                                                                            role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID  
+                                                                                                            role.positionsLeft = role.positionsLeft-1
+                                                                                                            student.projectID = project._id
+                                                                                                            ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                                                                                if (err) {
+                                                                                                                    return res.status(400).json({success: false, error: err})
+                                                                                                                }
+                                                                                                                else{
+                                                                                                                    student.projectID = project._id
+                                                                                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                                                                        if (err) {
+                                                                                                                            return res.status(400).json({success: false, error: err})
+                                                                                                                        }
+                                                                                                                    })
+                                                                                                                }
+                                                                                                            })
+                                                                                                        }
+                                                                                                        else{
+                                                                                                            if (index == (array.length -1)){
+                                                                                                                resolve()
+                                                                                                            }
+                                                                                                        }
+                                                                                                    })
+                                                                                                }
+                                                                                            })
+                                                                                        }
+                                                                                    })
+                                                                                }
+                                                                                else{
+                                                                                    if (index == (array.length -1)){
+                                                                                        resolve()
+                                                                                    }
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    })
+                                                                }
+                                                            })
                                                         }
                                                         else{
-                                                            console.log(res)
+                                                            if (index == (array.length -1)){
+                                                                resolve()
+                                                            }
                                                         }
                                                     })
+                                                })
+                                            })                                        
+                                            allocation.then(() => {
+                                                if (ind == (arr.length -1)){
+                                                    return res.status(200).json({
+                                                        success: true
+                                                    })
                                                 }
-                                                // Need to test if this will work...
                                             })
                                         }
                                     })
-                                    var second_pref_students = t_students.find(student => student.projectPreference2 === project.projectName)
-                                    second_pref_students.forEach(student => {
-                                        // If there are available spots and student is not assigned to a group
-                                        if ((role.positionsLeft !== 0) && (student.projectID === null)) {
-                                            role.studentsEnrolledID = role.studentsEnrolledID.push(student.studentID)
-                                            role.positionsLeft = role.positionsLeft-1
-                                            student.projectID = project._id
-                                        }
-                                    })
-                                    var third_pref_students = t_students.find(student => student.projectPreference3 === project.projectName)
-                                    third_pref_students.forEach(student => {
-                                        // If there are available spots and student is not assigned to a group
-                                        if ((role.positionsLeft !== 0) && (student.projectID === null)) {
-                                            role.studentsEnrolledID = role.studentsEnrolledID.push(student.studentID)
-                                            role.positionsLeft = role.positionsLeft-1
-                                            student.projectID = project._id
-                                        }
-                                    })
-
-                                    // After records are updated in the database...query all temp students for this class that don't have an assigned projectID
-
-                                })
-
-                                
-                            }
+                                }
+                            })
                         })
-
-                    })
+                    }
+                    
                 }
-            }).then(() => {
-                
             })
         }
-
     })
-    
-    
 }
+
+randomSort = async (req, res) => {
+    const course_name = req.params.course
+    console.log(course_name);
+    // Get Course
+    await Course.findOne({name: course_name}).exec(function(err, course) {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        else if (!course) {
+            return res.status(404).json({
+                success: false,
+                error: 'Cannot find course with the provided name'
+            })
+        }
+        else if (course) {
+            //Get all students enrolled in the course and 
+            TempStudent.find({classID: course._id, projectID: "null"}).exec(function(err, students) {
+                if (err){
+                    console.log(err)
+                    return res.status(400).json({success: false, error: err})
+                }
+                else if (!students.length) {
+                    return res.status(404).json({success: false, error: 'There are no students associated with this course'})
+                }
+                else {
+                    
+                    //shuffle students into random order
+                    function shuffleArray(array) {
+                        var currentIndex = array.length, temporaryValue, randomIndex;
+        
+                        // While there remain elements to shuffle...
+                        while (0 !== currentIndex) {
+        
+                            // Pick a remaining element...
+                            randomIndex = Math.floor(Math.random() * currentIndex);
+                            currentIndex -= 1;
+        
+                            // And swap it with the current element.
+                            temporaryValue = array[currentIndex];
+                            array[currentIndex] = array[randomIndex];
+                            array[randomIndex] = temporaryValue;
+                        }
+        
+                        return array;
+                    }
+
+                    shuffleArray(students);
+
+                    // Get all projects for the course
+                    Project.find({classID: course._id}).exec(function(err, projects) {
+                        if (err){
+                            console.log(err)
+                            return res.status(400).json({success: false, error: err})
+                        }
+                        else if (!projects.length){
+                            return res.status(404).json({success: false, error: 'There are no projects associated with this course'})
+                        }
+                        else {
+                            //get project roles
+                            projects.forEach((project, ind, arr) => {
+                                console.log('line 221')
+                                // console.log(project._id)
+                                ProjectRole.find({projectID: project._id}).exec(function(err, roles) {
+                                    if (err) {
+                                        console.log(err)
+                                        return res.status(400).json({success: false, error: err})
+                                    }
+                                    else if (!roles.length) {
+                                        return res.status(404).json({success: false, error: 'There are no roles for this project'})
+                                    }
+                                    else {
+                                        project.roleList = roles
+                                        // const run = async() => {
+
+                                            console.log('running')
+                                            console.log(project._id)
+                                            // var promises = []
+                                            // console.log(students.length)
+                                            var allocation = new Promise((resolve, reject) => {
+                                            
+                                                students.forEach((student) => {
+                                                    project.roleList.forEach((role, index, array) => {
+                                                        
+                                                        //console.log(role.positionsLeft)
+                                                        if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
+                                                            console.log(student.studentID)
+                                                            role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
+                                                            role.positionsLeft = role.positionsLeft-1
+                                                            student.projectID = project._id
+
+                                                            ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                                                if (err) {
+                                                                    console.log(err)
+                                                                    return res.status(400).json({success: false, error: err})
+                                                                }
+                                                                else{
+                                                                    // console.log('line 250')
+                                                                    // console.log(student.projectID)
+                                                                    TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                                                        if (err) {
+                                                                            console.log(err)
+                                                                            return res.status(400).json({success: false, error: err})
+                                                                        }
+                                                                    })
+                                                                }
+                                                            })
+                                                        }
+                                                        else{
+                                                            // console.log('no more')
+
+                                                            if (index == (array.length -1)){
+                                                                resolve()
+                                                            }
+                                                        }
+                                                    })
+                                                })
+                                                
+                                            })
+                                            allocation.then(() => {
+                                                if (ind == (arr.length -1)){
+                                                    console.log('hereeee')
+                                                    // return res.status(200).json({
+                                                    //     success: true
+                                                    // })
+                                                }
+                                            })
+                                            // const outputs = await Promise.all(promises);
+                                            // outputs.forEach((result) => console.log(result));
+
+                                            // var allocation = new Promise((resolve, reject) => {
+                                            //     //for each project role, add a student that has not been allocated to a project until there are no postions left
+                                            //     students.forEach(student => {
+                                            //         project.roleList.forEach((role, index, array) => {
+                                            //             if ((role.positionsLeft !== 0) && (student.projectID === 'null')) {
+                                            //                 role.studentsEnrolledID[role.studentsEnrolledID.length++] = student.studentID
+                                            //                 role.positionsLeft = role.positionsLeft-1
+                                            //                 ProjectRole.updateOne({_id: role._id}, role).exec(function(err, res){
+                                            //                     if (err) {
+                                            //                         return res.status(400).json({success: false, error: err})
+                                            //                     }
+                                            //                     else{
+                                            //                         student.projectID = project._id
+                                            //                         TempStudent.updateOne({_id: student._id}, student).exec(function(err, res) {
+                                            //                             if (err) {
+                                            //                                 return res.status(400).json({success: false, error: err})
+                                            //                             }
+                                            //                         })
+                                            //                     }
+                                            //                 })
+                                            //             }
+                                            //             else{
+                                            //                 if (index == (array.length -1)){
+                                            //                     resolve()
+                                            //                 }
+                                            //             }
+                                            //         })
+                                            //     })  
+                                            // }) 
+                                            // console.log(promises.length)
+                                            // await Promise.all(promises).then(() => {
+                                            //     if (ind == (arr.length -1)){
+                                            //         return res.status(200).json({
+                                            //             success: true
+                                            //         })
+                                            //     }
+                                            // })
+
+                                        // }
+                                        // run()
+                                        // allocation.then(() => {
+                                        //     if (ind == (arr.length -1)){
+                                        //         return res.status(200).json({
+                                        //             success: true
+                                        //         })
+                                        //     }
+                                        // })
+                                    }
+                                })                         
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+    // await TempStudent.find({projectID: "null"}).exec(function(err, students) {
+    //     if (err) {
+    //         console.log(err)
+    //         return res.status(400).json({success: false, error: err})
+    //     }
+    //     if(students){
+    //         console.log("Number of students that have not been allocated a project: " + students.length);
+    //     }
+    // })
+}
+
 
 module.exports = {
     startAlgorithm,
+    randomSort
 }
 
-/* 
-get all student details (preferences and tech expertise)
-get number of students
-get all project quotas - group size background requirements
-split students based on their background
-if first preference project quota is not full 
-    allocate students with tech expertise "A" to first preference - add project_ID to temp-student DB 
-    allocate students with tech expertise "b" to first preference - add project_ID to temp-student DB
-    allocate students with tech expertise "c" to first preference - add project_ID to temp-student DB 
-else if second preference project quota is not full 
-    allocate students with tech expertise "A" to second preference - add project_ID to temp-student DB
-    allocate students with tech expertise "c" to second preference - add project_ID to temp-student DB
-    allocate students with tech expertise "b" to second preference - add project_ID to temp-student DB
-else if third preference project quota is not full 
-    allocate students with tech expertise "A" to third preference - add project_ID to temp-student DB
-    allocate students with tech expertise "b" to third preference - add project_ID to temp-student DB
-    allocate students with tech expertise "c" to third preference - add project_ID to temp-student DB
-else
-    randomly assign to projects with empty spaces 
-   
-*/
+    // Get Course
+    // Get all projects for the course
+    // Get all the students enrolled in the course -> add to array and shuffle
+    //Get first  project 
+        //get first project role
+            //if positiions required is greater than or equal to position lefts
+                //add first student to studentsEnrolledIDS
+                //mark temp-student projectid as projectid
+                //remove from array
+                //minus positions left
+            //if positions left == 0
+                //get next project role
 
-// Admin can manually assign left over students to groups with empty spaces 
+        //check if number of students is less than the min requirement and if students in arary
+            //Add students until between min and max
+                // change TEMP STUDENT project id from null to project id 
+                // remove student from array
+            //change project
+
+        // else if full but students still in array
+            // print no more space for students
+            //change project
+
+        //else if no students in array
+            //print all students allocated to projects
+        
+    //else
+        // change project

@@ -4,38 +4,35 @@ import { Link } from 'react-router-dom';
 import back from '../res/back.png';
 
 import api from '../api';
-import './addClass.css';
+import '../style/style.css';
 
-class AddClass extends Component {
+class EditClass extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: localStorage.user,
       className: '',
+      numberOfStudents: '',
+      courseName: localStorage.className,
     };
+
+    console.log(localStorage);
+
+    if (this.state.user === 'undefined') {
+      localStorage.setItem('user', this.state.user.fullName);
+    }
+    console.log(this.state);
   }
 
-  handleRegisterUser = async (event) => {
-    event.preventDefault();
-    let studentID = localStorage.getItem('uid');
-    const { className } = this.state;
-    // Add in validation here
-    if (className !== '') {
-      await api.addCourse({ className }).then(
-        (res) => {
-          // Do whatever you want to do whether its a page redirect etc.
-          console.log(res);
-          if (res.status === 200) {
-            // Success condition
-            window.alert('Successful Add data to Database!');
-            //this.props.history.push('/teacher/classList')
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-  };
+  editClass() {
+    const id = localStorage.classID;
+    const numberOfStudents = this.state.numberOfStudents;
+    const name = this.state.className;
+
+    api.updateCourse(id, name, numberOfStudents).then((data) => {
+      console.log(data);
+    });
+  }
 
   render() {
     return (
@@ -51,21 +48,34 @@ class AddClass extends Component {
             style={{ marginTop: '-100px', width: '50%' }}
           >
             <div className='form-group'>
-              <div className='name'>Class Name</div>
+              <br></br>
+              <br></br>
+              <h2>{this.state.courseName} </h2>
+              <br></br>
+              <div className='name'>Update Class Name</div>
               <input
                 type='className'
                 className='form-control'
                 id='ExampleInputClassName1'
                 onChange={(e) => this.setState({ className: e.target.value })}
               ></input>
+              <div className='name'>Update Number of students</div>
+              <input
+                type='className'
+                className='form-control'
+                id='ExampleInputClassName1'
+                onChange={(e) =>
+                  this.setState({ numberOfStudents: e.target.value })
+                }
+              ></input>
             </div>
             <div className='box button-container'>
               <button
                 type='button'
                 className='button button--add-class'
-                onClick={this.handleRegisterUser}
+                onClick={this.editClass()}
               >
-                Add Class
+                Update Class Details
               </button>
             </div>
           </div>
@@ -75,4 +85,4 @@ class AddClass extends Component {
   }
 }
 
-export default AddClass;
+export default EditClass;

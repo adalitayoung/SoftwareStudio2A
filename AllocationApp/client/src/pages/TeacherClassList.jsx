@@ -15,22 +15,27 @@ class TeacherClassList extends Component {
       isLoading: false,
       courseIds: [],
     };
-
-    this.fetchClassList(this.state.user._id);
+    console.log(localStorage);
+    localStorage.setItem('user', this.state.user.fullName);
+    this.fetchClassList();
   }
 
   fetchClassList() {
     api.getAllCourses().then((data) => {
-      // need to change class model and check if the course is for that teacher
       console.log(data);
       this.setState({ classData: data.data.data });
     });
   }
 
-  editClass(user) {
-    // event.preventDefault();
-    console.log('edit');
-    console.log(user);
+  editClass(_id, name) {
+    localStorage.setItem('classID', _id);
+    localStorage.setItem('className', name);
+    console.log(localStorage.className);
+
+    this.props.history.push({
+      pathname: '/EditClass',
+      state: { course: _id },
+    });
   }
 
   deleteClass(_id, name) {
@@ -59,8 +64,26 @@ class TeacherClassList extends Component {
     });
   };
 
+  algorithm(name) {
+    api.startAlgorithm(name).then((res) => {
+      console.log(res.status)
+      window.alert(name + ' has been allocated!');
+    }).catch(err => {
+      console.log(err)
+    });
+  }
+
+  random(name) {
+    api.startRandomSort(name).then(() => {
+      window.alert(name+" has been randomly sorted!")
+    })
+  }
+
   addClass = async (event) => {
     event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddClass',
+    });
   };
 
   renderTableData() {
@@ -91,7 +114,29 @@ class TeacherClassList extends Component {
             </button>
           </td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
+            <button
+              key={_id}
+              className='btn btn-primary btn-round algobtn'
+              onClick={() => this.algorithm( name)}
+            >
+              Auto Allocate
+            </button>
+          </td>
+          <td>
+            <button
+              key={_id}
+              className='btn btn-primary btn-round algobtn'
+              onClick={() => this.random(name)}
+            >
+              Random Allocate
+            </button>
+          </td>
+          <td>
+            <button
+              id='icon'
+              key={_id}
+              onClick={() => this.editClass(_id, name)}
+            >
               <img id='edit' src={edit} />
             </button>
           </td>
@@ -123,6 +168,8 @@ class TeacherClassList extends Component {
                 <th id='th'>Number of Students</th>
                 <th id='th'>View Students</th>
                 <th id='th'>View Projects</th>
+                <th id='th'>Algorithm</th>
+                <th id='th'>Random Sort</th>
                 <th></th>
                 <th></th>
               </tr>
