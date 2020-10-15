@@ -106,10 +106,12 @@ class AdminStudentList extends Component {
                         <div className="box adminstbutton-container">
                         
                         <Link to= "AdminTeacherList"> <button type="button"  style = {{top: "445px", left: "120px", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", margin:"10%"}} className="btn btn-primary btn-block" onClick = {this.teacher}>Teacher</button></Link>
-                        <button type = "button" style = {{position: "absolute", top: "40px", right: "0", width: "180px",height: "45px",color: "#FFFFFFF", background: "#4285F4",borderRadius: "50px", opacity: "1",fontFamily: "Helvetica", fontSize: "15px",display: "block", }} className="btn btn-primary btn-block" onClick = {this.addStudent}>Add Student</button>
+                       
                    </div>
                    
                 </div>
+                <div class="container scroll">
+
                 <div class="backgroundbox">
                 <div class="backgroundwhitebox">
                     <table class="center">
@@ -131,6 +133,7 @@ class AdminStudentList extends Component {
                     </table>
                     </div>
                     </div>
+                </div>
                 </div>
                </div> 
             </div>
