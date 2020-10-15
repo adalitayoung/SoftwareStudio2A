@@ -60,7 +60,9 @@ class TeacherClassList extends Component {
   };
 
   addClass = async (event) => {
-    event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddClass',
+    });
   };
 
   renderTableData() {
