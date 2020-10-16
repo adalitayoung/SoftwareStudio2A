@@ -188,12 +188,20 @@ th {
 }
 
 #classbtn {
-  width: 70%;
+  width: 80%;
   margin-left: 15%;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   font-size: 10px !important;
   background-color: #26a6ff !important;
+}
+.algobtn {
+  width: 90%;
+  margin-left: 15%;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 10px !important;
+  background-color: #1984d1 !important;
 }
 
 #projectbtn {
@@ -224,7 +232,7 @@ th {
 
 #icon {
   border-color: white !important;
-  background-color: white;
+  background-color: transparent;
   border-width: 0;
 }
 
@@ -290,6 +298,19 @@ h2 {
   border-radius: 25px;
   opacity: 1;
 }
+
+.backgroundboxaddy {
+  position: absolute;
+  background-color: #5ba3d677;
+  left: 25%;
+  right: 25%;
+  width: 50%;
+  height: 24%;
+  border-radius: 25px;
+  opacity: 1;
+  padding: 7%;
+}
+
 .backgroundwhitebox {
   position: absolute;
   background-color: #ebeff1;
@@ -300,6 +321,17 @@ h2 {
   transform: translate(-50%, -50%);
   border-radius: 25px;
   opacity: 1;
+}
+
+.backgroundwhiteboxaddy {
+  position: absolute;
+  background-color: #ebeff1;
+  width: 75%;
+  height: fit-content;
+  border-radius: 25px;
+  opacity: 1;
+  margin-top: -9%;
+  padding-top: 4%;
 }
 
 svg {
@@ -345,11 +377,11 @@ svg {
 
 .img-fluid {
   width: 100%;
-  height: 1100px !important;
+  height: 1200px !important;
 }
 
-h6 {
-  margin-left: 15px;
+#note {
   color: rgb(61, 61, 61);
   font-weight: 400 !important;
+  font-size: 16px;
 }

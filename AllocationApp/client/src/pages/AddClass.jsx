@@ -1,5 +1,7 @@
+
 import React from "react";
 import { Component } from "react";
+import { Link } from 'react-router-dom';
 import back from '../res/back.png';
 import api from '../api';
 import './addClass.css';
@@ -7,7 +9,7 @@ import Axios from "axios";
 
 class AddClass extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       name: '',
       numberOfStudents:'',
@@ -34,11 +36,11 @@ class AddClass extends Component {
         console.log(error)
       })
   }
-
-
+  
   render() {
     const { name, numberOfStudents } = this.state
     return (
+
       <div className="signup addClass">
         <form onSubmit={this.submitHandler}>
         <div className="box">
@@ -56,15 +58,34 @@ class AddClass extends Component {
             </div>
             <div className="box button-container">
               <button type="submit" className="button button--add-class">Add Class</button>
+<!--           <div
+            className='box__center'
+            style={{ marginTop: '-100px', width: '50%' }}
+          >
+            <div className='form-group'>
+              <div className='name'>Class Name</div>
+              <input
+                type='className'
+                className='form-control'
+                id='ExampleInputClassName1'
+                onChange={(e) => this.setState({ className: e.target.value })}
+              ></input>
+            </div>
+            <div className='box button-container'>
+              <button
+                type='button'
+                className='button button--add-class'
+                onClick={this.handleRegisterUser}
+              >
+                Add Class
+              </button> -->
             </div>
           </div>
         </div>
         </form>
       </div>
     );
-
   }
-
 }
 
 export default AddClass;

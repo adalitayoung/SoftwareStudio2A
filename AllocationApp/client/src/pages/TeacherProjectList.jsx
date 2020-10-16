@@ -23,6 +23,9 @@ class TeacherProjectList extends Component {
 
   getProjectData() {
     const class_id = this.state.course;
+    localStorage.setItem('classID', class_id);
+    localStorage.setItem('className', this.state.className);
+
     api.showClassProjects(class_id).then((data) => {
       console.log(data);
       this.setState({ projectData: data.data });
@@ -47,9 +50,40 @@ class TeacherProjectList extends Component {
     });
   }
 
+  exportProject() {
+    const id = this.state.course;
+    api.outputToExcel(id).then((data) => {
+      // console.log(data.data);
+      //save to client as .xlsx file
+    });
+  }
+
+  addStudentToProject(_id, name) {
+    this.props.history.push({
+      pathname: '/AddToProject',
+      state: { course: _id, className: name },
+    });
+  }
+
+  viewAllocations(_id, projectName) {
+    localStorage.setItem('projectID', _id);
+    localStorage.setItem('projectName', projectName);
+
+    // console.log(localStorage.className);
+    const name = projectName;
+    localStorage.setItem('projectName', name);
+    this.props.history.push({
+      pathname: '/AllocatedStudents',
+      state: { projectID: _id, projectName: name },
+    });
+  }
+
   addProject = async (event) => {
     event.preventDefault();
-    // redirect to add class
+    event.preventDefault();
+    this.props.history.push({
+      pathname: '/AddProject',
+    });
   };
 
   renderTableData() {
@@ -59,13 +93,20 @@ class TeacherProjectList extends Component {
         <tr key={_id}>
           <td id='tdclass'>{projectName}</td>
           <td id='tdclass'>{description}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td id='tdclass'>{createdByname}</td>
-          <td id='tdclass'>{createdByname}</td>
           <td>
-            <button id='icon' key={_id} onClick={() => this.editClass(_id)}>
-              <img id='edit' src={edit} />
+            <button
+              key={_id}
+              id='classbtn'
+              style={{
+                width: '70%',
+              }}
+              className='btn btn-primary btn-round'
+              onClick={() => this.viewAllocations(_id, projectName)}
+            >
+              View Project Details
             </button>
+          </td>
+          <td>
             <button
               id='icon'
               onClick={() => this.deleteProject(_id, projectName)}
@@ -88,14 +129,26 @@ class TeacherProjectList extends Component {
           <div className='col' id='column'>
             <div className='row'>
               <h2>Projects in {this.state.className} </h2>
+              <button
+                style={{
+                  width: '25%',
+                  position: 'absolute',
+                  right: '50px',
+                  marginTop: '25px',
+                }}
+                id='export'
+                className='btn btn-primary btn-round'
+                onClick={this.exportProject()}
+              >
+                Download Project details
+              </button>
             </div>
+            <br></br>
             <table className='center' id='table'>
               <tr>
                 <th id='th'>Project Name</th>
                 <th id='th'>Project Description</th>
-                <th id='th'>Role 1</th>
-                <th id='th'>Role 2</th>
-                <th id='th'>Role 3</th>
+                <th id='th'>Project Allocations</th>
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button

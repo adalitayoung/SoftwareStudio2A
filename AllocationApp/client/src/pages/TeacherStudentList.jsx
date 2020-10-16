@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import api from '../api';
 import back from '../res/back.png';
@@ -67,28 +68,11 @@ class TeacherStudentList extends Component {
             <div className='row'>
               <h2>Students in {this.state.className} </h2>
             </div>
-            <a
-              id='navbtn'
-              href='#'
-              class='btn btn-primary btn-lg disabled'
-              role='button'
-              aria-disabled='true'
-            >
-              Students
-            </a>
-            <a
-              id='navbtn'
-              href='#'
-              class='btn btn-primary btn-lg'
-              role='button'
-              aria-disabled='true'
-            >
-              Projects
-            </a>
             <table className='center' id='table'>
               <tr>
                 <th id='th'>Student Email</th>
                 <th id='th'>Student ID</th>
+                {/*  put the students project ID and project role? */}
               </tr>
               <tbody>{this.renderTableData()}</tbody>
               <button
