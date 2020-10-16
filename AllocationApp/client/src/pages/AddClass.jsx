@@ -15,7 +15,7 @@ class AddClass extends Component {
       numberOfStudents:'',
       isLoading: false,
     }
-    
+
   }
 
   changeHandler = (e) => {
@@ -36,15 +36,15 @@ class AddClass extends Component {
         console.log(error)
       })
   }
-  
-  render() {
+
+   /* render() {
     const { name, numberOfStudents } = this.state
     return (
 
       <div className="signup addClass">
         <form onSubmit={this.submitHandler}>
         <div className="box">
-          <div className="box__left"> 
+          <div className="box__left">
             <a id='back' href='javascript:history.back()'>
               <img width='20px' src={back}></img> &nbsp;Classes
             </a>
@@ -58,7 +58,7 @@ class AddClass extends Component {
             </div>
             <div className="box button-container">
               <button type="submit" className="button button--add-class">Add Class</button>
-<!--           <div
+           <div
             className='box__center'
             style={{ marginTop: '-100px', width: '50%' }}
           >
@@ -78,14 +78,15 @@ class AddClass extends Component {
                 onClick={this.handleRegisterUser}
               >
                 Add Class
-              </button> -->
+              </button>
             </div>
           </div>
         </div>
         </form>
       </div>
+
     );
-  }
+  } */
 }
 
 export default AddClass;

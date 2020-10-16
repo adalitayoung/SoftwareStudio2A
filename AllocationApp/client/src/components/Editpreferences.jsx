@@ -14,8 +14,29 @@ constructor(props){
     projectPreference3:'volvo',
     technicalBackground:'volvo',
     msg:'',
+    pp:[],
+    tb:[]
   }
-  }
+  this.fetchprojects()
+  this.tchbg()
+}
+
+fetchprojects(){
+  var id=this.props.match.params.id;
+     api.showClassProjects(id).then(data => {
+       //  console.log(data)
+        this.setState({pp: data.data})
+     })
+}
+tchbg(){
+  var id=this.props.match.params.id;
+     api.getRolesForBackground(id).then(data => {
+         console.log(data)
+        this.setState({tb: data.data})
+    //     //console.log(this.state.teacherData)
+     })
+}
+
 
     handleRegisterUser = async event => {
     event.preventDefault();
@@ -45,8 +66,9 @@ constructor(props){
         <br/><br/><br/><br/>
     <div className="row text-center">
       <div className="col-md-2 col-12">
-        <i className="fas fa-arrow-left clr"></i>
+       <i className="fas fa-arrow-left clr"></i>
         <span className="clr">classes</span>
+        
       </div>
       <div className="col-md-8 col-12" >
         <p className="txt">Edit Your Preference</p>
@@ -70,10 +92,9 @@ constructor(props){
             name="projectPreference1" 
     value={this.state.projectPreference1} onChange={(e)=>this.setState({projectPreference1:e.target.value})}
              form="carform" className="form-control">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
+             {this.state.pp.map((item,i)=>(
+              <option value={item._id}>{item.projectName}</option>
+              ))}
             </select>
           </div>
 
@@ -83,10 +104,9 @@ constructor(props){
 name="technicalBackground" 
     value={this.state.technicalBackground} onChange={(e)=>this.setState({technicalBackground:e.target.value})}
              form="carform" className="form-control">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
+              {this.state.tb.map((item,i)=>(
+              <option value={item._id}>{item.roleType}</option>
+              ))}
             </select>
           </div>
          
@@ -96,10 +116,9 @@ name="technicalBackground"
 name="projectPreference2" 
     value={this.state.projectPreference2} onChange={(e)=>this.setState({projectPreference2:e.target.value})}
              form="carform" className="form-control">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
+              {this.state.pp.map((item,i)=>(
+              <option value={item._id}>{item.projectName}</option>
+              ))}
             </select>
           </div>
             <div className="col-md-6 col-12">
@@ -112,10 +131,9 @@ name="projectPreference2"
             name="projectPreference3" 
     value={this.state.projectPreference3} onChange={(e)=>this.setState({projectPreference3:e.target.value})}
              form="carform" className="form-control">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
+              {this.state.pp.map((item,i)=>(
+              <option value={item._id}>{item.projectName}</option>
+              ))}
             </select>
           </div>
           
