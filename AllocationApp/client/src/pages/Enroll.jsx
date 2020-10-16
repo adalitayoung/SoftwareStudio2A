@@ -10,7 +10,7 @@ class Enroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: props.location.state.user.fullName,
+      user: props.location.state.user,
       classData: [],
       isLoading: false,
     };
@@ -26,23 +26,17 @@ class Enroll extends Component {
           console.log(this.state.classData);
         });
     }
-
-    // join = async event => {
-    //     event.preventDefault();
-    //     console.log("join");
-    //     //add the student to the class
-    // }
     
     join(_id, studentID, courseName) {
       //const name = studentID;
-      api.addStudentToClass(studentID, courseName).then(() => {
+      api.addStudentToClass(studentID, courseName).then((data) => {
         window.alert(studentID + " is enrolled into class.")
       })
     }
 
     viewClass = async event => {
         event.preventDefault();
-        console.log("it works")
+        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/ClassList',
@@ -52,7 +46,7 @@ class Enroll extends Component {
       
       viewProject = async event => {
         event.preventDefault();
-        console.log("it works")
+        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/StudentProjectList',
@@ -62,7 +56,7 @@ class Enroll extends Component {
       
       enroll = async event => {
         event.preventDefault();
-        console.log("it works")
+        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/Enroll',

@@ -11,7 +11,7 @@ class StudentProjectList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      user: props.location.state.user.fullName,
+      user: props.location.state.user,
       //course: props.location.state.course,
       //className: props.location.state.className,
       projectData: [],
@@ -26,12 +26,6 @@ class StudentProjectList extends Component {
         api.showAllProjects().then( data => {
           this.setState({ projectData: data.data})
         })
-    }
-
-    join = async event => {
-        event.preventDefault();
-        console.log("join");
-        //add the student to the class
     }
   
     viewClass = async event => {
