@@ -1,52 +1,64 @@
-import React from 'react';
-import { Component } from 'react';
+
+import React from "react";
+import { Component } from "react";
 import { Link } from 'react-router-dom';
 import back from '../res/back.png';
-
 import api from '../api';
 import './addClass.css';
+import Axios from "axios";
 
 class AddClass extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      className: '',
-    };
+      name: '',
+      numberOfStudents:'',
+      isLoading: false,
+    }
+    
   }
 
-  handleRegisterUser = async (event) => {
-    event.preventDefault();
-    let studentID = localStorage.getItem('uid');
-    const { className } = this.state;
-    // Add in validation here
-    if (className !== '') {
-      await api.addCourse({ className }).then(
-        (res) => {
-          // Do whatever you want to do whether its a page redirect etc.
-          console.log(res);
-          if (res.status === 200) {
-            // Success condition
-            window.alert('Successful Add data to Database!');
-            //this.props.history.push('/teacher/classList')
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-  };
+  changeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
+  submitHandler = async event => {
+    event.preventDefault();
+    console.log(this.state);
+    Axios
+      .post('http://localhost:3000/api/class/createClass', this.state)
+      .then(response => {
+        console.log(response)
+        window.alert('Class Added')
+        window.location.reload()
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+  
   render() {
+    const { name, numberOfStudents } = this.state
     return (
-      <div className='signup addClass'>
-        <div className='box'>
-          <div className='box__left'>
+
+      <div className="signup addClass">
+        <form onSubmit={this.submitHandler}>
+        <div className="box">
+          <div className="box__left"> 
             <a id='back' href='javascript:history.back()'>
               <img width='20px' src={back}></img> &nbsp;Classes
             </a>
           </div>
-          <div
+          <div className="box__center">
+            <div className="form-group">
+              <div className="name">Class Name</div>
+              <input type="className" className="form-control" name="name" value={name} onChange={this.changeHandler}></input>
+              <div className="name">Number of Students</div>
+              <input type="className" className="form-control" name="numberOfStudents" value={numberOfStudents} onChange={this.changeHandler}></input>
+            </div>
+            <div className="box button-container">
+              <button type="submit" className="button button--add-class">Add Class</button>
+<!--           <div
             className='box__center'
             style={{ marginTop: '-100px', width: '50%' }}
           >
@@ -66,10 +78,11 @@ class AddClass extends Component {
                 onClick={this.handleRegisterUser}
               >
                 Add Class
-              </button>
+              </button> -->
             </div>
           </div>
         </div>
+        </form>
       </div>
     );
   }
