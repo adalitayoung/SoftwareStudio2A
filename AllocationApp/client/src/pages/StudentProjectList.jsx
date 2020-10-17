@@ -66,9 +66,7 @@ class StudentProjectList extends Component {
             <tr key={_id}>
               <td id='tdclass'>{projectName}</td>
               <td id='tdclass'>{description}</td>
-              <td id='tdClass'>
-                {createdByname}
-              </td>
+              <td id='tdclas'>{createdByname}</td>
             </tr>
           )
         })
