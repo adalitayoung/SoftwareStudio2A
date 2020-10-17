@@ -59,7 +59,7 @@ edit(id){
   const user = this.state.user;
   console.log(id)
   this.props.history.push({
-    pathname: '/student/updatepreferences',
+    pathname:`/student/updatepreferences/${id}`,
     state: {user: user, course: id}
   })
    // redirect to edit page

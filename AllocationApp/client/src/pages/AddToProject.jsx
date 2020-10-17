@@ -1,6 +1,5 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
 import back from '../res/back.png';
 
 import api from '../api';
@@ -11,27 +10,52 @@ class AddToProject extends Component {
     super(props);
     this.state = {
       user: localStorage.user,
-      studentName: '',
-      numberOfStudents: '',
-      role: '',
-      courseName: localStorage.className,
-      projectID: localStorage.projectID,
-      positionsLeft: '',
+      studentID: '',
+      roleType: '',
     };
-    console.log(this.state.projectID);
-    console.log(localStorage);
+
+    this.onChangeStudent = this.onChangeStudent.bind(this);
+    this.onChangeRoleType = this.onChangeRoleType.bind(this);
+    this.addStudent = this.addStudent.bind(this);
   }
 
-  addStudent() {
-    const id = this.state.projectID;
-    const role = this.state.roleType;
-    const positions = this.state.positionsLeft;
-    const studentID = this.state.studentName;
-    api
-      .addStudentToProjectManually(id, role, studentID, positions)
-      .then((data) => {
-        console.log(data);
-      });
+  addStudent(event) {
+    event.preventDefault();
+    const studentID = this.state.studentID;
+    const roleType = this.state.roleType;
+    const projectID = localStorage.projectID;
+
+    //idk how to put all 3 variables into 1 payload so just gona do this for now
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      projectID: projectID,
+      studentID: studentID,
+      roleType: roleType,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'http://localhost:3000/api/project/addStudentToProjectManually',
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then(() => window.history.back())
+      .catch((error) => console.log('error', error));
+  }
+
+  onChangeStudent(event) {
+    this.setState({ studentID: event.target.value });
+  }
+  onChangeRoleType(event) {
+    this.setState({ roleType: event.target.value });
   }
 
   render() {
@@ -52,33 +76,29 @@ class AddToProject extends Component {
               <h2>Add a student to {localStorage.projectName} </h2>
               <br></br>
               <br></br>
-              <div className='name'>Student Name</div>
+              <div className='name'>Student ID</div>
               <input
-                type='className'
+                type='text'
                 className='form-control'
-                id='ExampleInputClassName1'
-                onChange={(e) => this.setState({ studentName: e.target.value })}
+                value={this.state.studentID}
+                onChange={this.onChangeStudent}
               ></input>
               <div className='name'>Role</div>
+              <h5 id='note'>
+                Please note this must be an already existing role
+              </h5>
               <input
-                type='className'
+                type='text'
                 className='form-control'
-                id='ExampleInputClassName1'
-                onChange={(e) => this.setState({ role: e.target.value })}
+                value={this.state.roleType}
+                onChange={this.onChangeRoleType}
               ></input>
             </div>
-            <div className='name'>Positions Left</div>
-            <input
-              type='className'
-              className='form-control'
-              id='ExampleInputClassName1'
-              onChange={(e) => this.setState({ positionsLeft: e.target.value })}
-            ></input>
             <div className='box button-container'>
               <button
                 type='button'
                 className='button button--add-class'
-                onClick={this.addStudent()}
+                onClick={this.addStudent}
               >
                 Add to Project
               </button>
