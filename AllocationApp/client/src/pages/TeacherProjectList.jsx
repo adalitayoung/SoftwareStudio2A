@@ -53,7 +53,7 @@ class TeacherProjectList extends Component {
   exportProject() {
     const id = this.state.course;
     api.outputToExcel(id).then((data) => {
-      // console.log(data.data);
+       console.log(data.data);
       //save to client as .xlsx file
     });
   }

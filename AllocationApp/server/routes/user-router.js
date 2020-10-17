@@ -21,6 +21,6 @@ router.get('/startAlgorithm/:course', AlgorithmCtrl.startAlgorithm)
 router.get('/randomSort/:course', AlgorithmCtrl.randomSort)
 router.post('/login', UserCtrl.login)
 router.post('/logout', UserCtrl.logout)
-router.post('/outputToExcel/:id', OutputToExcelCtrl.outputToExcel)
+router.get('/outputToExcel/:id', OutputToExcelCtrl.outputToExcel)
 
 module.exports = router
