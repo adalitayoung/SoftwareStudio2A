@@ -49,7 +49,7 @@ class AllocatedStudents extends Component {
       return (
         <tr key={_id}>
           <td id='tdclass'>{roleType}</td>
-          <td id='tdclass'>{studentsEnrolledID}</td>
+          <td id='tdclass'>{studentsEnrolledID.join(', ')}</td>
           <td id='tdclass'>{positionsLeft}</td>
         </tr>
       );
