@@ -14,17 +14,19 @@ class StudentClassList extends Component {
         classData: [],
         isLoading: false,
     }
-    //localStorage.setItem('user', this.state.user.fullName)
+    localStorage.setItem('user', this.state.user.fullName)
+    localStorage.setItem('user', this.state.user.id)
     this.fetchClassList()
 }
 
 fetchClassList(){
     //fetch the class list the student has enrolled
-    const class_id = this.state.course;
-    api.showMyclasses(class_id).then((data) => {
+    const _id = this.state.user.id;
+    console.log(_id)
+    api.showMyclasses(_id).then((data) => {
       // need to change class model and check if the course is for that teacher
       console.log(data);
-      this.setState({ classData: data.data.data });
+      this.setState({ classData: data.data });
     });
 }
 
@@ -85,7 +87,10 @@ renderTableData(){
           <td id='tdclass'>{name}</td>
           <td id='tdclass'>{numberOfStudents}</td>
           <td>
-            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={(course) => this.edit(_id)}>
+            <button 
+              style = {{width: "70%", marginLeft: "15%"}} 
+              className="btn btn-primary btn-block" 
+              onClick={(course) => this.edit(_id)}>
                 Edit
             </button>
           </td>

@@ -11,11 +11,12 @@ class Enroll extends Component {
     super(props);
     this.state = {
       user: props.location.state.user,
+      course: props.location.state.course,
+      className: props.location.state.className,
       classData: [],
       isLoading: false,
     };
     console.log(props);
-    localStorage.setItem('user', this.state.user.fullName)
     this.getClasses();
   }
 
@@ -28,17 +29,17 @@ class Enroll extends Component {
         });
     }
     
-    join(_id, studentID, courseName) {
+    join() {
       //const name = studentID;
-      api.addStudentToClass(studentID, courseName).then((data) => {
-        this.setState({ classData: data.data})
-        window.alert(studentID + " is enrolled into class.")
+      const id = this.state.user.id
+      const name = this.state.course
+      api.addStudentToClass(id, name).then(() => {
+        window.alert(this.state.user.fullName + " is enrolled into class.")
       })
     }
 
     viewClass = async event => {
         event.preventDefault();
-        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/ClassList',
@@ -48,7 +49,6 @@ class Enroll extends Component {
       
       viewProject = async event => {
         event.preventDefault();
-        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/StudentProjectList',
@@ -58,7 +58,6 @@ class Enroll extends Component {
       
       enroll = async event => {
         event.preventDefault();
-        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/Enroll',
@@ -78,7 +77,7 @@ class Enroll extends Component {
               <button
                 style = {{width: "70%", marginLeft: "15%"}} 
                 className="btn btn-primary btn-block"
-                onClick={this.join}
+                onClick={this.join()}
               >
                 Enroll
               </button>
