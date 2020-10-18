@@ -32,7 +32,7 @@ class Enroll extends Component {
     join() {
       //const name = studentID;
       const id = this.state.user.id
-      const name = this.state.course
+      const name = this.state.className
       api.addStudentToClass(id, name).then(() => {
         window.alert(this.state.user.fullName + " is enrolled into class.")
       })
