@@ -32,8 +32,7 @@ class Enroll extends Component {
       const id = this.state.user.id
       console.log(course.name)
       api.addStudentToClass(id, course.name).then((data) => {
-        //this.setState({ course: data })
-        window.alert(this.state.user.fullName + " is enrolled into class.")
+        window.alert(this.state.user.fullName + " is enrolled into " + course.name)
       })
     }
 
