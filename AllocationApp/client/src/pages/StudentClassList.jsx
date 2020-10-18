@@ -87,7 +87,7 @@ renderTableData(){
           <td id='tdclass'>{numberOfStudents}</td>
           <td>
             <button 
-              style = {{width: "70%", marginLeft: "15%"}} 
+              style = {{width: "40%", marginLeft: "30%"}} 
               className="btn btn-primary btn-block" 
               onClick={(course) => this.edit(_id)}>
                 Edit

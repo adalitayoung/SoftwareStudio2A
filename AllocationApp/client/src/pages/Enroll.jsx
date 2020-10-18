@@ -77,7 +77,7 @@ class Enroll extends Component {
               <button
                 style = {{width: "70%", marginLeft: "15%"}} 
                 className="btn btn-primary btn-block"
-                onClick={(course) => this.join(course)}
+                onClick={() => this.join(course)}
               >
                 Enroll
               </button>
