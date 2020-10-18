@@ -50,6 +50,11 @@ tchbg(){
         if (res.status === 200){
           // Success condition
           window.alert('Successful Add data to Database!')
+          this.props.history.push({
+            pathname: '/student/ClassList',
+            state: { user: '09' },
+          });
+
           //this.props.history.push('/SignIn')
         }
       }, error => {
