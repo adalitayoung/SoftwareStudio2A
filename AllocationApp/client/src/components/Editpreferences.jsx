@@ -9,6 +9,7 @@ constructor(props){
     super(props)
     
   this.state={
+    user: props.location.state.user,
     projectPreference1:'volvo',
     projectPreference2:'volvo',
     projectPreference3:'volvo',
@@ -41,6 +42,7 @@ tchbg(){
     handleRegisterUser = async event => {
     event.preventDefault();
     let studentID = localStorage.getItem('uid');
+    const user = this.state.user
     const { projectPreference1, projectPreference2, projectPreference3, technicalBackground} = this.state
     // Add in validation here
     if (projectPreference1 !== '' && projectPreference2 !== '' && projectPreference3 !== '' && technicalBackground !== ''){
@@ -50,7 +52,10 @@ tchbg(){
         if (res.status === 200){
           // Success condition
           window.alert('Successful Add data to Database!')
-          //this.props.history.push('/SignIn')
+          this.props.history.push({
+            pathname: '/student/ClassList',
+            state: { user: user }
+          })
         }
       }, error => {
         console.log(error)

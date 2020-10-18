@@ -106,7 +106,8 @@ const apis = {
   showProjectByName,
   getRolesForBackground,
   addStudentToProjectManually,
-  outputToExcel
+  outputToExcel,
+  showMyclasses
 };
 
 export default apis;
