@@ -15,10 +15,10 @@ class Enroll extends Component {
       isLoading: false,
     };
     console.log(props);
-    this.getClasses(this.state.user._id);
+    this.getClasses();
   }
 
-    getClasses(userID) {
+    getClasses() {
         //display classes to join
         api.getAllCourses().then((data) => {
           console.log(data);
@@ -26,16 +26,17 @@ class Enroll extends Component {
           console.log(this.state.classData);
         });
     }
-
-    join = async event => {
-        event.preventDefault();
-        console.log("join");
-        //add the student to the class
+    
+    join(_id, studentID, courseName) {
+      //const name = studentID;
+      api.addStudentToClass(studentID, courseName).then((data) => {
+        window.alert(studentID + " is enrolled into class.")
+      })
     }
 
     viewClass = async event => {
         event.preventDefault();
-        console.log("it works")
+        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/ClassList',
@@ -45,7 +46,7 @@ class Enroll extends Component {
       
       viewProject = async event => {
         event.preventDefault();
-        console.log("it works")
+        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/StudentProjectList',
@@ -55,7 +56,7 @@ class Enroll extends Component {
       
       enroll = async event => {
         event.preventDefault();
-        console.log("it works")
+        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/Enroll',
@@ -65,19 +66,19 @@ class Enroll extends Component {
     
     renderTable() {
       return this.state.classData.map((course, index) => {
-        const { name, teacher, _id } = course; //destructuring
+        const { name, numberOfStudents, _id } = course; //destructuring
         console.log(_id);
         return (
           <tr key={_id}>
             <td id='tdclass'>{name}</td>
-            <td id='tdclass'>{teacher}</td>
+            <td id='tdclass'>{numberOfStudents}</td>
             <td>
               <button
                 style = {{width: "70%", marginLeft: "15%"}} 
                 className="btn btn-primary btn-block"
                 onClick={this.join}
               >
-                Enrol
+                Enroll
               </button>
             </td>
           </tr>

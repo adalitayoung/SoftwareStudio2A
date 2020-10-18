@@ -78,7 +78,7 @@ function App() {
           component={TeacherProjectList}
         />
         <Route
-          path='/student/updatepreferences'
+          path='/student/updatepreferences/:id'
           exact
           component={Editpreferences}
         />

@@ -14,11 +14,12 @@ export const addUserToDatabase = (user) => api.post(`/user/createUser`, user);
 
 export const deleteUser = (email) => api.delete(`/user/deleteUser/${email}`);
 
-export const startAlgorithm = () => api.get(`/algorithm`);
-export const startRandomSort = () => api.get(`/randomSort`);
+export const startAlgorithm = (course) => api.get(`/user/startAlgorithm/${course}`);
+export const startRandomSort = (course) => api.get(`/user/randomSort/${course}`);
 
-export const addStudentToClass = (id, className) =>
-  api.post(`/user/addToClass/${id}/${className}`);
+export const addStudentToClass = (student_id, className) =>
+  api.post(`/user/addToClass/${student_id}/${className}`);
+
 export const removeFromClass = (student_id, className) =>
   api.post(`/user/removeFromClass/${student_id}/${className}`);
 
@@ -31,7 +32,6 @@ export const updateUserRole = (user_id, role) =>
   api.post(`/user/updateUserRole/${user_id}/${role}`);
 export const addUserPreference = (tempStudent) =>
   api.post(`/user/userPreference`, tempStudent);
-
 
 
 export const addPreferencesBackground = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)

@@ -42,9 +42,9 @@ class AdminUpdateUserRole extends Component {
                             <div style={{margin: "auto"}} className="align-items-center">
                                 <label style={{paddingRight: '3%'}}>Role  </label>
                                 <select id="role">
-                                    <option value="ADMIN">Admin</option>
-                                    <option value="TEACHER">Teacher</option>
-                                    <option value="STUDENT">Student</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Student">Student</option>
                                 </select>
                             </div>
                             <div>

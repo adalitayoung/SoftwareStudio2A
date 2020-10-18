@@ -97,6 +97,9 @@ class TeacherProjectList extends Component {
             <button
               key={_id}
               id='classbtn'
+              style={{
+                width: '70%',
+              }}
               className='btn btn-primary btn-round'
               onClick={() => this.viewAllocations(_id, projectName)}
             >

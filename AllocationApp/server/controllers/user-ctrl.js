@@ -232,9 +232,6 @@ addStudentToClass = async (req, res) => {
     const className = req.params.className;
     const id = req.params.student_id;
 
-    // var mongoose = require('mongoose');
-    // var mongoObjectId = mongoose.Types.ObjectId(id);
-
     //console.log(typeof id);
     if ( req.params.student_id !== null && className !== null) {
         const tempStudent = new TempStudent();
