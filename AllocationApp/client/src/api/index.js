@@ -19,6 +19,7 @@ export const startRandomSort = (course) => api.get(`/user/randomSort/${course}`)
 
 export const addStudentToClass = (student_id, className) =>
   api.post(`/user/addToClass/${student_id}/${className}`);
+
 export const removeFromClass = (student_id, className) =>
   api.post(`/user/removeFromClass/${student_id}/${className}`);
 
@@ -27,8 +28,12 @@ export const fetchUserData = (user_role, course_id) =>
 
 export const getAllStudentIds = (role) => api.get(`/user/getAllStudentIds/${role}`);
 
-export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
-export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
+export const updateUserRole = (user_id, role) =>
+  api.post(`/user/updateUserRole/${user_id}/${role}`);
+export const addUserPreference = (tempStudent) =>
+  api.post(`/user/userPreference`, tempStudent);
+
+
 export const addPreferencesBackground = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)
 
 

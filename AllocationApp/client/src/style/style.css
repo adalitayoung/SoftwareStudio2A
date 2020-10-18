@@ -311,6 +311,10 @@ h2 {
   padding: 7%;
 }
 
+.scroll {
+  overflow-y: scroll;
+}
+
 .backgroundwhitebox {
   position: absolute;
   background-color: #ebeff1;
@@ -321,6 +325,7 @@ h2 {
   transform: translate(-50%, -50%);
   border-radius: 25px;
   opacity: 1;
+  overflow: auto;
 }
 
 .backgroundwhiteboxaddy {
