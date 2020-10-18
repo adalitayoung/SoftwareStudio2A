@@ -15,6 +15,7 @@ class Enroll extends Component {
       isLoading: false,
     };
     console.log(props);
+    localStorage.setItem('user', this.state.user.fullName)
     this.getClasses();
   }
 
@@ -30,6 +31,7 @@ class Enroll extends Component {
     join(_id, studentID, courseName) {
       //const name = studentID;
       api.addStudentToClass(studentID, courseName).then((data) => {
+        this.setState({ classData: data.data})
         window.alert(studentID + " is enrolled into class.")
       })
     }

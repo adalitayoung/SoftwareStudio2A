@@ -10,22 +10,34 @@ class StudentClassList extends Component {
     super(props)
     this.state = {
         user: props.location.state.user,
+        course: props.location.state.course,
         classData: [],
         isLoading: false,
     }
-    localStorage.setItem('user', this.state.user.fullName)
+    //localStorage.setItem('user', this.state.user.fullName)
     this.fetchClassList()
 }
 
 fetchClassList(){
     //fetch the class list the student has enrolled
-    api.getAllCourses().then((data) => {
+    const class_id = this.state.course;
+    api.showMyclasses(class_id).then((data) => {
       // need to change class model and check if the course is for that teacher
       console.log(data);
       this.setState({ classData: data.data.data });
-      console.log(this.state.classData);
     });
 }
+
+// fetchClassList() {
+//   const class_id = '';
+//   //localStorage.setItem('classID', class_id);
+//   //localStorage.setItem('className', this.state.className);
+
+//   api.showMyclasses(class_id).then((data) => {
+//     console.log(data);
+//     this.setState({ classData: data.data});
+//   });
+// }
 
 viewClass = async event => {
   event.preventDefault();
