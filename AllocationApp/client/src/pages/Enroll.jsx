@@ -21,7 +21,6 @@ class Enroll extends Component {
   }
 
     getClasses() {
-        //display classes to join
         api.getAllCourses().then((data) => {
           console.log(data);
           this.setState({ classData: data.data.data });
@@ -29,11 +28,11 @@ class Enroll extends Component {
         });
     }
     
-    join() {
-      //const name = studentID;
+    join(course) {
       const id = this.state.user.id
-      const name = this.state.className
-      api.addStudentToClass(id, name).then(() => {
+      console.log(course.name)
+      api.addStudentToClass(id, course.name).then((data) => {
+        //this.setState({ course: data })
         window.alert(this.state.user.fullName + " is enrolled into class.")
       })
     }
@@ -59,9 +58,10 @@ class Enroll extends Component {
       enroll = async event => {
         event.preventDefault();
         const user = this.state.user;
+        const course = this.state.course;
         this.props.history.push({
           pathname: '/student/Enroll',
-          state: {user: user}
+          state: {user: user, course: course}
         })    // redirect to enroll page
       }
     
@@ -77,7 +77,7 @@ class Enroll extends Component {
               <button
                 style = {{width: "70%", marginLeft: "15%"}} 
                 className="btn btn-primary btn-block"
-                onClick={this.join()}
+                onClick={(course) => this.join(course)}
               >
                 Enroll
               </button>
@@ -101,7 +101,7 @@ class Enroll extends Component {
                 <table className='center' id='table'>
                 <tr>
                     <th id='th'>Class Name</th>
-                    <th id='th'>Class Teacher</th>
+                    <th id='th'>Student Number</th>
                     <th id='th'>Join Class</th>
                     <th></th>
                     <th></th>

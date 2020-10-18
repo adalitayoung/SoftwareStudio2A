@@ -11,6 +11,7 @@ class StudentClassList extends Component {
     this.state = {
         user: props.location.state.user,
         course: props.location.state.course,
+        className: props.location.state.className,
         classData: [],
         isLoading: false,
     }
@@ -43,7 +44,6 @@ fetchClassList(){
 
 viewClass = async event => {
   event.preventDefault();
-  //console.log("it works")
   this.props.history.push({
     pathname: '/student/ClassList',
   })   // redirect to class list
@@ -51,7 +51,6 @@ viewClass = async event => {
 
 viewProject = async event => {
   event.preventDefault();
-  //console.log("it works")
   const user = this.state.user;
   this.props.history.push({
     pathname: '/student/StudentProjectList',
@@ -61,11 +60,11 @@ viewProject = async event => {
 
 enroll = async event => {
   event.preventDefault();
-  //console.log("it works")
   const user = this.state.user;
+  const course = this.state.course;
   this.props.history.push({
     pathname: '/student/Enroll',
-    state: {user: user},
+    state: {user: user, course: course},
   })    // redirect to enroll page
 }
 
