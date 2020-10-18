@@ -9,7 +9,7 @@ const TempStudent = new Schema(
         projectPreference1: {type: String},
         projectPreference2: {type: String},
         projectPreference3: {type: String},
-        technicalBackground: [String]
+        technicalBackground: {type: String},
     }
 )
 

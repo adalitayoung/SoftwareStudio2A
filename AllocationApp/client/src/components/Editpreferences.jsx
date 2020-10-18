@@ -9,10 +9,10 @@ constructor(props){
     super(props)
     
   this.state={
-    projectPreference1:'volvo',
-    projectPreference2:'volvo',
-    projectPreference3:'volvo',
-    technicalBackground:'volvo',
+    projectPreference1:'',
+    projectPreference2:'',
+    projectPreference3:'',
+    technicalBackground:'',
     msg:'',
     pp:[],
     tb:[]
@@ -50,6 +50,10 @@ tchbg(){
         if (res.status === 200){
           // Success condition
           window.alert('Successful Add data to Database!')
+          this.props.history.push({
+            pathname: '/student/ClassList',
+            state: { user: '09' },
+          });
           //this.props.history.push('/SignIn')
         }
       }, error => {
@@ -93,7 +97,7 @@ tchbg(){
     value={this.state.projectPreference1} onChange={(e)=>this.setState({projectPreference1:e.target.value})}
              form="carform" className="form-control">
              {this.state.pp.map((item,i)=>(
-              <option value={item._id}>{item.projectName}</option>
+              <option value={item.projectName}>{item.projectName}</option>
               ))}
             </select>
           </div>
@@ -105,7 +109,7 @@ name="technicalBackground"
     value={this.state.technicalBackground} onChange={(e)=>this.setState({technicalBackground:e.target.value})}
              form="carform" className="form-control">
               {this.state.tb.map((item,i)=>(
-              <option value={item._id}>{item.roleType}</option>
+              <option value={item.roleType}>{item.roleType}</option>
               ))}
             </select>
           </div>
@@ -117,7 +121,7 @@ name="projectPreference2"
     value={this.state.projectPreference2} onChange={(e)=>this.setState({projectPreference2:e.target.value})}
              form="carform" className="form-control">
               {this.state.pp.map((item,i)=>(
-              <option value={item._id}>{item.projectName}</option>
+              <option value={item.projectName}>{item.projectName}</option>
               ))}
             </select>
           </div>
@@ -132,7 +136,7 @@ name="projectPreference2"
     value={this.state.projectPreference3} onChange={(e)=>this.setState({projectPreference3:e.target.value})}
              form="carform" className="form-control">
               {this.state.pp.map((item,i)=>(
-              <option value={item._id}>{item.projectName}</option>
+              <option value={item.projectName}>{item.projectName}</option>
               ))}
             </select>
           </div>

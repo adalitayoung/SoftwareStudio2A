@@ -28,7 +28,7 @@ export const fetchUserData = (user_role, course_id) =>
 export const getAllStudentIds = (role) => api.get(`/user/getAllStudentIds/${role}`);
 
 export const updateUserRole = (user_id, role) => api.post(`/user/updateUserRole/${user_id}/${role}`)
-export const addUserPreference = tempStudent => api.post(`/user/userPreference`, tempStudent)
+export const addUserPreference = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)
 export const addPreferencesBackground = tempStudent => api.post(`/user/addPreferencesBackground`, tempStudent)
 
 
