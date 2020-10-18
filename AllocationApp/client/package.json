@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "file-saver": "^2.0.2",
     "mdbreact": "^4.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -17,7 +18,8 @@
     "react-scripts": "^3.4.3",
     "react-table": "^7.3.3",
     "save": "^2.4.0",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "xlsx": "^0.16.8"
   },
   "scripts": {
     "start": "set PORT=8000 && react-scripts start",

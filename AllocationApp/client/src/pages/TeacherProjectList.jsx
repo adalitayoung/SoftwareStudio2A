@@ -8,6 +8,11 @@ import back from '../res/back.png';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
 
+var xlsx = require('xlsx');
+var saveAs = require('file-saver');
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+const FILE_NAME = 'ProjectDetails'
 class TeacherProjectList extends Component {
   constructor(props) {
     super(props);
@@ -53,10 +58,26 @@ class TeacherProjectList extends Component {
   exportProject() {
     const id = this.state.course;
     api.outputToExcel(id).then((data) => {
-      // console.log(data.data);
+       console.log(data.data);
+       var info = data.data
+       const worksheet = xlsx.utils.json_to_sheet(info)
+       const workbook = {
+         Sheets:{
+           'info' : worksheet
+         },
+         SheetNames:['info']
+       }
+       const excelBuffer = xlsx.write(workbook,{bookType: 'xlsx', type:'array'})
+       console.log(excelBuffer)
+       var saveData = new Blob([excelBuffer], {type: EXCEL_TYPE} );
+       saveAs(saveData, FILE_NAME + EXCEL_EXTENSION)
       //save to client as .xlsx file
     });
   }
+
+
+
+
 
   addStudentToProject(_id, name) {
     this.props.history.push({
@@ -64,6 +85,8 @@ class TeacherProjectList extends Component {
       state: { course: _id, className: name },
     });
   }
+
+
 
   viewAllocations(_id, projectName) {
     localStorage.setItem('projectID', _id);
