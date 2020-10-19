@@ -50,6 +50,25 @@ class classes extends Component {
       technicalBackground,
     } = this.state;
     // Add in validation here
+// <<<<<<< linkEditpref
+//     if (projectPreference1 !== '' && projectPreference2 !== '' && projectPreference3 !== '' && technicalBackground !== ''){
+//       await api.addPreferencesBackground({studentID, projectPreference1, projectPreference2, projectPreference3, technicalBackground}).then(res => {
+//         // Do whatever you want to do whether its a page redirect etc.
+//         console.log(res)
+//         if (res.status === 200){
+//           // Success condition
+//           window.alert('Successful Add data to Database!')
+//           this.props.history.push({
+//             pathname: '/student/ClassList',
+//             state: { user: '09' },
+//           });
+
+//           //this.props.history.push('/SignIn')
+//         }
+//       }, error => {
+//         console.log(error)
+//       })
+// =======
     if (
       projectPreference1 !== '' &&
       projectPreference2 !== '' &&
@@ -81,6 +100,7 @@ class classes extends Component {
             console.log(error);
           }
         );
+// >>>>>>> Develop
     }
   };
 
