@@ -11,6 +11,8 @@ class Enroll extends Component {
     super(props);
     this.state = {
       user: props.location.state.user,
+      course: props.location.state.course,
+      className: props.location.state.className,
       classData: [],
       isLoading: false,
     };
@@ -19,7 +21,6 @@ class Enroll extends Component {
   }
 
     getClasses() {
-        //display classes to join
         api.getAllCourses().then((data) => {
           console.log(data);
           this.setState({ classData: data.data.data });
@@ -27,16 +28,16 @@ class Enroll extends Component {
         });
     }
     
-    join(_id, studentID, courseName) {
-      //const name = studentID;
-      api.addStudentToClass(studentID, courseName).then((data) => {
-        window.alert(studentID + " is enrolled into class.")
+    join(course) {
+      const id = this.state.user.id
+      console.log(course.name)
+      api.addStudentToClass(id, course.name).then((data) => {
+        window.alert(this.state.user.fullName + " is enrolled into " + course.name)
       })
     }
 
     viewClass = async event => {
         event.preventDefault();
-        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/ClassList',
@@ -46,7 +47,6 @@ class Enroll extends Component {
       
       viewProject = async event => {
         event.preventDefault();
-        //console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/StudentProjectList',
@@ -56,11 +56,11 @@ class Enroll extends Component {
       
       enroll = async event => {
         event.preventDefault();
-        //console.log("it works")
         const user = this.state.user;
+        const course = this.state.course;
         this.props.history.push({
           pathname: '/student/Enroll',
-          state: {user: user}
+          state: {user: user, course: course}
         })    // redirect to enroll page
       }
     
@@ -76,7 +76,7 @@ class Enroll extends Component {
               <button
                 style = {{width: "70%", marginLeft: "15%"}} 
                 className="btn btn-primary btn-block"
-                onClick={this.join}
+                onClick={() => this.join(course)}
               >
                 Enroll
               </button>
@@ -100,7 +100,7 @@ class Enroll extends Component {
                 <table className='center' id='table'>
                 <tr>
                     <th id='th'>Class Name</th>
-                    <th id='th'>Class Teacher</th>
+                    <th id='th'>Student Number</th>
                     <th id='th'>Join Class</th>
                     <th></th>
                     <th></th>

@@ -10,26 +10,40 @@ class StudentClassList extends Component {
     super(props)
     this.state = {
         user: props.location.state.user,
+        course: props.location.state.course,
+        className: props.location.state.className,
         classData: [],
         isLoading: false,
     }
     localStorage.setItem('user', this.state.user.fullName)
+    localStorage.setItem('user', this.state.user.id)
     this.fetchClassList()
 }
 
 fetchClassList(){
     //fetch the class list the student has enrolled
-    api.getAllCourses().then((data) => {
+    const _id = this.state.user.id;
+    console.log(_id)
+    api.showMyclasses(_id).then((data) => {
       // need to change class model and check if the course is for that teacher
       console.log(data);
-      this.setState({ classData: data.data.data });
-      console.log(this.state.classData);
+      this.setState({ classData: data.data });
     });
 }
 
+// fetchClassList() {
+//   const class_id = '';
+//   //localStorage.setItem('classID', class_id);
+//   //localStorage.setItem('className', this.state.className);
+
+//   api.showMyclasses(class_id).then((data) => {
+//     console.log(data);
+//     this.setState({ classData: data.data});
+//   });
+// }
+
 viewClass = async event => {
   event.preventDefault();
-  //console.log("it works")
   this.props.history.push({
     pathname: '/student/ClassList',
   })   // redirect to class list
@@ -37,7 +51,6 @@ viewClass = async event => {
 
 viewProject = async event => {
   event.preventDefault();
-  //console.log("it works")
   const user = this.state.user;
   this.props.history.push({
     pathname: '/student/StudentProjectList',
@@ -47,11 +60,11 @@ viewProject = async event => {
 
 enroll = async event => {
   event.preventDefault();
-  //console.log("it works")
   const user = this.state.user;
+  const course = this.state.course;
   this.props.history.push({
     pathname: '/student/Enroll',
-    state: {user: user},
+    state: {user: user, course: course},
   })    // redirect to enroll page
 }
 
@@ -73,7 +86,10 @@ renderTableData(){
           <td id='tdclass'>{name}</td>
           <td id='tdclass'>{numberOfStudents}</td>
           <td>
-            <button style = {{width: "70%", marginLeft: "15%"}} className="btn btn-primary btn-block" onClick={(course) => this.edit(_id)}>
+            <button 
+              style = {{width: "40%", marginLeft: "30%"}} 
+              className="btn btn-primary btn-block" 
+              onClick={(course) => this.edit(_id)}>
                 Edit
             </button>
           </td>
