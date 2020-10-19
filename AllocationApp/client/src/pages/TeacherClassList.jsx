@@ -65,18 +65,21 @@ class TeacherClassList extends Component {
   };
 
   algorithm(name) {
-    api.startAlgorithm(name).then((res) => {
-      console.log(res.status)
-      window.alert(name + ' has been allocated!');
-    }).catch(err => {
-      console.log(err)
-    });
+    api
+      .startAlgorithm(name)
+      .then((res) => {
+        console.log(res.status);
+        window.alert(name + ' has been allocated!');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   random(name) {
     api.startRandomSort(name).then(() => {
-      window.alert(name+" has been randomly sorted!")
-    })
+      window.alert(name + ' has been randomly sorted!');
+    });
   }
 
   addClass = async (event) => {
@@ -117,7 +120,7 @@ class TeacherClassList extends Component {
             <button
               key={_id}
               className='btn btn-primary btn-round algobtn'
-              onClick={() => this.algorithm( name)}
+              onClick={() => this.algorithm(name)}
             >
               Auto Allocate
             </button>
