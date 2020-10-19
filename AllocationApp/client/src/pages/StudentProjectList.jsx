@@ -30,7 +30,6 @@ class StudentProjectList extends Component {
   
     viewClass = async event => {
         event.preventDefault();
-        console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/ClassList',
@@ -40,7 +39,6 @@ class StudentProjectList extends Component {
       
       viewProject = async event => {
         event.preventDefault();
-        console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/StudentProjectList',
@@ -50,7 +48,6 @@ class StudentProjectList extends Component {
       
       enroll = async event => {
         event.preventDefault();
-        console.log("it works")
         const user = this.state.user;
         this.props.history.push({
           pathname: '/student/Enroll',
@@ -66,9 +63,7 @@ class StudentProjectList extends Component {
             <tr key={_id}>
               <td id='tdclass'>{projectName}</td>
               <td id='tdclass'>{description}</td>
-              <td id='tdClass'>
-                {createdByname}
-              </td>
+              <td id='tdclas'>{createdByname}</td>
             </tr>
           )
         })

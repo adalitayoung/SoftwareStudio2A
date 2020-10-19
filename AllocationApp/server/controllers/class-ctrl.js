@@ -108,7 +108,7 @@ updateCourse = async (req, res) =>{
 }
 
 showMyclasses = async(req, res) =>{
-  Course.find({studentIDS:req.params.id}, 'name')
+  Course.find({studentIDS:req.params.id})
   .then(classes => res.json(classes))
   .catch(err => res.status(400).json('Error: ' + err))
 }

@@ -45,7 +45,7 @@ class EditClass extends Component {
           </div>
           <div
             className='box__center'
-            style={{ marginTop: '-100px', width: '50%' }}
+            style={{ marginTop: '60px', width: '50%' }}
           >
             <div className='form-group'>
               <br></br>
